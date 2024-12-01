@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://dka188l04khpq"]
+
+[ext_resource type="Script" path="res://scenes/dice_roller/dice_roller_control.gd" id="1_hbdfx"]
+[ext_resource type="PackedScene" uid="uid://cnlssqpge8erk" path="res://scenes/dice_roller/dice_roller.tscn" id="2_lyhe4"]
+
+[node name="Control" type="SubViewportContainer"]
+custom_minimum_size = Vector2(100, 50)
+size_flags_horizontal = 0
+script = ExtResource("1_hbdfx")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+handle_input_locally = false
+size = Vector2i(75, 50)
+size_2d_override_stretch = true
+render_target_update_mode = 4
+
+[node name="DiceRoller" parent="SubViewport" instance=ExtResource("2_lyhe4")]

@@ -1,0 +1,88 @@
+[gd_scene load_steps=9 format=3 uid="uid://cnlssqpge8erk"]
+
+[ext_resource type="Script" path="res://scenes/dice_roller/dice_roller.gd" id="1_h46j8"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uauhm"]
+albedo_color = Color(0, 0.282353, 0, 1)
+rim_enabled = true
+rim = 0.73
+rim_tint = 0.64
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_gg0cj"]
+rough = true
+bounce = 0.7
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_uyylj"]
+size = Vector3(20, 0.1, 20)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_e1ncu"]
+size = Vector3(20, 0.1, 20)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_71uin"]
+size = Vector3(2, 40, 40)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_i0u24"]
+size = Vector3(1, 40, 40)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_r6xhl"]
+margin = 0.5
+size = Vector3(40, 40, 2)
+
+[node name="DiceRoller" type="Node3D"]
+script = ExtResource("1_h46j8")
+metadata/_edit_lock_ = true
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.926054, -0.0217188, -0.376766, 0.364029, 0.314711, 0.876607, 0.0995334, -0.948939, 0.299345, -8.21153, 11.2586, 4.93059)
+light_color = Color(0.619608, 0.643137, 0.729412, 1)
+shadow_enabled = true
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.310866, -0.454348, 0.834823, 0.158551, 0.890824, 0.425786, -0.937136, 2.96294e-08, 0.348965, 7.01433, 9.25399, 0)
+light_color = Color(0.745098, 0.537255, 1, 1)
+
+[node name="OverCamera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 50, 0)
+current = true
+fov = 6.1
+near = 0.007
+far = 124.74
+
+[node name="DebugCamera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.551826, 2.33882, 19.6974)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 0)
+snap = 0.01
+use_collision = true
+flip_faces = true
+size = Vector3(10, 16, 8)
+material = SubResource("StandardMaterial3D_uauhm")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="."]
+disable_mode = 2
+physics_material_override = SubResource("PhysicsMaterial_gg0cj")
+
+[node name="CollisionShape3D_floor" type="CollisionShape3D" parent="StaticBody3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
+shape = SubResource("BoxShape3D_uyylj")
+
+[node name="CollisionShape3D_rooft" type="CollisionShape3D" parent="StaticBody3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15, 0)
+shape = SubResource("BoxShape3D_e1ncu")
+
+[node name="CollisionShape3D+x" type="CollisionShape3D" parent="StaticBody3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 0)
+shape = SubResource("BoxShape3D_71uin")
+
+[node name="CollisionShape3D-x" type="CollisionShape3D" parent="StaticBody3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 0)
+shape = SubResource("BoxShape3D_i0u24")
+
+[node name="CollisionShape3D+y" type="CollisionShape3D" parent="StaticBody3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
+shape = SubResource("BoxShape3D_r6xhl")
+
+[node name="CollisionShape3D-y" type="CollisionShape3D" parent="StaticBody3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
+shape = SubResource("BoxShape3D_r6xhl")

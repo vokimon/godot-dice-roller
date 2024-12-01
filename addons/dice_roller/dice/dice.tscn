@@ -1,0 +1,60 @@
+[gd_scene load_steps=9 format=4 uid="uid://cpqgcxm5wmtqk"]
+
+[ext_resource type="Script" path="res://scenes/dice_roller/dice.gd" id="1_68wp2"]
+[ext_resource type="Texture2D" uid="uid://c3cpwpc7bvv82" path="res://images/dice_texture.svg" id="2_e47ja"]
+[ext_resource type="Texture2D" uid="uid://do3xsddtldsbe" path="res://images/dice_normal_map.png" id="3_itb1g"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2p4nd"]
+size = Vector3(2, 2, 2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a2vue"]
+albedo_texture = ExtResource("2_e47ja")
+normal_enabled = true
+normal_texture = ExtResource("3_itb1g")
+heightmap_texture = ExtResource("2_e47ja")
+
+[sub_resource type="BoxMesh" id="BoxMesh_fxv3q"]
+lightmap_size_hint = Vector2i(24, 36)
+add_uv2 = true
+size = Vector3(2, 2, 2)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_43f5b"]
+_surfaces = [{
+"aabb": AABB(-1.17321, -1.17321, -1.17321, 2.34641, 2.34642, 2.34642),
+"attribute_data": PackedByteArray("AAAAAAAAAAAAAAAAAAAAAKuqKj8AAAAAAAAAAKuqqj6rqqo+AAAAAFVV1T4AAAAAAACAPwAAAABVVdU+q6qqPgAAAAAAAAA/AAAAAOQ4jj6rqio/AAAAPwAAAADIcRw/q6qqPgAAAD9VVdU+5DiOPgAAgD8AAAA/VVXVPshxHD+rqqo+AAAAAAAAAD8AAAAAAAAAAAAAAD8AAAA/q6qqPquqKj8AAAAAqqpqPwAAAACrqqo+AAAAP6qqaj+rqqo+q6qqPgAAAD8AAAA/5DiOPgAAAAAAAIA/AAAAP8hxHD+rqio/AAAAP6qqaj/kOI4+q6qqPgAAgD+qqmo/yHEcP6uqqj4AAAA/AAAAAKuqKj+rqio/AAAAPwAAAD+rqio/q6oqPwAAAD9VVdU+q6oqPwAAgD8AAAA/qqpqP6uqKj+rqqo+AACAPwAAAAAdx3E/q6oqPwAAgD8AAAA/HcdxP6uqKj8AAIA/VVXVPh3HcT8AAIA/AACAP6qqaj8dx3E/"),
+"format": 34359742519,
+"index_count": 36,
+"index_data": PackedByteArray("AAAEAAIAAgAEAAYAAQAFAAMAAwAFAAcACAAMAAoACgAMAA4ACQANAAsACwANAA8AEAAUABIAEgAUABYAEQAVABMAEwAVABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("liuWv5Yrlj+WK5Y/liuWP5Yrlj+WK5a/liuWP5Yrlj+WK5Y/liuWv5Yrlj+WK5a/liuWv5Yrlr+WK5Y/liuWP5Yrlr+WK5a/liuWP5Yrlr+WK5Y/liuWv5Yrlr+WK5a/liuWP5Yrlj+WK5Y/liuWv5Yrlj+WK5a/liuWP5Yrlj+WK5a/liuWv5Yrlj+WK5Y/liuWP5Yrlr+WK5Y/liuWv5Yrlr+WK5a/liuWP5Yrlr+WK5a/liuWv5Yrlr+WK5Y/liuWP5Yrlj+WK5Y/liuWv5Yrlr+WK5Y/liuWv5Yrlj+WK5Y/liuWP5Yrlr+WK5Y/liuWP5Yrlj+WK5a/liuWv5Yrlr+WK5a/liuWv5Yrlj+WK5a/liuWP5Yrlr+WK5a//3//f////7//////AAD/v/9//3////+//////wAA/7//f/9/////v/////8AAP+//3//f////7//////AAD/v///AID/////AAAAgP9//7///wCA/////wAAAID/f/+///8AgP////8AAACA/3//v///AID/////AAAAgP9//78AgP//AAD/vwCAAAD///+/AID//wAA/78AgAAA////vwCA//8AAP+/AIAAAP///78AgP//AAD/vwCAAAD///+/")
+}]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_23xjn"]
+shading_mode = 0
+albedo_color = Color(0.33, 0.720833, 1, 1)
+disable_receive_shadows = true
+
+[node name="Dice" type="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0789636, 0.0177878)
+inertia = Vector3(80, 80, 80)
+continuous_cd = true
+script = ExtResource("1_68wp2")
+
+[node name="Collider" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_2p4nd")
+metadata/_edit_lock_ = true
+
+[node name="DiceMesh" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_a2vue")
+extra_cull_margin = 16384.0
+ignore_occlusion_culling = true
+mesh = SubResource("BoxMesh_fxv3q")
+metadata/_edit_lock_ = true
+
+[node name="Outline" type="MeshInstance3D" parent="DiceMesh"]
+visible = false
+cast_shadow = 0
+mesh = SubResource("ArrayMesh_43f5b")
+surface_material_override/0 = SubResource("StandardMaterial3D_23xjn")
