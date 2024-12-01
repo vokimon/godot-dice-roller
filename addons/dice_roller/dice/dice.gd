@@ -1,4 +1,4 @@
-@icon("res://images/dice-6.svg")
+@icon("./dice-6.svg")
 class_name Dice
 extends RigidBody3D
 
@@ -13,17 +13,18 @@ const sides = {
 	5: Vector3.BACK,
 	6: Vector3.RIGHT,
 }
-const dice_size := 2.
-const dice_density := 10.
+const dice_size := 2.0
+const dice_density := 10.0
 ## The minimal angle between faces (different in a d20)
-const face_angle := 90.
+const face_angle := 90.0
 ## how up must be a face unit vector for the face to be choosen
 var max_tilt := cos(deg_to_rad(face_angle/float(sides.size())))
+## Whether the dice is rolling
 var rolling := false
-var roll_time := 0.
-var n_shakes := 0
+## Accomulated roll time
+var roll_time := 0.0
+## Emited when a roll finishes
 signal roll_finished(int)
-
 
 func has_stabilized() -> bool:
 	if global_position.y > dice_size: return false

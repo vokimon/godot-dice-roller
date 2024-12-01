@@ -1,0 +1,39 @@
+[gd_scene load_steps=3 format=3 uid="uid://rcpqfanm0w6q"]
+
+[ext_resource type="Script" path="res://addons/dice_roller/dice_roller_example.gd" id="1_2c8eh"]
+[ext_resource type="PackedScene" uid="uid://dka188l04khpq" path="res://addons/dice_roller/dice_roller_control/dice_roller_control.tscn" id="2_dgarx"]
+
+[node name="DiceRollerExample" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2c8eh")
+
+[node name="Layout" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DiceRollerControl" parent="Layout" instance=ExtResource("2_dgarx")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 1
+
+[node name="ResultLabel" type="Label" parent="Layout"]
+unique_name_in_owner = true
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="RollButton" type="Button" parent="Layout"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Roll"
+
+[connection signal="roll_finnished" from="Layout/DiceRollerControl" to="." method="_on_dice_roller_control_roll_finnished"]
+[connection signal="pressed" from="Layout/RollButton" to="." method="_on_roll_button_pressed"]

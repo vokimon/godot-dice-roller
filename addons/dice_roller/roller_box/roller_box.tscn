@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3 uid="uid://rqfuu652op82"]
+
+[ext_resource type="Script" path="res://addons/dice_roller/roller_box/roller_box.gd" id="1_10iax"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_gg0cj"]
+rough = true
+bounce = 0.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uauhm"]
+albedo_color = Color(0, 0.282353, 0, 1)
+rim_enabled = true
+rim = 0.73
+rim_tint = 0.64
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_6p0cb"]
+
+[node name="RollerBox" type="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 0)
+disable_mode = 2
+physics_material_override = SubResource("PhysicsMaterial_gg0cj")
+script = ExtResource("1_10iax")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+snap = 0.01
+use_collision = true
+flip_faces = true
+size = Vector3(10, 16, 8)
+material = SubResource("StandardMaterial3D_uauhm")
+
+[node name="DebugCamera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.62723, 15.974)
+
+[node name="OverCamera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 50, 0)
+current = true
+fov = 9.0
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.309299, -0.581028, 0.752821, 0, 0.79164, 0.610988, -0.950965, -0.188978, 0.244853, 0, 13.2875, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_6p0cb")
