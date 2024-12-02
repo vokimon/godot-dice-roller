@@ -1,2 +1,8 @@
 # godot-dice-roller
-A godot control to roll dices
+
+A Godot UI control that rolls 3D dices in a box.
+
+![Screenshot Landscape](screenshots/example-landscape.png)
+![Screenshot Portrait](screenshots/example-portrait.png)
+
+
