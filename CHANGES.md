@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.0.2 (2024-12-02)
 
 - CI to release from github actions
 - Icon and classname for RollerBox

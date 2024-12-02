@@ -31,7 +31,7 @@ Features
     - Responsive control, it adapts to the space given by the layout adapting the camera to fully see the rolling box floor
     - Automatically turns the rolling box if the aspect ratio available spacce is inverted the one of the rolling box
 "
-config/version="1.0.1"
+config/version="1.0.2"
 run/main_scene="res://examples/dice_roller_example.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
