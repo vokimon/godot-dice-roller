@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- CI to release from github actions
+- Icon and classname for RollerBox
+
 ## 1.0.1 (2024-12-02)
 
 - Example out of the addon
