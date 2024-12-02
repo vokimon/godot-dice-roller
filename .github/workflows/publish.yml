@@ -64,7 +64,7 @@ jobs:
         source <(cat $GITHUB_ENV | grep PROJECT_ICON)
         icon="https://raw.githubusercontent.com/${repo}/refs/heads/${branch}/$(echo "$PROJECT_ICON" | sed s.res://..)"
         single_line_var() {
-          echo "$1='$2'" >> "$GITHUB_ENV"
+          echo "$1=$2" >> "$GITHUB_ENV"
         }
         single_line_var PROJECT_ICON "$icon"
         echo "Results of data extraction:"
