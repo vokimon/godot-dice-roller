@@ -59,7 +59,7 @@ jobs:
 
         wget https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_linux.x86_64.zip
         unzip Godot_v4.3-stable_linux.x86_64.zip
-        (echo -n "#"; Godot_v4.3-stable_linux.x86_64 --display-driver headless --quit -s ./tools/project2bashvars.gd) >> $GITHUB_ENV
+        (echo -n "#"; ./Godot_v4.3-stable_linux.x86_64 --display-driver headless --quit -s ./tools/project2bashvars.gd) >> $GITHUB_ENV
         source $GITHUB_ENV
         icon="https://raw.githubusercontent.com/${repo}/refs/heads/${branch}/$(echo \"$PROJECT_ICON\" | sed s/res:\/\///)"
         single_line_var() {
