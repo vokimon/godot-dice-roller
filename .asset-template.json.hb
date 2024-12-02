@@ -9,7 +9,7 @@
   "download_commit": "{{ env.GITHUB_SHA }}",
   "browse_url": "{{ context.repository.html_url }}",
   "issues_url": "{{ context.repository.html_url }}/issues",
-  "icon_url": "{{ env.PROJECT_ICON }},
+  "icon_url": "{{ env.PROJECT_ICON }}",
   "previews": [
     {
       "preview_id": "1",
@@ -20,8 +20,8 @@
     {
       "preview_id": "2",
       "type": "image",
-      "link": "https://raw.githubusercontent.com/vokimon/godot-dice-roller/refs/heads/main/screenshots/example-landscape.png",
-      "thumbnail": "https://raw.githubusercontent.com/vokimon/godot-dice-roller/refs/heads/main/screenshots/example-landscape-thumb.jpg"
+      "link": "https://raw.githubusercontent.com/vokimon/godot-dice-roller/refs/heads/main/screenshots/example-portrait.png",
+      "thumbnail": "https://raw.githubusercontent.com/vokimon/godot-dice-roller/refs/heads/main/screenshots/example-portrait-thumb.jpg"
     }
   ]
 }
