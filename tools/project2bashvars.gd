@@ -6,7 +6,7 @@ func printvar(shellvar, setting_value):
 	if not setting_value.contains('\n'):
 		print('{0}="{1}"'.format([shellvar, setting_value]))
 	else:
-		print('{0}=$(cat <<EOF\n{1}\nEOF\n)'.format([shellvar, setting_value]))
+		print('{0}=<<EOF\n{1}\nEOF'.format([shellvar, setting_value]))
 
 func printvar_fromgodot(shellvar, setting, default):
 	var setting_value = ProjectSettings.get_setting(setting, default)
