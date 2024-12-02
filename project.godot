@@ -11,6 +11,8 @@ config_version=5
 [application]
 
 config/name="Dice Roller"
+config/description="A UI control that rolls 3D dices in a box"
+config/version="1.0"
 run/main_scene="res://addons/dice_roller/dice_roller_example.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
