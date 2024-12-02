@@ -43,7 +43,7 @@ jobs:
         description=$(project_var '.application.["config/description"]')
         version=$(project_var '.application.["config/version"]')
         icon=$(project_var '.application.["config/icon"]')
-        icon="https://raw.githubusercontent.com/${repo}/refs/heads/${branch}/$(echo \"$icon\" | sed s/res:\/\///)"
+        icon="https://raw.githubusercontent.com/${repo}/refs/heads/${branch}/$(echo \"$icon\" | sed s.res://..)"
         godot_version=$project_var 'application.["config/features"]' | sed 's/PackedStringArray("\([0-9.]+\).*/\\1'
         single_line_var PROJECT_TITLE "$name"
         single_line_var PROJECT_DESCRIPTION "$description"
@@ -61,12 +61,13 @@ jobs:
         unzip Godot_v4.3-stable_linux.x86_64.zip
         (echo -n "#"; ./Godot_v4.3-stable_linux.x86_64 --display-driver headless --audio-driver Dummy --quit -s ./tools/project2bashvars.gd) >> $GITHUB_ENV
         source $GITHUB_ENV
-        icon="https://raw.githubusercontent.com/${repo}/refs/heads/${branch}/$(echo \"$PROJECT_ICON\" | sed s.res://..)"
+        icon="https://raw.githubusercontent.com/${repo}/refs/heads/${branch}/$(echo "$PROJECT_ICON" | sed s.res://..)"
         single_line_var() {
           echo "$1='$2'" >> "$GITHUB_ENV"
         }
         single_line_var PROJECT_ICON "$icon"
-        cat $GITHUB_ENV
+        echo "Results of data extraction:"
+        cat "$GITHUB_ENV"
 
     - name: Godot Asset Lib
       uses: deep-entertainment/godot-asset-lib-action@v0.4.0
