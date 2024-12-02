@@ -52,7 +52,6 @@ jobs:
         cat "$GITHUB_ENV"
 
     - name: Extract Godot project info (using Godot itself)
-      if: false
       shell: bash
       run: |
         branch=${{ github.ref_name }}
