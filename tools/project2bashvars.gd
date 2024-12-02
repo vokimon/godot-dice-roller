@@ -3,7 +3,7 @@
 extends MainLoop
 
 func printvar(shellvar, setting_value):
-	if not setting_value.contains('"'):
+	if not setting_value.contains('\n'):
 		print('{0}="{1}"'.format([shellvar, setting_value]))
 	else:
 		print('{0}=$(cat <<EOF\n{1}\nEOF\n)'.format([shellvar, setting_value]))
