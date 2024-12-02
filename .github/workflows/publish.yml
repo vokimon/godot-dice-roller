@@ -73,6 +73,6 @@ jobs:
     - name: Godot Asset Lib
       uses: deep-entertainment/godot-asset-lib-action@v0.4.0
       with:
-        username: example
+        username: ${{ secrets.ASSET_STORE_USER }}
         password: ${{ secrets.ASSET_STORE_PASSWORD }}
-        assetId: 12345
+        assetId: ${{ secrets.ASSET_STORE_ASSET_ID }}
