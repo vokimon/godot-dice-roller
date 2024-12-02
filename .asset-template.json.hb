@@ -9,7 +9,7 @@
   "download_commit": "{{ env.GITHUB_SHA }}",
   "browse_url": "{{ context.repository.html_url }}",
   "issues_url": "{{ context.repository.html_url }}/issues",
-  "icon_url": "{{ env.PROJECT_ICON }}
+  "icon_url": "{{ env.PROJECT_ICON }},
   "previews": [
     {
       "preview_id": "1",
