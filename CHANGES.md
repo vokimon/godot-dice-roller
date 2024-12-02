@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.1 (2024-12-02)
+
+- Example out of the addon
+- Documentation and metadata
+
 ## 1.0.0 (2024-12-02)
 
 - First public release
