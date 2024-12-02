@@ -4,7 +4,7 @@ extends MainLoop
 
 func printvar(shellvar, setting_value):
 	if not setting_value.contains('\n'):
-		print('{0}="{1}"'.format([shellvar, setting_value]))
+		print('{0}={1}'.format([shellvar, setting_value]))
 	else:
 		print('{0}<<EOF\n{1}\nEOF'.format([shellvar, setting_value]))
 
