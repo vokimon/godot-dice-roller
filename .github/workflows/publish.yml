@@ -1,0 +1,77 @@
+# This workflow will upload a Python Package using Twine when a release is created
+# For more information see: https://help.github.com/en/actions/language-and-framework-guides/using-python-with-github-actions#publishing-to-package-registries
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+name: Upload Plugin to Godot Asset Library
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+  push:
+    tags:
+      - 'godot-dice-roller-[0-9]+.[0-9]+.[0-9]+'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    name: Publish new version to asset lib
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: |
+          sudo apt install jq jc
+
+      - name: Extract Godot project info
+        if: false
+        shell: bash
+        run: |
+          project_var() {
+            cat project.godot  | jc --ini | jq "$1"
+          }
+          single_line_var() {
+            echo "$1='$2'" >> "$GITHUB_ENV"
+          }
+          multi_line_var() {
+            printf "$1=\$(cat <<EOF\n%s\nEOF\n)\n" "$2" >> "$GITHUB_ENV"
+          }
+          branch=${{ github.ref_name }}
+          repo=${{ github.repository }}
+          name=$(project_var '.application.["config/name"]')
+          description=$(project_var '.application.["config/description"]')
+          version=$(project_var '.application.["config/version"]')
+          icon=$(project_var '.application.["config/icon"]')
+          icon="https://raw.githubusercontent.com/${repo}/refs/heads/${branch}/$(echo \"$icon\" | sed s/res:\/\///)"
+          godot_version=$project_var 'application.["config/features"]' | sed 's/PackedStringArray("\([0-9.]+\).*/\\1'
+          single_line_var PROJECT_TITLE "$name"
+          single_line_var PROJECT_DESCRIPTION "$description"
+          single_line_var PROJECT_VERSION "$version"
+          single_line_var PROJECT_ICON "$icon"
+          cat "$GITHUB_ENV"
+
+    - name: Extract Godot project info (using Godot itself)
+          branch=${{ github.ref_name }}
+          repo=${{ github.repository }}
+
+          wget curl https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_linux.x86_64.zip
+          unzip Godot_v4.3-stable_linux.x86_64.zip
+          (echo -n "#"; Godot_v4.3-stable_linux.x86_64 --display-driver headless --quit -s ./tools/project2bashvars.gd) >> $GITHUB_ENV
+          source $GITHUB_ENV
+          icon="https://raw.githubusercontent.com/${repo}/refs/heads/${branch}/$(echo \"$PROJECT_ICON\" | sed s/res:\/\///)"
+          single_line_var() {
+            echo "$1='$2'" >> "$GITHUB_ENV"
+          }
+          single_line_var PROJECT_ICON "$icon"
+          cat $GITHUB_ENV
+
+      - name: Godot Asset Lib
+        uses: deep-entertainment/godot-asset-lib-action@v0.4.0
+        with:
+          username: example
+          password: ${{ secrets.ASSET_STORE_PASSWORD }}
+          assetId: 12345
