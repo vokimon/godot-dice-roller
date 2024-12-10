@@ -15,7 +15,7 @@ func printvar_fromgodot(shellvar, setting, default):
 
 func _init():
 	printvar_fromgodot('PROJECT_NAME', "application/config/name", "Noname")
-	printvar_fromgodot('PROJECT_DESC', "application/config/description", "No description specified.")
+	printvar_fromgodot('PROJECT_DESCRIPTION', "application/config/description", "No description specified.")
 	printvar_fromgodot('PROJECT_VERSION', "application/config/version", "0.0.0")
 	printvar_fromgodot('PROJECT_ICON', "application/config/icon", "icon.svg")
 	var godot_required = ProjectSettings.get_setting('application/config/features')[0]
