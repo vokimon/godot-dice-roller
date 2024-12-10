@@ -71,7 +71,7 @@ jobs:
         cat "$GITHUB_ENV"
 
     - name: Godot Asset Lib
-      uses: deep-entertainment/godot-asset-lib-action@v0.4.0
+      uses: deep-entertainment/godot-asset-lib-action@main
       with:
         username: ${{ secrets.ASSET_STORE_USER }}
         password: ${{ secrets.ASSET_STORE_PASSWORD }}
