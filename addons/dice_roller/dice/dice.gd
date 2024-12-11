@@ -48,13 +48,13 @@ func _ready():
 	stop()
 
 func stop():
-	$DiceMesh/Outline.visible = false
+	dehighlight()
 	freeze = true
 	sleeping = true
 	position = original_position
 	position.y = 5 * dice_size
 	rotation = randf_range(0, 2*PI)*Vector3(1.,1.,1.)
-	lock_rotation = true # TODO: should not be set?
+	#lock_rotation = true # TODO: should not be set?
 	linear_velocity = Vector3.ZERO
 	angular_velocity = Vector3.ZERO
 
@@ -87,10 +87,8 @@ func shake(reason: String):
 func _process(_delta):
 	if not rolling: return
 	roll_time += _delta
-	#if position.y < dice_size * .5:
-		#print("Dice {0}: Bellow ground, pushing up".format([name]))
-		#apply_impulse(mass * Vector3(0, 1, 0), dice_size/2.*Vector3.ONE)
-		#position.y = dice_size * .5
+
+	if freeze: return # non physics movement on progress
 
 	if linear_velocity.length() > dice_size * 0.2:
 		#print("Still moving: ", linear_velocity)
@@ -108,10 +106,7 @@ func _process(_delta):
 	print("Dice %s solved [%s] - %.02fs"%([name, side, roll_time]))
 	freeze = true
 	sleeping = true
-	rolling = false
 	show_face(side)
-	roll_finished.emit(side)
-	highlight()
 
 func highlight():
 	$DiceMesh/Outline.visible = true
@@ -119,7 +114,11 @@ func highlight():
 	$DiceMesh/Outline.position=Vector3.ZERO
 	$DiceMesh/Outline.global_position.y+=.3
 
+func dehighlight():
+	$DiceMesh/Outline.visible = false
+	
 func upper_side() -> int:
+	"Returns which dice side is up, or 0 when none is clear"
 	var highest_y := -INF
 	var highest_side := 0
 	for side in sides:
@@ -134,28 +133,28 @@ func upper_side() -> int:
 		return 0
 	return highest_side
 
-func quick_roll(value):
-	rolling = true
-
-
-func show_face(value):
-	"""Shows a given face by rotating it up"""
-	if value not in sides: return
-	rolling = true
-	print(name, " ", value)
-	const show_face_animation_time := .3
+func face_up_transform(value) -> Transform3D:
+	"""Returns the 3D tranform to put the given value up"""
 	var face_normal = (to_global(sides[value])-global_position).normalized()
 	var cross = face_normal.cross(Vector3.UP).normalized()
 	var angle = face_normal.angle_to(Vector3.UP)
-	var rotated = Transform3D(transform)
+	var rotated := Transform3D(transform)
 	# Edge case: face is down
 	if cross.length_squared()<0.1:
 		cross = Vector3.FORWARD
 	rotated.basis = rotated.basis.rotated(cross.normalized(), angle)
-	var tween = create_tween().tween_property(
+	return rotated
+
+func show_face(value):
+	"""Shows a given face by rotating it up"""
+	assert(value in sides)
+	dehighlight()
+	rolling = true
+	const show_face_animation_time := .3
+	var rotated := face_up_transform(value)
+	var tween: Tweener = create_tween().tween_property(
 		self, "transform", rotated, show_face_animation_time
 	)
-	$DiceMesh/Outline.visible = false
 	await tween.finished
 	rolling = false
 	highlight()

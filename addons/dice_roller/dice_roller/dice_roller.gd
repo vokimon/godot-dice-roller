@@ -67,12 +67,14 @@ func ensure_valid_and_unique_dice_names():
 		dice.name = dice_name
 
 func roll():
+	if rolling: return
 	result = {}
 	rolling = true
 	for dice in dices:
 		dice.roll()
 
 func prepare():
+	if rolling: return
 	for dice in dices:
 		dice.stop()
 
