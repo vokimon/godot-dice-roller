@@ -128,10 +128,19 @@ func _input(event: InputEvent) -> void:
 		elif not event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 			roll()
 		elif event.pressed and event.button_index == MOUSE_BUTTON_RIGHT:
-			show_faces([randi_range(1,6), randi_range(1,6)])
+			quick_roll()
+
+func quick_roll():
+	"""Turn dices toward computer generated random values (non-physics)"""
+	var values: Array[int] = []
+	for dice in dice_set:
+		values.append(randi_range(1, dice.sides))
+	show_faces(values)
 
 func show_faces(faces: Array[int]):
 	"""Shows given faces by rotating them up"""
+	if rolling: return
+	assert(faces.size() == dices.size())
 	result={}
 	rolling = true
 	for i in range(faces.size()):
