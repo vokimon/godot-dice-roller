@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c3cpwpc7bvv82"
-path.s3tc="res://.godot/imported/dice_texture.svg-75edf27d454e978f33911a0ff509a93a.s3tc.ctex"
+uid="uid://ch6otp30d2hoj"
+path.s3tc="res://.godot/imported/dice_texture.png-a5d96e9e831d383c22aa6df02ad12a69.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://addons/dice_roller/dice/dice_texture.svg"
-dest_files=["res://.godot/imported/dice_texture.svg-75edf27d454e978f33911a0ff509a93a.s3tc.ctex"]
+source_file="res://addons/dice_roller/dice/dice_texture.png"
+dest_files=["res://.godot/imported/dice_texture.png-a5d96e9e831d383c22aa6df02ad12a69.s3tc.ctex"]
 
 [params]
 
@@ -20,12 +20,12 @@ compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/normal_map=1
+compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
-roughness/mode=7
-roughness/src_normal="res://tiles/dice_normal_map_border.png"
+roughness/mode=0
+roughness/src_normal=""
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/normal_map_invert_y=false
@@ -33,6 +33,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=0
-svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false

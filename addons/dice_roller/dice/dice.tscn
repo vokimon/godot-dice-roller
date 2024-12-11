@@ -1,14 +1,15 @@
-[gd_scene load_steps=9 format=4 uid="uid://cpqgcxm5wmtqk"]
+[gd_scene load_steps=10 format=4 uid="uid://cpqgcxm5wmtqk"]
 
 [ext_resource type="Script" path="res://addons/dice_roller/dice/dice.gd" id="1_e5duk"]
 [ext_resource type="Texture2D" uid="uid://c3cpwpc7bvv82" path="res://addons/dice_roller/dice/dice_texture.svg" id="2_e47ja"]
+[ext_resource type="Texture2D" uid="uid://ch6otp30d2hoj" path="res://addons/dice_roller/dice/dice_texture.png" id="2_g0egc"]
 [ext_resource type="Texture2D" uid="uid://do3xsddtldsbe" path="res://addons/dice_roller/dice/dice_normal_map.png" id="3_itb1g"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_2p4nd"]
 size = Vector3(2, 2, 2)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a2vue"]
-albedo_texture = ExtResource("2_e47ja")
+albedo_texture = ExtResource("2_g0egc")
 normal_enabled = true
 normal_texture = ExtResource("3_itb1g")
 heightmap_texture = ExtResource("2_e47ja")

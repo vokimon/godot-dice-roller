@@ -4,16 +4,15 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://do3xsddtldsbe"
 path.s3tc="res://.godot/imported/dice_normal_map.png-5e5d292beb28e66192979582a787376a.s3tc.ctex"
-path.etc2="res://.godot/imported/dice_normal_map.png-5e5d292beb28e66192979582a787376a.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://addons/dice_roller/dice/dice_normal_map.png"
-dest_files=["res://.godot/imported/dice_normal_map.png-5e5d292beb28e66192979582a787376a.s3tc.ctex", "res://.godot/imported/dice_normal_map.png-5e5d292beb28e66192979582a787376a.etc2.ctex"]
+dest_files=["res://.godot/imported/dice_normal_map.png-5e5d292beb28e66192979582a787376a.s3tc.ctex"]
 
 [params]
 
