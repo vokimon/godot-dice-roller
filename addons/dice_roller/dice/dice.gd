@@ -26,11 +26,16 @@ var roll_time := 0.0
 ## Emited when a roll finishes
 signal roll_finished(int)
 
-func has_stabilized() -> bool:
-	if global_position.y > dice_size: return false
-	if linear_velocity.length() > dice_size: return false
-	return true
+@onready var outline: Node3D = $DiceMesh/Outline
+func highlight():
+	# avoids outline to intersect floor
+	outline.global_position.y+=.3
+	outline.visible = true
 
+func dehighlight():
+	outline.position=Vector3.ZERO
+	outline.visible = false
+	
 func _init():
 	continuous_cd = false
 	can_sleep = true
@@ -108,16 +113,6 @@ func _process(_delta):
 	sleeping = true
 	show_face(side)
 
-@onready var outline: Node3D = $DiceMesh/Outline
-func highlight():
-	# avoids outline to intersect floor
-	outline.position=Vector3.ZERO
-	outline.global_position.y+=.3
-	outline.visible = true
-
-func dehighlight():
-	outline.visible = false
-	
 func upper_side() -> int:
 	"Returns which dice side is up, or 0 when none is clear"
 	var highest_y := -INF

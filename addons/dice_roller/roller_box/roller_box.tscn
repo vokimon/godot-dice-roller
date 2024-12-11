@@ -42,7 +42,6 @@ shape = SubResource("SphereShape3D_6p0cb")
 transform = Transform3D(-0.70639, -0.33215, -0.625052, -0.706238, 0.389796, 0.591005, 0.0473406, 0.858915, -0.509925, -3.22313, 5.76738, -2.54457)
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.47758, 5.11813, 2.40566)
-visible = false
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.47758, 0.541256, 2.40566)
 omni_range = 34.655
 omni_attenuation = 0.224

@@ -16,8 +16,6 @@ normal_texture = ExtResource("3_itb1g")
 heightmap_texture = ExtResource("2_e47ja")
 
 [sub_resource type="BoxMesh" id="BoxMesh_fxv3q"]
-lightmap_size_hint = Vector2i(24, 36)
-add_uv2 = true
 size = Vector3(2, 2, 2)
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_43f5b"]
@@ -34,9 +32,10 @@ _surfaces = [{
 }]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_23xjn"]
+render_priority = -3
+transparency = 4
 shading_mode = 0
 albedo_color = Color(0.33, 0.720833, 1, 1)
-disable_receive_shadows = true
 
 [node name="Dice" type="RigidBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0789636, 0.0177878)
@@ -50,8 +49,6 @@ metadata/_edit_lock_ = true
 
 [node name="DiceMesh" type="MeshInstance3D" parent="."]
 material_override = SubResource("StandardMaterial3D_a2vue")
-extra_cull_margin = 16384.0
-ignore_occlusion_culling = true
 mesh = SubResource("BoxMesh_fxv3q")
 metadata/_edit_lock_ = true
 
@@ -60,3 +57,13 @@ visible = false
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_43f5b")
 surface_material_override/0 = SubResource("StandardMaterial3D_23xjn")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-0.999844, -3.56928e-10, -0.0176792, -0.00526942, 0.954548, 0.298011, 0.0168756, 0.298058, -0.954399, -1.62503, 2.26442, -4.55637)
+fov = 74.7173
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.03856, 2.49804, -2.76955)
+visible = false
+omni_range = 18.5702
+omni_attenuation = -0.765

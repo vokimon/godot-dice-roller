@@ -20,6 +20,3 @@ func _init():
 	printvar_fromgodot('PROJECT_ICON', "application/config/icon", "icon.svg")
 	var godot_required = ProjectSettings.get_setting('application/config/features')[0]
 	printvar("GODOT_VERSION", godot_required)
-
-
-
