@@ -65,7 +65,7 @@ jobs:
         single_line_var() {
           echo "$1=$2" >> "$GITHUB_ENV"
         }
-        icon="https://raw.githubusercontent.com/${repo}/refs/heads/${branch}/$(echo "$PROJECT_ICON" | sed s.res://..)"
+        icon="https://raw.githubusercontent.com/${repo}/refs/heads/main/$(echo "$PROJECT_ICON" | sed s.res://..)"
         single_line_var PROJECT_ICON "$icon"
         description=$(cat README.md CHANGES.md | sed 's/$/\\n/' | tr -d '\n')
         single_line_var PROJECT_DESCRIPTION "${description}"
