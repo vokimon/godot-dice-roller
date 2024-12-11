@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Dice Roller"
+config/name="Godot Dice Roller (UI Control)"
 config/description="A UI control that rolls 3D dices in a box.
 
 ## Features
