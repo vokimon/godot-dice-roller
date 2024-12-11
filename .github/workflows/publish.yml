@@ -62,11 +62,13 @@ jobs:
         # use tail to remove Godot banner from output
         (./Godot_v4.3-stable_linux.x86_64 --display-driver headless --audio-driver Dummy --quit -s ./tools/project2bashvars.gd | tail -n +3) >> $GITHUB_ENV
         source <(cat $GITHUB_ENV | grep PROJECT_ICON)
-        icon="https://raw.githubusercontent.com/${repo}/refs/heads/${branch}/$(echo "$PROJECT_ICON" | sed s.res://..)"
         single_line_var() {
           echo "$1=$2" >> "$GITHUB_ENV"
         }
+        icon="https://raw.githubusercontent.com/${repo}/refs/heads/${branch}/$(echo "$PROJECT_ICON" | sed s.res://..)"
         single_line_var PROJECT_ICON "$icon"
+        description=$(echo "$PROJECT_DESCRIPTION" | sed 's/$/\\n/' | tr -d '\n')
+        single_line_var PROJECT_DESCRIPTION "${description}"
         echo "Results of data extraction:"
         cat "$GITHUB_ENV"
 
