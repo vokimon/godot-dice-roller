@@ -108,14 +108,15 @@ func _process(_delta):
 	sleeping = true
 	show_face(side)
 
+@onready var outline: Node3D = $DiceMesh/Outline
 func highlight():
-	$DiceMesh/Outline.visible = true
 	# avoids outline to intersect floor
-	$DiceMesh/Outline.position=Vector3.ZERO
-	$DiceMesh/Outline.global_position.y+=.3
+	outline.position=Vector3.ZERO
+	outline.global_position.y+=.3
+	outline.visible = true
 
 func dehighlight():
-	$DiceMesh/Outline.visible = false
+	outline.visible = false
 	
 func upper_side() -> int:
 	"Returns which dice side is up, or 0 when none is clear"
