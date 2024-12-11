@@ -6,19 +6,19 @@
 
 [sub_resource type="Resource" id="Resource_lojf2"]
 script = ExtResource("2_x51pc")
-name = ""
+name = "yellow"
 color = Color(0.980392, 0.854902, 0, 1)
 sides = 6
 
 [sub_resource type="Resource" id="Resource_f0t8j"]
 script = ExtResource("2_x51pc")
-name = ""
+name = "red"
 color = Color(0.980392, 0.0352941, 0.0470588, 1)
 sides = 6
 
 [sub_resource type="Resource" id="Resource_4cw0m"]
 script = ExtResource("2_x51pc")
-name = ""
+name = "purple"
 color = Color(0.576204, 0.527659, 1, 1)
 sides = 6
 
