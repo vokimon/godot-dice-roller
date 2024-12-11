@@ -98,18 +98,25 @@ func _process(_delta):
 	if angular_velocity.length() > 10.:
 		#print("Still rolling: ", angular_velocity)
 		return
+	# Almost stopped but...
 	if position.y > dice_size * .8:
 		return shake("mounted")
 	var side = upper_side()
 	if not side:
 		return shake("tilted")
+
 	print("Dice %s solved [%s] - %.02fs"%([name, side, roll_time]))
 	freeze = true
 	sleeping = true
 	rolling = false
 	roll_finished.emit(side)
+	highlight()
+
+func highlight():
 	$DiceMesh/Outline.visible = true
-	position.y+=.2 # avoids outline to intersect floor
+	# avoids outline to intersect floor
+	$DiceMesh/Outline.position=Vector3.ZERO
+	$DiceMesh/Outline.global_position.y+=.3
 
 func upper_side() -> int:
 	var highest_y := -INF
@@ -145,5 +152,5 @@ func show_face(value):
 	$DiceMesh/Outline.visible = false
 	await tween.finished
 	rolling = false
-	$DiceMesh/Outline.visible = true
+	highlight()
 	roll_finished.emit(value)
