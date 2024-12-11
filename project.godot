@@ -13,23 +13,27 @@ config_version=5
 config/name="Dice Roller"
 config/description="A UI control that rolls 3D dices in a box.
 
-Features
---------
+## Features
 
-- Configurable setup
-   - Dynamic set of dices (6 faces only by now)
-   - Custom colors for each dice
-   - Configurable box size
-- 3 ways to roll:
-   - Physics based rolling (slow but cool)
-   - Turning to a computer generated random value (faster but unnatural)
-   - Turning to a given value (useful when the actual rolling is done remotely)
-- Easy to integrate in your code
-   - Trigger rolling programmatically to buttons or activate shortcuts
-   - A signal notifies the rolling has finished
-   - After rolling you can extract the overall value and the specific values for each dice
-    - Responsive control, it adapts to the space given by the layout adapting the camera to fully see the rolling box floor
-    - Automatically turns the rolling box if the aspect ratio available spacce is inverted the one of the rolling box
+* Configurable setup
+    - Dynamic set of dices (6 faces only by now)
+    - Custom colors for each dice
+    - Configurable box size
+
+* 3 ways to roll:
+    - Physics based rolling (slow but cool)
+    - Turning to a computer generated random value (faster but unnatural)
+    - Turning to a given value (useful when the actual rolling is done remotely)
+
+* Easy to integrate in your code:
+    - Trigger rolling programmatically to buttons or activate shortcuts
+    - A signal notifies the rolling has finished
+    - Then you can extract the overall value or the specific face value for each dice
+
+* Responsive to layouts:
+    - The control adapts to the available space given by the layout
+    - Whichever the resulting size, the camera adapts the zoom to fully see the rolling box floor
+    - Automatically rotates the rolling box if the control aspect ratio is inverse to the one of the box
 "
 config/version="1.0.2"
 run/main_scene="res://examples/dice_roller_example.tscn"

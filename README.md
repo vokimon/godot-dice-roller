@@ -19,7 +19,7 @@ A Godot UI control that rolls 3D dices in a box.
 * Easy to integrate in your code:
     - Trigger rolling programmatically from buttons or shortcuts
     - A signal notifies after the rolling
-    - Then youc can can extract the overall value or the specific face value for each dice
+    - Then you can extract the overall value or the specific face value for each dice
 
 * Responsive to layouts:
     - The control adapts to the available space given by the layout

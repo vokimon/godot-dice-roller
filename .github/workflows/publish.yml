@@ -67,7 +67,7 @@ jobs:
         }
         icon="https://raw.githubusercontent.com/${repo}/refs/heads/${branch}/$(echo "$PROJECT_ICON" | sed s.res://..)"
         single_line_var PROJECT_ICON "$icon"
-        description=$(echo "$PROJECT_DESCRIPTION" | sed 's/$/\\n/' | tr -d '\n')
+        description=$(cat README.md | sed 's/$/\\n/' | tr -d '\n')
         single_line_var PROJECT_DESCRIPTION "${description}"
         echo "Results of data extraction:"
         cat "$GITHUB_ENV"
