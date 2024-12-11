@@ -11,6 +11,7 @@ size = Vector3(2, 2, 2)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a2vue"]
 albedo_texture = ExtResource("2_g0egc")
 normal_enabled = true
+normal_scale = -1.0
 normal_texture = ExtResource("3_itb1g")
 heightmap_texture = ExtResource("2_e47ja")
 
