@@ -109,6 +109,7 @@ func _process(_delta):
 	freeze = true
 	sleeping = true
 	rolling = false
+	show_face(side)
 	roll_finished.emit(side)
 	highlight()
 
@@ -133,9 +134,14 @@ func upper_side() -> int:
 		return 0
 	return highest_side
 
+func quick_roll(value):
+	rolling = true
+
+
 func show_face(value):
 	"""Shows a given face by rotating it up"""
 	if value not in sides: return
+	rolling = true
 	print(name, " ", value)
 	const show_face_animation_time := .3
 	var face_normal = (to_global(sides[value])-global_position).normalized()
