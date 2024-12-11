@@ -35,7 +35,7 @@ config/description="A UI control that rolls 3D dices in a box.
     - Whichever the resulting size, the camera adapts the zoom to fully see the rolling box floor
     - Automatically rotates the rolling box if the control aspect ratio is inverse to the one of the box
 "
-config/version="1.0.2"
+config/version="1.0.3"
 run/main_scene="res://examples/dice_roller_example.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
