@@ -3,16 +3,19 @@ extends Node3D
 class_name DiceRoller
 const DiceScene = preload("../dice/dice.tscn")
 
-@export var dice_definitions: Dictionary = {
+const defaultSet := {
 	'red': {
 		'color': Color.FIREBRICK,
 	},
 	'yellow': {
 		'color': Color.GOLDENROD,
 	},
-}:
+}
+
+@export var dice_set: Array[DiceDef] = []:
 	set(new_value):
-		dice_definitions = new_value
+		print("Updating roller dices")
+		dice_set = new_value
 		reload_dices()
 
 @export var fast_roll := false
@@ -40,6 +43,29 @@ var total_value:=0 :
 			total += result[dice_name]
 		return total
 
+func ensure_any_dice_set():
+	if dice_set:
+		return
+	var new_set: Array[DiceDef] = []
+	for name in defaultSet:
+		var dice = DiceDef.new()
+		dice.name = name
+		dice.color = defaultSet[name].color
+		new_set.append(dice)
+	dice_set = new_set
+
+func ensure_valid_and_unique_dice_names():
+	var used_names: Dictionary = {}
+	for dice in dice_set:
+		var name_prefix := dice.name if dice.name and len(dice.name) else "dice"
+		var dice_name := name_prefix
+		for i in range(len(result)+1, 100):
+			if dice_name not in used_names:
+				break
+			dice_name = name_prefix+"{0}".format([i])
+		used_names[dice_name] = true
+		dice.name = dice_name
+
 func roll():
 	result = {}
 	rolling = true
@@ -60,17 +86,19 @@ func clear_dices():
 
 func reload_dices():
 	clear_dices()
-	for dice_name: String in dice_definitions:
-		add_dice(dice_name, dice_definitions[dice_name].color)
+	ensure_any_dice_set()
+	ensure_valid_and_unique_dice_names()
+	for dice: DiceDef in dice_set:
+		add_dice_escene(dice)
 	reposition_dices()
 
-func add_dice(dice_name, dice_color):
-	var dice = DiceScene.instantiate()
-	dice.name = dice_name
-	dice.dice_color = dice_definitions[dice_name].color
-	dice.roll_finished.connect(_on_finnished_dice_rolling.bind(dice_name))
-	add_child(dice)
-	dices.append(dice)
+func add_dice_escene(dice: DiceDef):
+	var scene = DiceScene.instantiate()
+	scene.name = dice.name
+	scene.dice_color = dice.color
+	scene.roll_finished.connect(_on_finnished_dice_rolling.bind(dice.name))
+	add_child(scene)
+	dices.append(scene)
 
 func reposition_dices():
 	## Positions the dices evenly distributed along the roller
