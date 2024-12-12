@@ -25,15 +25,37 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 1
 
-[node name="ResultLabel" type="Label" parent="Layout"]
+[node name="Labels" type="HFlowContainer" parent="Layout"]
+layout_mode = 2
+
+[node name="ResultLabel" type="Label" parent="Layout/Labels"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
 horizontal_alignment = 1
 
-[node name="RollButton" type="Button" parent="Layout"]
+[node name="DicesLabel" type="Label" parent="Layout/Labels"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
+horizontal_alignment = 1
+
+[node name="Buttons" type="HBoxContainer" parent="Layout"]
+layout_mode = 2
+
+[node name="RollButton" type="Button" parent="Layout/Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
 text = "Roll"
 
+[node name="QuickRollButton" type="Button" parent="Layout/Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Quick Roll"
+
 [connection signal="roll_finnished" from="Layout/DiceRollerControl" to="." method="_on_dice_roller_control_roll_finnished"]
-[connection signal="pressed" from="Layout/RollButton" to="." method="_on_roll_button_pressed"]
+[connection signal="roll_started" from="Layout/DiceRollerControl" to="." method="_on_dice_roller_control_roll_started"]
+[connection signal="pressed" from="Layout/Buttons/RollButton" to="." method="_on_roll_button_pressed"]
+[connection signal="pressed" from="Layout/Buttons/QuickRollButton" to="." method="_on_quick_roll_button_pressed"]

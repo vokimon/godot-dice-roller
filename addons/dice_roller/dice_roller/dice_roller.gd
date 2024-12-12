@@ -35,6 +35,8 @@ var rolling := false
 
 ## Emits the final value once the roll has finished
 signal roll_finnished(value: int)
+## Emits the final value when the roll starts
+signal roll_started()
 
 var total_value:=0 :
 	get:
@@ -72,6 +74,7 @@ func roll():
 	rolling = true
 	for dice in dices:
 		dice.roll()
+	roll_started.emit()
 
 func prepare():
 	if rolling: return
@@ -138,6 +141,7 @@ func quick_roll():
 	for dice in dice_set:
 		values.append(randi_range(1, dice.sides))
 	show_faces(values)
+	roll_started.emit()
 
 func show_faces(faces: Array[int]):
 	"""Shows given faces by rotating them up"""
