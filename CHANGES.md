@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.0.4 (2024-12-13)
+
+- More natural initial arrangement of dices
+- `DiceRollerControl` signal `roll_started`
+- `DiceRollerControl` method `quick_rolling`
+- Example updated to show how to use them
+- Scenes cleanup of uneeded properties
+- Packaging: Added previews and fixed name to match
+
 ## 1.0.3 (2024-12-11)
 
 - Dices set can be defined with control properties
