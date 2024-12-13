@@ -4,11 +4,10 @@
 class_name DiceRollerControl
 extends SubViewportContainer
 
+const dice_roller_scene = preload("../dice_roller/dice_roller.tscn")
 
-@export var dice_set: Array[DiceDef] = [
-]:
+@export var dice_set: Array[DiceDef] = []:
 	set(new_value):
-		print("updating control dices")
 		dice_set = new_value
 		if roller:
 			roller.dice_set = new_value
@@ -18,6 +17,12 @@ extends SubViewportContainer
 		roller_color = new_value
 		if roller:
 			roller.roller_color = new_value
+
+@export var roller_size := Vector3(10, 12, 6):
+	set(new_value):
+		roller_size = new_value
+		if roller:
+			roller.roller_size = new_value
 
 func per_dice_result():
 	print("rooller on result", roller)
@@ -31,20 +36,12 @@ signal roll_started()
 var roller: DiceRoller = null
 var viewport: SubViewport = null
 
-const dice_roller_scene = preload("../dice_roller/dice_roller.tscn")
-
 func _init():
 	stretch = true
 	viewport = SubViewport.new()
 	add_child(viewport)
 	roller = dice_roller_scene.instantiate()
 	viewport.add_child(roller)
-
-func roll():
-	roller.roll()
-
-func quick_roll():
-	roller.quick_roll()
 
 func _ready():
 	roller.roll_finnished.connect(
@@ -55,3 +52,10 @@ func _ready():
 	)
 	roller.dice_set = dice_set
 	roller.roller_color = roller_color
+	roller.roller_size = roller_size
+
+func roll():
+	roller.roll()
+
+func quick_roll():
+	roller.quick_roll()

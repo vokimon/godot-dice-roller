@@ -3,6 +3,9 @@ extends Node3D
 class_name DiceRoller
 const DiceScene = preload("../dice/dice.tscn")
 
+## Margin away from the walls when repositioning
+const margin = 1.0
+const launch_height := Dice.dice_size * 5.0
 const defaultSet := {
 	'red': {
 		'color': Color.FIREBRICK,
@@ -20,17 +23,25 @@ const defaultSet := {
 		dice_set = new_value
 		reload_dices()
 
-const roller_width := 10
-const roller_height := 8
-const launch_height := Dice.dice_size * 5.0
-## Margin away from the walls when repositioning
-const margin = 1.0
 @export var roller_color := Color.DARK_GREEN:
 	set(new_value):
 		roller_color = new_value
 		if $RollerBox/CSGBox3D:
 			$RollerBox/CSGBox3D.material.albedo_color = new_value
 
+@export var roller_size := Vector3(10, 12, 6):
+	set(new_value):
+		roller_size = new_value
+		if $RollerBox/CSGBox3D:
+			$RollerBox.width = new_value.x
+			$RollerBox.height = new_value.y
+			$RollerBox.depth = new_value.z
+			reload_dices()
+
+## Emits the final value once the roll has finished
+signal roll_finnished(value: int)
+## Emits the final value when the roll starts
+signal roll_started()
 
 ## Dices in the roller
 var dices := []
@@ -39,12 +50,11 @@ var result := {}
 ## Wheter the dices are rolling
 var rolling := false
 
-## Emits the final value once the roll has finished
-signal roll_finnished(value: int)
-## Emits the final value when the roll starts
-signal roll_started()
 func _ready() -> void:
 	$RollerBox/CSGBox3D.material.albedo_color = roller_color
+	$RollerBox.width = roller_size.x
+	$RollerBox.height = roller_size.y
+	$RollerBox.depth = roller_size.z
 
 func per_dice_result() -> Dictionary:
 	return result
@@ -133,8 +143,8 @@ func dices_arrangement(ndices: int, width: float, height: float) -> Vector2i:
 
 func reposition_dices():
 	""" Position dices evenly distributed along the roller """
-	const span_x := roller_width - margin * 2
-	const span_z := roller_height - margin * 2
+	var span_x := roller_size.x - margin * 2
+	var span_z := roller_size.z - margin * 2
 	var arrangement: Vector2i = dices_arrangement(dices.size(), span_x, span_x)
 	var cols: int = arrangement.x
 	var rows: int = arrangement.y
