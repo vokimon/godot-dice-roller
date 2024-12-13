@@ -105,14 +105,40 @@ func add_dice_escene(dice: DiceDef):
 	add_child(scene)
 	dices.append(scene)
 
+func dices_arrangement(ndices: int, width: float, height: float) -> Vector2i:
+	""" Given an aspect ratio and a number of dices returns
+	the number of rows and columns to best organize the dices.
+	"""
+	# ndices <= rows * cols =
+	# = ( cols * height / width ) * cols =
+	# = cols *  cols * height / width
+	# cols >= sqrt( ndices * width / height )
+	# column_center = -w/2 + w/cols * (1 + 2*i)/2 = w/2 (-1 + (2*i+1)/cols)
+	var first_cols: int = ceil(sqrt(ndices*width/height))
+	var rows: int = ceil(ndices/float(first_cols))
+	# If we are using the row, fully use it
+	var cols: int = ceil(ndices/float(rows))
+	return Vector2i(cols, rows)
+
 func reposition_dices():
-	## Positions the dices evenly distributed along the roller
-	const span = roller_width - margin * 2
-	var dice_interval = span/2./dices.size()
-	var dice_x = -span/2. + dice_interval
-	for dice in dices:
-		dice.position = Vector3(dice_x, launch_height, 0.0)
-		dice_x += dice_interval*2
+	""" Position dices evenly distributed along the roller """
+	const span_x := roller_width - margin * 2
+	const span_z := roller_height - margin * 2
+	var arrangement: Vector2i = dices_arrangement(dices.size(), span_x, span_x)
+	var cols: int = arrangement.x
+	var rows: int = arrangement.y
+	var last_row_cols: int = dices.size()%cols if dices.size()%cols else  cols
+	print("{0} X {1} {2}".format([cols, rows, last_row_cols]))
+	for i in range(dices.size()):
+		var dice: Dice = dices[i]
+		var col: int = i%cols
+		var row: int = floor(i/cols)
+		# Center last row with less columns
+		var actual_cols = last_row_cols if row == rows-1 else cols
+		var dice_x : float = -span_x/2 + span_x/actual_cols * (0.5 + col)
+		var dice_z : float = -span_z/2 + span_z/rows * (0.5 + row)
+		dice.position = Vector3(dice_x, launch_height, dice_z)
+		dice.original_position = dice.position
 
 func _on_finnished_dice_rolling(number: int, dice_name: String):
 	## One dice communicates has finished its rolling
