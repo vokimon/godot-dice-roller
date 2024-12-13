@@ -27,3 +27,5 @@ A Godot UI control that rolls 3D dices in a box.
     - Automatically rotates the rolling box if the control aspect ratio is inverse to the one of the box
 
 ![Screenshot Portrait](screenshots/example-portrait.png)
+
+
