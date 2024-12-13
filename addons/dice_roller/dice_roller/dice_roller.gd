@@ -15,6 +15,8 @@ const defaultSet := {
 @export var dice_set: Array[DiceDef] = []:
 	set(new_value):
 		print("Updating roller dices")
+		if rolling:
+			await roll_finnished
 		dice_set = new_value
 		reload_dices()
 
