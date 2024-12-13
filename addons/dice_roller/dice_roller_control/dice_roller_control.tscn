@@ -1,7 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://dka188l04khpq"]
+[gd_scene load_steps=7 format=3 uid="uid://dka188l04khpq"]
 
 [ext_resource type="Script" path="res://addons/dice_roller/dice_roller_control/dice_roller_control.gd" id="1_4x3ke"]
-[ext_resource type="PackedScene" uid="uid://cnlssqpge8erk" path="res://addons/dice_roller/dice_roller/dice_roller.tscn" id="2_lyhe4"]
 [ext_resource type="Script" path="res://addons/dice_roller/dice_def.gd" id="2_x51pc"]
 
 [sub_resource type="Resource" id="Resource_lojf2"]
@@ -29,19 +28,9 @@ color = Color(0.980392, 0.921569, 0.843137, 1)
 sides = 6
 
 [node name="DiceRollerControl" type="SubViewportContainer"]
-custom_minimum_size = Vector2(100, 50)
-offset_right = 239.0
-offset_bottom = 128.0
-size_flags_horizontal = 0
+offset_bottom = 48.0
+size_flags_horizontal = 3
 size_flags_vertical = 3
 stretch = true
 script = ExtResource("1_4x3ke")
 dice_set = Array[ExtResource("2_x51pc")]([SubResource("Resource_lojf2"), SubResource("Resource_f0t8j"), SubResource("Resource_4cw0m"), SubResource("Resource_wjykp")])
-
-[node name="SubViewport" type="SubViewport" parent="."]
-handle_input_locally = false
-size = Vector2i(239, 128)
-size_2d_override_stretch = true
-render_target_update_mode = 4
-
-[node name="DiceRoller" parent="SubViewport" instance=ExtResource("2_lyhe4")]

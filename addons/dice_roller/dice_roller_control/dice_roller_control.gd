@@ -11,7 +11,6 @@ extends SubViewportContainer
 		if roller:
 			roller.dice_set = new_value
 
-@onready var roller: DiceRoller = $SubViewport/DiceRoller
 func per_dice_result():
 	print("rooller on result", roller)
 	if not roller:
@@ -21,6 +20,17 @@ func per_dice_result():
 signal roll_finnished(int)
 signal roll_started()
 
+var roller: DiceRoller = null
+var viewport: SubViewport = null
+
+const dice_roller_scene = preload("../dice_roller/dice_roller.tscn")
+
+func _init():
+	stretch = true
+	viewport = SubViewport.new()
+	add_child(viewport)
+	roller = dice_roller_scene.instantiate()
+	viewport.add_child(roller)
 
 func roll():
 	roller.roll()
