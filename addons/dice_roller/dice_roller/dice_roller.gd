@@ -38,6 +38,9 @@ signal roll_finnished(value: int)
 ## Emits the final value when the roll starts
 signal roll_started()
 
+func per_dice_result() -> Dictionary:
+	return result
+
 var total_value:=0 :
 	get:
 		var total := 0

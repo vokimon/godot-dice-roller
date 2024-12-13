@@ -13,8 +13,8 @@ func _on_quick_roll_button_pressed() -> void:
 
 func _on_dice_roller_control_roll_finnished(result: int) -> void:
 	%ResultLabel.text = "Result: %s"%[result]
-	%DicesLabel.text = "%s"%[%DiceRollerControl/SubViewport/DiceRoller.result]
+	%DicesLabel.text = "%s"%[%DiceRollerControl.per_dice_result()]
 
 func _on_dice_roller_control_roll_started() -> void:
 	%ResultLabel.text = "Rolling..."
-	%DicesLabel.text = "%s"%[%DiceRollerControl/SubViewport/DiceRoller.result]
+	%DicesLabel.text = "%s"%[%DiceRollerControl.per_dice_result()]

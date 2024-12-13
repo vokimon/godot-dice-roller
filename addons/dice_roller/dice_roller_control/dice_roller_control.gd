@@ -12,6 +12,11 @@ extends SubViewportContainer
 			roller.dice_set = new_value
 
 @onready var roller: DiceRoller = $SubViewport/DiceRoller
+func per_dice_result():
+	print("rooller on result", roller)
+	if not roller:
+		return {}
+	return roller.per_dice_result()
 
 signal roll_finnished(int)
 signal roll_started()
