@@ -14,8 +14,8 @@
     {
       "preview_id": "1",
       "type": "video",
-      "link": "https://www.youtube.com/watch?v=p_qe9ZKVna4",
-      "thumbnail": "https://img.youtube.com/vi/p_qe9ZKVna4/maxresdefault.jpg"
+      "link": "https://www.youtube.com/watch?v=AD8awHLpFxs",
+      "thumbnail": "https://img.youtube.com/vi/AD8awHLpFxs/maxresdefault.jpg"
     },
     {
       "preview_id": "2",
