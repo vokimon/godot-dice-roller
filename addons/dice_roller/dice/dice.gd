@@ -66,6 +66,7 @@ func stop():
 func roll():
 	"""Roll the dice"""
 	if position.y < dice_size*2: stop()
+	dehighlight()
 	linear_velocity = Vector3(-dice_size, 0, -dice_size)
 	angular_velocity = Vector3.ZERO
 	freeze = false
