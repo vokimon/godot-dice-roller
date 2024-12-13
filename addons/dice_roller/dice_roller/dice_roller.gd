@@ -20,8 +20,6 @@ const defaultSet := {
 		dice_set = new_value
 		reload_dices()
 
-@export var fast_roll := false
-
 const roller_width := 10
 const roller_height := 8
 const launch_height := Dice.dice_size * 5.0
