@@ -13,6 +13,12 @@ extends SubViewportContainer
 		if roller:
 			roller.dice_set = new_value
 
+@export var roller_color: Color = Color.DARK_GREEN:
+	set(new_value):
+		roller_color = new_value
+		if roller:
+			roller.roller_color = new_value
+
 func per_dice_result():
 	print("rooller on result", roller)
 	if not roller:
@@ -48,3 +54,4 @@ func _ready():
 		func(): roll_started.emit()
 	)
 	roller.dice_set = dice_set
+	roller.roller_color = roller_color

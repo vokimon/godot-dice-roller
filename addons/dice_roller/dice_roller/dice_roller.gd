@@ -25,6 +25,12 @@ const roller_height := 8
 const launch_height := Dice.dice_size * 5.0
 ## Margin away from the walls when repositioning
 const margin = 1.0
+@export var roller_color := Color.DARK_GREEN:
+	set(new_value):
+		roller_color = new_value
+		if $RollerBox/CSGBox3D:
+			$RollerBox/CSGBox3D.material.albedo_color = new_value
+
 
 ## Dices in the roller
 var dices := []
@@ -37,6 +43,8 @@ var rolling := false
 signal roll_finnished(value: int)
 ## Emits the final value when the roll starts
 signal roll_started()
+func _ready() -> void:
+	$RollerBox/CSGBox3D.material.albedo_color = roller_color
 
 func per_dice_result() -> Dictionary:
 	return result
