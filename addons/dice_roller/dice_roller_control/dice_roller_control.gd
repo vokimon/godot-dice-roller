@@ -1,7 +1,9 @@
 ## A Control holding an actionable Dice Roller
+@tool
 @icon("./dice_roller_control.svg")
 class_name DiceRollerControl
 extends SubViewportContainer
+
 
 @export var dice_set: Array[DiceDef] = [
 ]:

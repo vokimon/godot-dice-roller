@@ -79,5 +79,11 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "Quick Roll"
 
+[node name="AddDiceButton" type="Button" parent="Layout/Buttons"]
+layout_mode = 2
+text = "Add Dice"
+icon = ExtResource("4_8808l")
+
 [connection signal="pressed" from="Layout/Buttons/RollButton" to="." method="_on_roll_button_pressed"]
 [connection signal="pressed" from="Layout/Buttons/QuickRollButton" to="." method="_on_quick_roll_button_pressed"]
+[connection signal="pressed" from="Layout/Buttons/AddDiceButton" to="." method="_on_add_dice_button_pressed"]
