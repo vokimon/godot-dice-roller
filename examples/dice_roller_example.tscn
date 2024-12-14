@@ -48,7 +48,6 @@ size_flags_vertical = 3
 stretch = true
 script = ExtResource("2_v500g")
 dice_set = Array[ExtResource("3_ro3eo")]([SubResource("Resource_7x16n"), SubResource("Resource_egpxp"), SubResource("Resource_n4ev2")])
-roller_color = Color(0.18922, 0.0517095, 0.141897, 1)
 
 [node name="Labels" type="HFlowContainer" parent="Layout"]
 layout_mode = 2
@@ -57,13 +56,12 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-horizontal_alignment = 1
 
 [node name="DicesLabel" type="Label" parent="Layout/Labels"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-horizontal_alignment = 1
+horizontal_alignment = 2
 
 [node name="Buttons" type="HBoxContainer" parent="Layout"]
 layout_mode = 2
