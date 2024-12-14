@@ -7,7 +7,7 @@ const DiceScene = preload("../dice/dice.tscn")
 ## Margin away from the walls when repositioning
 const margin = 1.0
 const launch_height := Dice.dice_size * 5.0
-const defaultSet := {
+const default_set := {
 	'red': {
 		'color': Color.FIREBRICK,
 	},
@@ -68,14 +68,15 @@ var total_value:=0 :
 
 func ensure_any_dice_set():
 	if dice_set:
-		return
+		return false
 	var new_set: Array[DiceDef] = []
-	for name in defaultSet:
+	for name in default_set:
 		var dice = DiceDef.new()
 		dice.name = name
-		dice.color = defaultSet[name].color
+		dice.color = default_set[name].color
 		new_set.append(dice)
 	dice_set = new_set
+	return true
 
 func ensure_valid_and_unique_dice_names():
 	var used_names: Dictionary = {}
@@ -112,7 +113,7 @@ func clear_dices():
 
 func reload_dices():
 	clear_dices()
-	ensure_any_dice_set()
+	if ensure_any_dice_set(): return
 	ensure_valid_and_unique_dice_names()
 	for dice: DiceDef in dice_set:
 		add_dice_escene(dice)
