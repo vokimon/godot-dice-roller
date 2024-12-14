@@ -16,14 +16,20 @@ const sides = {
 }
 const dice_size := 2.0
 const dice_density := 10.0
+const ANGULAR_VELOCITY_THRESHOLD := 10.
+const LINEAR_VELOCITY_THRESHOLD := 0.2 * dice_size
+## If the center of the dice stops above this elevation it is considered mounted
+const mounted_elevation = 0.8 * dice_size
 ## The minimal angle between faces (different in a d20)
 const face_angle := 90.0
 ## how up must be a face unit vector for the face to be choosen
 var max_tilt := cos(deg_to_rad(face_angle/float(sides.size())))
+
 ## Whether the dice is rolling
 var rolling := false
 ## Accomulated roll time
 var roll_time := 0.0
+
 ## Emited when a roll finishes
 signal roll_finished(int)
 
@@ -90,21 +96,20 @@ func shake(reason: String):
 		mass * 10. * Vector3(0,1,0),
 		dice_size * Vector3(randf_range(-1,1),randf_range(-1,1),randf_range(-1,1)),
 	)
-
 func _process(_delta):
 	if not rolling: return
 	roll_time += _delta
 
 	if freeze: return # non physics movement on progress
 
-	if linear_velocity.length() > dice_size * 0.2:
+	if linear_velocity.length() > LINEAR_VELOCITY_THRESHOLD:
 		#print("Still moving: ", linear_velocity)
 		return
-	if angular_velocity.length() > 10.:
+	if angular_velocity.length() > ANGULAR_VELOCITY_THRESHOLD:
 		#print("Still rolling: ", angular_velocity)
 		return
 	# Almost stopped but...
-	if position.y > dice_size * .8:
+	if position.y > mounted_elevation:
 		return shake("mounted")
 	var side = upper_side()
 	if not side:
