@@ -18,7 +18,6 @@ const defaultSet := {
 
 @export var dice_set: Array[DiceDef] = []:
 	set(new_value):
-		print("Updating roller dices")
 		if rolling:
 			await roll_finnished
 		dice_set = new_value
@@ -150,7 +149,6 @@ func reposition_dices():
 	var cols: int = arrangement.x
 	var rows: int = arrangement.y
 	var last_row_cols: int = dices.size()%cols if dices.size()%cols else  cols
-	print("{0} X {1} {2}".format([cols, rows, last_row_cols]))
 	for i in range(dices.size()):
 		var dice: Dice = dices[i]
 		var col: int = i%cols

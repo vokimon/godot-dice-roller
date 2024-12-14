@@ -123,7 +123,6 @@ func focus_camera() -> void:
 		return
 	var viewport_size: Vector2 = viewport.size
 	var box_size: Vector3 = size()
-	print("viewport changed ", viewport_size)
 	const margin = 0.05
 	var floor_height := box_size.z + margin
 	var floor_width := box_size.x + margin
