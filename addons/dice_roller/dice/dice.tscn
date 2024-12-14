@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://cpqgcxm5wmtqk"]
+[gd_scene load_steps=11 format=4 uid="uid://cpqgcxm5wmtqk"]
 
 [ext_resource type="Script" path="res://addons/dice_roller/dice/dice.gd" id="1_e5duk"]
 [ext_resource type="Texture2D" uid="uid://c3cpwpc7bvv82" path="res://addons/dice_roller/dice/dice_texture.svg" id="2_e47ja"]
@@ -6,9 +6,10 @@
 [ext_resource type="Texture2D" uid="uid://do3xsddtldsbe" path="res://addons/dice_roller/dice/dice_normal_map.png" id="3_itb1g"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_2p4nd"]
+margin = 0.2
 size = Vector3(2, 2, 2)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tvxrr"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nn4r6"]
 albedo_texture = ExtResource("2_g0egc")
 normal_enabled = true
 normal_scale = -1.0
@@ -16,7 +17,6 @@ normal_texture = ExtResource("3_itb1g")
 heightmap_texture = ExtResource("2_e47ja")
 
 [sub_resource type="BoxMesh" id="BoxMesh_fxv3q"]
-size = Vector3(2, 2, 2)
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_43f5b"]
 _surfaces = [{
@@ -37,6 +37,8 @@ transparency = 4
 shading_mode = 0
 albedo_color = Color(0.33, 0.720833, 1, 1)
 
+[sub_resource type="Environment" id="Environment_irsfi"]
+
 [node name="Dice" type="RigidBody3D"]
 inertia = Vector3(80, 80, 80)
 script = ExtResource("1_e5duk")
@@ -46,7 +48,7 @@ shape = SubResource("BoxShape3D_2p4nd")
 metadata/_edit_lock_ = true
 
 [node name="DiceMesh" type="MeshInstance3D" parent="."]
-material_override = SubResource("StandardMaterial3D_tvxrr")
+material_override = SubResource("StandardMaterial3D_nn4r6")
 mesh = SubResource("BoxMesh_fxv3q")
 metadata/_edit_lock_ = true
 
@@ -65,3 +67,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.03856, 2.49804, -2.76955)
 visible = false
 omni_range = 18.5702
 omni_attenuation = -0.765
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_irsfi")
