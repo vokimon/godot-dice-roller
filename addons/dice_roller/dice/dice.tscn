@@ -17,6 +17,7 @@ normal_texture = ExtResource("3_itb1g")
 heightmap_texture = ExtResource("2_e47ja")
 
 [sub_resource type="BoxMesh" id="BoxMesh_fxv3q"]
+size = Vector3(2, 2, 2)
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_43f5b"]
 _surfaces = [{
