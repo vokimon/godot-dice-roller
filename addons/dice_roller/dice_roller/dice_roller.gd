@@ -66,9 +66,7 @@ var total_value:=0 :
 			total += result[dice_name]
 		return total
 
-func ensure_any_dice_set():
-	if dice_set:
-		return false
+func set_default_dice_set():
 	var new_set: Array[DiceDef] = []
 	for name in default_set:
 		var dice = DiceDef.new()
@@ -76,7 +74,6 @@ func ensure_any_dice_set():
 		dice.color = default_set[name].color
 		new_set.append(dice)
 	dice_set = new_set
-	return true
 
 func ensure_valid_and_unique_dice_names():
 	var used_names: Dictionary = {}
@@ -112,8 +109,9 @@ func clear_dices():
 	dices = []
 
 func reload_dices():
+	if not dice_set:
+		return set_default_dice_set()
 	clear_dices()
-	if ensure_any_dice_set(): return
 	ensure_valid_and_unique_dice_names()
 	for dice: DiceDef in dice_set:
 		add_dice_escene(dice)
