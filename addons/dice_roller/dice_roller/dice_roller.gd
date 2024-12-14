@@ -1,3 +1,4 @@
+@tool
 @icon("./dice_roller.svg")
 extends Node3D
 class_name DiceRoller
