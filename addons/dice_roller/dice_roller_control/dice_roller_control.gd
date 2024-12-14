@@ -6,29 +6,29 @@ extends SubViewportContainer
 
 const dice_roller_scene = preload("../dice_roller/dice_roller.tscn")
 
+## The set of dices to be thrown. If empty, a default set will be used.
 @export var dice_set: Array[DiceDef] = []:
 	set(new_value):
 		dice_set = new_value
 		if roller:
 			roller.dice_set = new_value
 
+## Color of the rolling box
 @export var roller_color: Color = Color.DARK_GREEN:
 	set(new_value):
 		roller_color = new_value
 		if roller:
 			roller.roller_color = new_value
 
-@export var roller_size := Vector3(10, 12, 6):
+## Box roller size. x and z are width and depth of the floor, y is the ceiling.
+##
+## Small floors may not let the dices to finnish the roll.
+## Big floors make dices look so small.
+@export var roller_size := Vector3(9, 12, 5):
 	set(new_value):
 		roller_size = new_value
 		if roller:
 			roller.roller_size = new_value
-
-func per_dice_result():
-	print("rooller on result", roller)
-	if not roller:
-		return {}
-	return roller.per_dice_result()
 
 signal roll_finnished(int)
 signal roll_started()
@@ -60,3 +60,8 @@ func roll():
 
 func quick_roll():
 	roller.quick_roll()
+
+func per_dice_result():
+	if not roller:
+		return {}
+	return roller.per_dice_result()

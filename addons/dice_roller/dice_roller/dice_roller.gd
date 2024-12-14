@@ -29,7 +29,7 @@ const default_set := {
 		if $RollerBox/CSGBox3D:
 			$RollerBox/CSGBox3D.material.albedo_color = new_value
 
-@export var roller_size := Vector3(10, 12, 6):
+@export var roller_size := Vector3(9, 12, 5):
 	set(new_value):
 		roller_size = new_value
 		if $RollerBox/CSGBox3D:
