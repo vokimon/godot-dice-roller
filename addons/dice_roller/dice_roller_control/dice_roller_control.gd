@@ -37,13 +37,14 @@ var roller: DiceRoller = null
 var viewport: SubViewport = null
 
 func _init():
+	# Expand the viewport to cover the control
 	stretch = true
+
+func _ready():
 	viewport = SubViewport.new()
 	add_child(viewport)
 	roller = dice_roller_scene.instantiate()
 	viewport.add_child(roller)
-
-func _ready():
 	roller.roll_finnished.connect(
 		func(value): roll_finnished.emit(value)
 	)
