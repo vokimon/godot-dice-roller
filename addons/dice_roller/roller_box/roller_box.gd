@@ -1,4 +1,3 @@
-@tool
 @icon("./roller_box.svg")
 class_name RollerBox
 extends StaticBody3D

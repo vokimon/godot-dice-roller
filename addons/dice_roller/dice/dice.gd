@@ -1,4 +1,3 @@
-@tool
 @icon("./dice-6.svg")
 class_name Dice
 extends RigidBody3D
