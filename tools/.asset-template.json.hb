@@ -12,18 +12,21 @@
   "icon_url": "{{ env.PROJECT_ICON }}",
   "previews": [
     {
+      "operation": "insert",
       "preview_id": "1",
       "type": "video",
       "link": "https://www.youtube.com/watch?v=AD8awHLpFxs",
       "thumbnail": "https://img.youtube.com/vi/AD8awHLpFxs/maxresdefault.jpg"
     },
     {
+      "operation": "insert",
       "preview_id": "2",
       "type": "image",
       "link": "https://raw.githubusercontent.com/vokimon/godot-dice-roller/refs/heads/main/screenshots/example-landscape.png",
       "thumbnail": "https://raw.githubusercontent.com/vokimon/godot-dice-roller/refs/heads/main/screenshots/example-landscape-thumb.jpg"
     },
     {
+      "operation": "insert",
       "preview_id": "3",
       "type": "image",
       "link": "https://raw.githubusercontent.com/vokimon/godot-dice-roller/refs/heads/main/screenshots/example-portrait.png",

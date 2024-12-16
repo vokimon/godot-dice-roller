@@ -78,3 +78,4 @@ jobs:
         username: ${{ secrets.ASSET_STORE_USER }}
         password: ${{ secrets.ASSET_STORE_PASSWORD }}
         assetId: ${{ secrets.ASSET_STORE_ASSET_ID }}
+		assetTemplate: tools/.asset-template.json.hb
