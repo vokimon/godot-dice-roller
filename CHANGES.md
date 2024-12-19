@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.0.5 (2024-12-19)
+
+- ✨ DiceRollerControl can be created without instantiating
+     the scene, just by creating selecting the node type.
+- ✨ Expose roller attributes in Control (box size and color)
+- ✨ Method `per_dice_result` returns the value of each dice
+- ✨ Example: New button to add dices interactivelly
+- 💄 Added Environment to have ambient light
+- 🐛 Fix: rolling after fastrolling kept the highlight
+- 🐛 Fix: avoid setting dices while rolling
+- 🏗️ Removed non essential files from the package
+
 ## 1.0.4 (2024-12-13)
 
 - More natural initial arrangement of dices
