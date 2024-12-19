@@ -7,9 +7,9 @@
 - ✨ Expose roller attributes in Control (box size and color)
 - ✨ Method `per_dice_result` returns the value of each dice
 - ✨ Example: New button to add dices interactivelly
-- 💄 Added Environment to have ambient light
+- 💄 Added Environment with ambient light for more natural look
 - 🐛 Fix: rolling after fastrolling kept the highlight
-- 🐛 Fix: avoid setting dices while rolling
+- 🐛 Fix: avoid changing the dice set while rolling
 - 🏗️ Removed non essential files from the package
 
 ## 1.0.4 (2024-12-13)
