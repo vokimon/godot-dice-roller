@@ -16,3 +16,6 @@ mono_crash.*.json
 
 # vim
 .*.sw?
+
+# config
+.env
