@@ -1,5 +1,4 @@
 asset_id: '3530'
-edit_id: '14939'
 repo_hosting: GitHub
 repo: vokimon/godot-dice-roller
 branch: main
@@ -7,8 +6,10 @@ category: "1" # 2D Tools
 project_license: AGPLv3
 previews:
 - youtube: AD8awHLpFxs
+
 - repoimage: /screenshots/example-landscape.png
   repothumb: /screenshots/example-landscape-thumb.jpg
+
 - repoimage: /screenshots/example-portrait.png
   repothumb: /screenshots/example-portrait-thumb.jpg
 

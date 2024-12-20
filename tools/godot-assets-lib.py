@@ -140,9 +140,13 @@ class Api:
 		self.token = r['token']
 
 	def _process_response(self, response):
-		print(response.text)
+		#print(response.text)
 		response.raise_for_status()
-		return response.json()
+		try:
+			return response.json()
+		except:
+			print(response.text)
+			raise
 
 	def post(self, url, data={}, *args, **kwds):
 		if hasattr(self, 'token'):
@@ -171,7 +175,6 @@ class Config:
 	repo_hosting: str = 'GitHub'
 	previews: list[dict] = field(default_factory=list)
 	description_files: list[str] = field(default_factory=list)
-	edit_id: str = ''
 
 	project_name = from_project('project_name')
 	project_version = from_project('project_version')
@@ -201,7 +204,6 @@ class Config:
 
 
 config_yaml = yaml.safe_load(Path('tools/assetlib.yaml').read_text())
-print(config_yaml)
 config = Config(**config_yaml)
 
 api = Api()
@@ -210,8 +212,17 @@ api.login(username, password)
 result = api.get('asset/edit', params=dict(
 	asset=3530,
 	status='new',
+	version_string=config.project_version,
 ))
-print(result)
+
+edit_ids = [
+	p['edit_id']
+	for p in result.get('result')
+	if p['version_string'] == config.project_version
+]
+if edit_ids:
+	config.edit_id = max(edit_ids)
+	print(f"Detected pending edit {config.edit_id} for version {config.project_version}. Modifiying it.")
 
 resource = (
 	f'asset/edit/{config.edit_id}'
@@ -219,12 +230,9 @@ resource = (
 	f'asset/{config.asset_id}'
 )
 
-
 old_data = api.get(resource)
 old_previews = old_data.get('previews', [])
 previews = previews_edit(config.previews, old_previews, config)
-
-print(previews)
 
 data = {
     "title": config.project_name,
@@ -248,5 +256,5 @@ print("DATA", data)
 #data['previews'] = []
 
 result = api.post(resource, data=data)
-#print(result)
+print(result)
 
