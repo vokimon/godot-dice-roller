@@ -15,8 +15,7 @@ def main():
 	username = os.environ.get('ASSET_STORE_USER')
 	password = os.environ.get('ASSET_STORE_PASSWORD')
 
-	config_yaml = yaml.safe_load(Path('tools/assetlib.yaml').read_text())
-	config = Config(**config_yaml)
+	config = Config.from_file('tools/assetlib.yaml')
 
 	api = Api()
 	api.login(username, password)
@@ -142,6 +141,11 @@ class Config:
 		if not description:
 			description = self.config_description
 		return description
+
+	@classmethod
+	def from_file(cls, filename)
+		config_yaml = yaml.safe_load(Path(filename).read_text())
+		config = cls(**config_yaml)
 
 def get_git_revision_hash() -> str:
     return subprocess.check_output(['git', 'rev-parse', 'HEAD']).decode('ascii').strip()
