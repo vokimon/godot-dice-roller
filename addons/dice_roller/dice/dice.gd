@@ -13,6 +13,14 @@ const sides = {
 	5: Vector3.BACK,
 	6: Vector3.RIGHT,
 }
+const highlight_rotations = {
+	1: PI/2.0*Vector3.BACK,
+	2: PI/2.0*Vector3.LEFT,
+	3: PI*Vector3.LEFT,
+	4: Vector3.ZERO,
+	5: PI/2.0*Vector3.RIGHT,
+	6: PI/2.0*Vector3.FORWARD,
+}
 const dice_size := 2.0
 const dice_density := 10.0
 const ANGULAR_VELOCITY_THRESHOLD := 10.
@@ -32,16 +40,6 @@ var roll_time := 0.0
 ## Emited when a roll finishes
 signal roll_finished(int)
 
-@onready var outline: Node3D = $DiceMesh/Outline
-func highlight():
-	# avoids outline to intersect floor
-	outline.global_position.y+=.3
-	outline.visible = true
-
-func dehighlight():
-	outline.position=Vector3.ZERO
-	outline.visible = false
-	
 func _init():
 	continuous_cd = false
 	can_sleep = true
@@ -95,6 +93,7 @@ func shake(reason: String):
 		mass * 10. * Vector3(0,1,0),
 		dice_size * Vector3(randf_range(-1,1),randf_range(-1,1),randf_range(-1,1)),
 	)
+
 func _process(_delta):
 	if not rolling: return
 	roll_time += _delta
@@ -161,3 +160,15 @@ func show_face(value):
 	rolling = false
 	highlight()
 	roll_finished.emit(value)
+
+
+@onready var highlight_face : Node3D = $DiceMesh/FaceHighligth
+
+func highlight():
+	var side: int = upper_side()
+	highlight_face.rotation = highlight_rotations[side]
+	highlight_face.visible = true
+
+func dehighlight():
+	highlight_face.visible = false
+	
