@@ -22,7 +22,7 @@ def main():
 	api.login(username, password)
 
 	result = api.get('asset/edit', params=dict(
-		asset=3530,
+		asset=config.asset_id,
 		status='new',
 		version_string=config.project_version,
 	))
