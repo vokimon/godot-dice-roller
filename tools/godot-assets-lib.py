@@ -9,12 +9,6 @@ import yaml
 from dataclasses import dataclass, field
 
 
-# Load secrets from environment or .env file
-load_dotenv('.env')
-username = os.environ.get('ASSET_STORE_USER')
-password = os.environ.get('ASSET_STORE_PASSWORD')
-
-
 def get_git_revision_hash() -> str:
     return subprocess.check_output(['git', 'rev-parse', 'HEAD']).decode('ascii').strip()
 
@@ -202,59 +196,68 @@ class Config:
 			description = self.config_description
 		return description
 
+def main():
 
-config_yaml = yaml.safe_load(Path('tools/assetlib.yaml').read_text())
-config = Config(**config_yaml)
+	# Load secrets from environment or .env file
+	load_dotenv('.env')
+	username = os.environ.get('ASSET_STORE_USER')
+	password = os.environ.get('ASSET_STORE_PASSWORD')
 
-api = Api()
-api.login(username, password)
+	config_yaml = yaml.safe_load(Path('tools/assetlib.yaml').read_text())
+	config = Config(**config_yaml)
 
-result = api.get('asset/edit', params=dict(
-	asset=3530,
-	status='new',
-	version_string=config.project_version,
-))
+	api = Api()
+	api.login(username, password)
 
-edit_ids = [
-	p['edit_id']
-	for p in result.get('result')
-	if p['version_string'] == config.project_version
-]
-if edit_ids:
-	config.edit_id = max(edit_ids)
-	print(f"Detected pending edit {config.edit_id} for version {config.project_version}. Modifiying it.")
+	result = api.get('asset/edit', params=dict(
+		asset=3530,
+		status='new',
+		version_string=config.project_version,
+	))
 
-resource = (
-	f'asset/edit/{config.edit_id}'
-	if config.edit_id else
-	f'asset/{config.asset_id}'
-)
+	edit_ids = [
+		p['edit_id']
+		for p in result.get('result')
+		if p['version_string'] == config.project_version
+	]
+	if edit_ids:
+		config.edit_id = max(edit_ids)
+		print(f"Detected pending edit {config.edit_id} for version {config.project_version}. Modifiying it.")
 
-old_data = api.get(resource)
-old_previews = old_data.get('previews', [])
-previews = previews_edit(config.previews, old_previews, config)
+	resource = (
+		f'asset/edit/{config.edit_id}'
+		if config.edit_id else
+		f'asset/{config.asset_id}'
+	)
 
-data = {
-    "title": config.project_name,
-    "description": config.description,
-    "category_id": config.category,
-    "godot_version": config.godot_version,
-    "version_string": config.project_version,
-    "cost": config.project_license,
-    "download_provider": config.repo_hosting,
-    "download_commit": config.git_hash,
-    "download_hash": "", # deprecated
-    "browse_url": f"{config.repo_url}",
-    "issues_url": f"{config.repo_url}/issues",
-    "icon_url": f"{config.repo_raw}/icon.svg",
-	"previews": previews,
-}
+	old_data = api.get(resource)
+	old_previews = old_data.get('previews', [])
+	previews = previews_edit(config.previews, old_previews, config)
 
-print("DATA", data)
+	data = {
+		"title": config.project_name,
+		"description": config.description,
+		"category_id": config.category,
+		"godot_version": config.godot_version,
+		"version_string": config.project_version,
+		"cost": config.project_license,
+		"download_provider": config.repo_hosting,
+		"download_commit": config.git_hash,
+		"download_hash": "", # deprecated
+		"browse_url": f"{config.repo_url}",
+		"issues_url": f"{config.repo_url}/issues",
+		"icon_url": f"{config.repo_raw}/icon.svg",
+		"previews": previews,
+	}
 
-# TODO: previews not working yet
-#data['previews'] = []
+	print("SENT DATA:\n", yaml.dump(data))
 
-result = api.post(resource, data=data)
-print(result)
+	# TODO: previews not working yet
+	#data['previews'] = []
+
+	result = api.post(resource, data=data)
+	print("RESULT:", result)
+
+if __name__ == '__main__':
+	main()
 
