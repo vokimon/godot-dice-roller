@@ -58,7 +58,7 @@ def main():
 	print(f"POST DATA to {api.base}{resource}:\n{yaml.dump(data)}")
 
 	# TODO: previews not working yet
-	#data['previews'] = []
+	data['previews'] = []
 
 	result = api.post(resource, data=data)
 	print("RESULT:", result)

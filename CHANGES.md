@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.0 (2024-12-23)
+
+- ✨ API stabilized. From now on, api changes will imply
+  major and minor version changes following semantic versioning.
+- 🐛 Highlights without artifacts
+- 🔧 New script to upload to the asset lib using project metadata
+
 ## 1.0.5 (2024-12-19)
 
 - ✨ DiceRollerControl can be created without instantiating
