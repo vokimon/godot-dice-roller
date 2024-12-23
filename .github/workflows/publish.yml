@@ -72,10 +72,21 @@ jobs:
         echo "Results of data extraction:"
         cat "$GITHUB_ENV"
 
-    - name: Godot Asset Lib
+    - name: Godot Asset Lib (based on external action)
+      if: false
       uses: deep-entertainment/godot-asset-lib-action@main
       with:
         username: ${{ secrets.ASSET_STORE_USER }}
         password: ${{ secrets.ASSET_STORE_PASSWORD }}
         assetId: ${{ secrets.ASSET_STORE_ASSET_ID }}
         assetTemplate: tools/.asset-template.json.hb
+
+    - name: Godot Asset Lib (based on my script)
+      shell: bash
+      run: |
+        echo "ASSET_STORE_USER=${{ secrets.ASSET_STORE_USER }}" >> .env
+        echo "ASSET_STORE_PASSWORD=${{ secrets.ASSET_STORE_PASSWORD }}" >> .env
+        pip install requests
+        python tools/godot-asset-lib.py
+
+# vim: et sw=2 ts=2
