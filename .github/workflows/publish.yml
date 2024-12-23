@@ -19,13 +19,13 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    - uses: actions/setup-python@v2
-      with:
-        python-version: 3
+    #- uses: actions/setup-python@v2
+    #  with:
+    #    python-version: 3
 
-    - name: Install dependencies
-      run: |
-        sudo apt install jq jc
+    #- name: Install dependencies
+    #  run: |
+    #    sudo apt install jq jc
 
     # NOT WORKING: godot project is not a ini file as jc understands it
     - name: Extract Godot project info
@@ -56,6 +56,7 @@ jobs:
         cat "$GITHUB_ENV"
 
     - name: Extract Godot project info (using Godot itself)
+      if: false
       shell: bash
       run: |
         branch=${{ github.ref_name }}
@@ -85,12 +86,12 @@ jobs:
         assetId: ${{ secrets.ASSET_STORE_ASSET_ID }}
         assetTemplate: tools/.asset-template.json.hb
 
-    - name: Godot Asset Lib (based on my script)
+    - name: Godot Asset Lib Upload
       shell: bash
       run: |
         echo "GODOT_ASSET_LIB_USER=${{ secrets.GODOT_ASSET_LIB_USER }}" >> .env
         echo "GODOT_ASSET_LIB_PASSWORD=${{ secrets.GODOT_ASSET_LIB_PASSWORD }}" >> .env
-        pip install godot-asset-library-client
+        pip install --user godot-asset-library-client
         godot-asset-library-client tools/assetlib.yaml --do
 
 # vim: et sw=2 ts=2
