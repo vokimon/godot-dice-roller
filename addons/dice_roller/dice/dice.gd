@@ -13,14 +13,6 @@ const sides = {
 	5: Vector3.BACK,
 	6: Vector3.RIGHT,
 }
-const highlight_rotations = {
-	1: PI/2.0*Vector3.BACK,
-	2: PI/2.0*Vector3.LEFT,
-	3: PI*Vector3.LEFT,
-	4: Vector3.ZERO,
-	5: PI/2.0*Vector3.RIGHT,
-	6: PI/2.0*Vector3.FORWARD,
-}
 const dice_size := 2.0
 const dice_density := 10.0
 const ANGULAR_VELOCITY_THRESHOLD := 10.
@@ -163,6 +155,15 @@ func show_face(value):
 
 
 @onready var highlight_face : Node3D = $DiceMesh/FaceHighligth
+
+const highlight_rotations = {
+	1: PI/2.0*Vector3.BACK,
+	2: PI/2.0*Vector3.LEFT,
+	3: PI*Vector3.LEFT,
+	4: Vector3.ZERO,
+	5: PI/2.0*Vector3.RIGHT,
+	6: PI/2.0*Vector3.FORWARD,
+}
 
 func highlight():
 	var side: int = upper_side()
