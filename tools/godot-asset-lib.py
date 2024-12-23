@@ -20,19 +20,13 @@ def main():
 	api = Api()
 	api.login(username, password)
 
-	result = api.get('asset/edit', params=dict(
-		asset=config.asset_id,
-		status='new',
-		version_string=config.project_version,
-	))
+	edit_id = api.pending_version_edit(
+		asset_id = config.asset_id,
+		version_string = config.project_version,
+	)
 
-	edit_ids = [
-		p['edit_id']
-		for p in result.get('result')
-		if p['version_string'] == config.project_version
-	]
-	if edit_ids:
-		config.edit_id = max(edit_ids)
+	config.edit_id = edit_id
+	if edit_id:
 		print(f"Detected pending edit {config.edit_id} for version {config.project_version}. Modifiying it.")
 
 	resource = (
@@ -41,7 +35,7 @@ def main():
 		f'asset/{config.asset_id}'
 	)
 
-	old_data = api.get(resource)
+	old_data = api.get(f'asset/{config.asset_id}')
 	old_previews = old_data.get('previews', [])
 	previews = previews_edit(config.previews, old_previews, config)
 
@@ -61,7 +55,7 @@ def main():
 		"previews": previews,
 	}
 
-	print("SENT DATA:\n", yaml.dump(data))
+	print(f"POST DATA to {api.base}{resource}:\n{yaml.dump(data)}")
 
 	# TODO: previews not working yet
 	#data['previews'] = []
@@ -105,6 +99,40 @@ class Api:
 			*args, **kwds)
 		return self._process_response(response)
 
+	def pending_version_edit(self, asset_id, version_string):
+		"""
+		Returns the last pending edit for the current version or None.
+		"""
+		result = self.get('asset/edit', params=dict(
+			asset=asset_id,
+			status='new',
+			version_string=version_string,
+		))
+
+		edit_ids = [
+			p['edit_id']
+			for p in result.get('result')
+			if p['version_string'] == version_string
+		]
+		if edit_ids:
+			return max(edit_ids)
+
+def get_git_revision_hash() -> str:
+    return subprocess.check_output(['git', 'rev-parse', 'HEAD']).decode('ascii').strip()
+
+def from_project(field):
+	# TODO: This is somewhat fragile
+	patterns = dict(
+		project_name = r'config/name="([^"]+)"',
+		project_version = r'config/version="([^"]+)"',
+		description = r'config/description="([^"]+)"',
+		godot_version = r'config/features=PackedStringArray[(]"([^"]+)"',
+		icon = r'config/icon="res:/([^"]+)"',
+	)
+	pattern = patterns[field]
+	project_content = Path('project.godot').read_text()
+	return re.search(pattern, project_content).group(1)
+
 @dataclass
 class Config:
 	asset_id: str
@@ -143,12 +171,9 @@ class Config:
 		return description
 
 	@classmethod
-	def from_file(cls, filename)
+	def from_file(cls, filename):
 		config_yaml = yaml.safe_load(Path(filename).read_text())
-		config = cls(**config_yaml)
-
-def get_git_revision_hash() -> str:
-    return subprocess.check_output(['git', 'rev-parse', 'HEAD']).decode('ascii').strip()
+		return cls(**config_yaml)
 
 def remove_emojis(description: str):
 	for emoji in "✨🐛🏗🧹🔧📝♻️💄":
@@ -161,18 +186,17 @@ def remove_md_image_lines(description: str) -> str:
 		if not line.startswith("![")
 	))
 
-def from_project(field):
-	# TODO: This is somewhat fragile
-	patterns = dict(
-		project_name = r'config/name="([^"]+)"',
-		project_version = r'config/version="([^"]+)"',
-		description = r'config/description="([^"]+)"',
-		godot_version = r'config/features=PackedStringArray[(]"([^"]+)"',
-		icon = r'config/icon="res:/([^"]+)"',
-	)
-	pattern = patterns[field]
-	project_content = Path('project.godot').read_text()
-	return re.search(pattern, project_content).group(1)
+def previews_edit(previews, old_previews, config):
+	previews = [
+		enhance_preview(p, config)
+		for p in previews
+	]
+	previews = [
+		preview_action(p, old_previews)
+		for p in previews
+	] 
+	previews += to_remove_previews(previews, old_previews)
+	return previews
 
 def enhance_preview(preview, context):
 	"""
@@ -208,14 +232,6 @@ def enhance_preview(preview, context):
 		)
 	return preview
 
-def previews_edit(previews, old_previews, config):
-	previews = [
-		preview_action(enhance_preview(short, config), old_previews)
-		for short in previews
-	] 
-	previews += to_remove_previews(previews, old_previews)
-	return previews
-
 def preview_action(preview, old_previews):
 	"""
 	Turns a preview in metadata into an action to perform
@@ -230,7 +246,7 @@ def preview_action(preview, old_previews):
 			continue
 		return dict(
 			preview,
-			preview_id=old['preview_id'],
+			edit_preview_id=old['preview_id'],
 			operation='update',
 			enabled=True,
 		)
@@ -238,7 +254,6 @@ def preview_action(preview, old_previews):
 	return dict(
 		preview,
 		operation='insert',
-		preview_id=None,
 		enabled=True,
 	)
 
@@ -263,4 +278,5 @@ def to_remove_previews(previews, old_previews):
 
 if __name__ == '__main__':
 	main()
+
 
