@@ -86,7 +86,7 @@ jobs:
       run: |
         echo "ASSET_STORE_USER=${{ secrets.ASSET_STORE_USER }}" >> .env
         echo "ASSET_STORE_PASSWORD=${{ secrets.ASSET_STORE_PASSWORD }}" >> .env
-        pip install requests
+        pip install requests dotenv
         python tools/godot-asset-lib.py
 
 # vim: et sw=2 ts=2
