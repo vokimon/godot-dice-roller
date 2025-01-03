@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.1 (2025-01-03)
+
+- ✨ Cleaner installs
+	- screenshots and build files excluded from package
+	- examples moved to `examples/dice_roller/` for cleaner
+	  merge in user's project along with other plugins.
+
 ## 1.1.0 (2024-12-23)
 
 - ✨ API stabilized. From now on, api changes will imply
