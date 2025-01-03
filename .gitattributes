@@ -1,2 +1,3 @@
 tools/ export-ignore
-.git*
+.git* export-ignore
+screenshots/ export-ignore
