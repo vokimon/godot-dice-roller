@@ -1,1 +1,2 @@
 tools/ export-ignore
+.git*
