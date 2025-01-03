@@ -13,13 +13,9 @@ config_version=5
 config/name="Godot Dice Roller (UI Control)"
 config/description="A UI control that rolls 3D dices in a box"
 config/version="1.1.0"
-run/main_scene="res://examples/dice_roller_example.tscn"
+run/main_scene="res://examples/dice_roler/dice_roller_example.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
-
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/dice_roller/plugin.cfg")
 
 [rendering]
 

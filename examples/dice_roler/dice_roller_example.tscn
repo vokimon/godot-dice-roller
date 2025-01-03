@@ -1,10 +1,10 @@
 [gd_scene load_steps=9 format=3 uid="uid://rcpqfanm0w6q"]
 
-[ext_resource type="Script" path="res://examples/dice_roller_example.gd" id="1_2c8eh"]
+[ext_resource type="Script" path="res://examples/dice_roler/dice_roller_example.gd" id="1_2c8eh"]
 [ext_resource type="Script" path="res://addons/dice_roller/dice_roller_control/dice_roller_control.gd" id="2_v500g"]
 [ext_resource type="Script" path="res://addons/dice_roller/dice_def.gd" id="3_ro3eo"]
 [ext_resource type="Texture2D" uid="uid://bbettxwvmopka" path="res://addons/dice_roller/dice/dice-6.svg" id="4_8808l"]
-[ext_resource type="PackedScene" uid="uid://cd7mnbjd262j7" path="res://examples/new_dice_dialog.tscn" id="5_osnus"]
+[ext_resource type="PackedScene" uid="uid://cd7mnbjd262j7" path="res://examples/dice_roler/new_dice_dialog.tscn" id="5_osnus"]
 
 [sub_resource type="Resource" id="Resource_7x16n"]
 script = ExtResource("3_ro3eo")

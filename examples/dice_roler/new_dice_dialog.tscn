@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cd7mnbjd262j7"]
 
-[ext_resource type="Script" path="res://examples/new_dice_dialog.gd" id="1_we3df"]
+[ext_resource type="Script" path="res://examples/dice_roler/new_dice_dialog.gd" id="1_we3df"]
 
 [node name="NewDiceDialog" type="ConfirmationDialog"]
 title = "Add a new dice"
