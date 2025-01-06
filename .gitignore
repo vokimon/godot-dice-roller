@@ -19,3 +19,11 @@ mono_crash.*.json
 
 # config
 .env
+
+# Godot external addons
+gdUnit4
+
+# Blender
+*.blend1
+
+
