@@ -6,6 +6,7 @@ extends ConfirmationDialog
 @export var dice_faces := 6
 
 const face6_texture : Texture2D = preload("res://addons/dice_roller/dice/d6_dice/d6_dice_icon.svg")
+const face4_texture : Texture2D = preload("res://addons/dice_roller/dice/d4_dice/dice4-icon.svg")
 
 func _ready() -> void:
 	pass
@@ -14,7 +15,7 @@ func _on_about_to_popup() -> void:
 	var face_select: ItemList = $VBoxContainer/GridContainer/SidesEdit
 	face_select.clear()
 	face_select.add_item("6", face6_texture, true)
-	#face_select.add_item("4", face6_texture, false)
+	face_select.add_item("4", face4_texture, true)
 	face_select.select(0)
 	$VBoxContainer/GridContainer/ColorEdit.color = Color.ANTIQUE_WHITE
 	$VBoxContainer/GridContainer/NameEdit.text = "dice"

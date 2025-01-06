@@ -22,7 +22,7 @@ sides = 6
 script = ExtResource("3_ro3eo")
 name = "yellow"
 color = Color(0.980392, 0.764706, 0, 1)
-sides = 6
+sides = 4
 
 [node name="DiceRollerExample" type="Control"]
 layout_mode = 3

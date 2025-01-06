@@ -4,4 +4,4 @@ extends Resource
 
 @export var name: String
 @export var color: Color = Color.ANTIQUE_WHITE
-@export_range(6,6) var sides: int = 6
+@export_enum("D6:6", "D4:4") var sides = 6

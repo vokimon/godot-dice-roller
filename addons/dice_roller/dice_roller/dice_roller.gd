@@ -1,7 +1,10 @@
 @icon("./dice_roller.svg")
 extends Node3D
 class_name DiceRoller
-const DiceScene = preload("../dice/d6_dice/d6_dice.tscn")
+const DiceScenes = {
+	6: preload("../dice/d6_dice/d6_dice.tscn"),
+	4: preload("../dice/d4_dice/d4_dice.tscn"),
+}
 
 ## Margin away from the walls when repositioning
 const margin = 1.0
@@ -117,7 +120,10 @@ func reload_dices():
 	reposition_dices()
 
 func add_dice_escene(dice: DiceDef):
-	var scene = DiceScene.instantiate()
+	var packed_scene: PackedScene = DiceScenes[dice.sides] as PackedScene
+	if not packed_scene:
+		packed_scene = DiceScenes[6]
+	var scene = packed_scene.instantiate()
 	scene.name = dice.name
 	scene.dice_color = dice.color
 	scene.roll_finished.connect(_on_finnished_dice_rolling.bind(dice.name))
@@ -148,7 +154,7 @@ func reposition_dices():
 	var rows: int = arrangement.y
 	var last_row_cols: int = dices.size()%cols if dices.size()%cols else  cols
 	for i in range(dices.size()):
-		var dice: Dice = dices[i]
+		var dice = dices[i] # TODO: use polymorfism
 		var col: int = i%cols
 		var row: int = floor(i/cols)
 		# Center last row with less columns
