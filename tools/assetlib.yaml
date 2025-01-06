@@ -10,6 +10,9 @@ previews:
 - repoimage: /screenshots/example-portrait.png
   repothumb: /screenshots/example-portrait-thumb.jpg
 
+- repoimage: /screenshots/example-editor.png
+  repothumb: /screenshots/example-editor-thumb.jpg
+
 description_files:
 - README.md
 - CHANGES.md
