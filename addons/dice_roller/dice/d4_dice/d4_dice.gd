@@ -1,4 +1,4 @@
-@icon("./dice4-icon.svg")
+@icon("./d4_dice.svg")
 class_name D4Dice
 extends RigidBody3D
 
