@@ -46,8 +46,8 @@ func _ready():
 	collider_shape.points = collider_points
 	#collider_shape.size = dice_size * Vector3.ONE
 	collider_shape.margin = dice_size * 0.1
-	$D4.material_override = $D4.material_override.duplicate()
-	$D4.material_override.albedo_color = dice_color
+	$DiceMesh.material_override = $DiceMesh.material_override.duplicate()
+	$DiceMesh.material_override.albedo_color = dice_color
 	stop()
 
 func stop():

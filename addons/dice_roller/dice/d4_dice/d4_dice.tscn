@@ -6,21 +6,21 @@
 [ext_resource type="Shape3D" uid="uid://dq88br5weip8v" path="res://addons/dice_roller/dice/d4_dice/d4_bb.tres" id="3_5pswj"]
 [ext_resource type="Material" uid="uid://df72api08qe5j" path="res://addons/dice_roller/dice/highlight_material.tres" id="5_oqvjk"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_trcom"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7bvci"]
 albedo_texture = ExtResource("2_1icuy")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kxnbn"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_fuovb"]
 material = ExtResource("5_oqvjk")
 size = Vector2(2, 2)
 
-[sub_resource type="PrismMesh" id="PrismMesh_t4srd"]
-size = Vector3(2, 2, 0.1)
-
 [node name="D4Dice" instance=ExtResource("1_0fvi0")]
 script = ExtResource("2_yq2ad")
 
-[node name="D4" parent="." index="0"]
-material_override = SubResource("StandardMaterial3D_trcom")
+[node name="DiceMesh" parent="." index="0"]
+material_override = SubResource("StandardMaterial3D_7bvci")
+surface_material_override/0 = SubResource("StandardMaterial3D_kxnbn")
 
 [node name="Collider" type="CollisionShape3D" parent="." index="1"]
 shape = ExtResource("3_5pswj")
@@ -29,6 +29,3 @@ shape = ExtResource("3_5pswj")
 transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 0, 0, 0)
 cast_shadow = 0
 mesh = SubResource("QuadMesh_fuovb")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="FaceHighligth" index="0"]
-mesh = SubResource("PrismMesh_t4srd")
