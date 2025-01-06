@@ -7,9 +7,9 @@ A Godot UI control that rolls 3D dices in a box.
 ## Features
 
 * Configurable setup:
-    - Dynamic set of dices (all dices of 6 faces, by now)
+    - Dynamic set of dices (d6 and d4 supported)
     - Custom colors for each dice
-    - Configurable box size
+    - Configurable box size and color
 
 * 3 ways to roll:
     - Physics based dice rolling (slow but cool)
@@ -27,5 +27,6 @@ A Godot UI control that rolls 3D dices in a box.
     - Automatically rotates the rolling box if the control aspect ratio is inverse to the one of the box
 
 ![Screenshot Portrait](screenshots/example-portrait.png)
+![Screenshot Dice set editor](screenshots/example-editor.png)
 
 

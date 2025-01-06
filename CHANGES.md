@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.0 (2025-01-06)
+
+- ✨ Support for d4 dices
+- 💄 Beveled borders for d6
+- ♻️ Generalization to favor inclusion of more shapes of dices
+
 ## 1.1.1 (2025-01-03)
 
 - ✨ Cleaner installs
