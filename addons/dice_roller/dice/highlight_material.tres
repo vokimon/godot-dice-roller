@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://df72api08qe5j"]
+
+[ext_resource type="Shader" path="res://addons/dice_roller/dice/d6_dice/highlight_blur.gdshader" id="1_8ke6o"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_8ke6o")
+shader_parameter/density = 300.0
+shader_parameter/frequency = 0.5

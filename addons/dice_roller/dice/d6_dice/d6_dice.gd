@@ -154,20 +154,13 @@ func show_face(value):
 	roll_finished.emit(value)
 
 
-@onready var highlight_face : Node3D = $DiceMesh/FaceHighligth
-
-const highlight_rotations = {
-	1: PI/2.0*Vector3.BACK,
-	2: PI/2.0*Vector3.LEFT,
-	3: PI*Vector3.LEFT,
-	4: Vector3.ZERO,
-	5: PI/2.0*Vector3.RIGHT,
-	6: PI/2.0*Vector3.FORWARD,
-}
+@onready var highlight_face : Node3D = $FaceHighligth
 
 func highlight():
 	var side: int = upper_side()
-	highlight_face.rotation = highlight_rotations[side]
+	var side_orientation: Vector3 = sides[side].normalized()
+	var rotation := Quaternion(Vector3.BACK, side_orientation).normalized()
+	highlight_face.rotation = rotation.get_euler(rotation_order)
 	highlight_face.visible = true
 
 func dehighlight():
