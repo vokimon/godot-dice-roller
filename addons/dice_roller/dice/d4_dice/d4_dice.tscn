@@ -1,0 +1,34 @@
+[gd_scene load_steps=9 format=3 uid="uid://dgiityqb17h4a"]
+
+[ext_resource type="PackedScene" uid="uid://jlqcvb8owke4" path="res://addons/dice_roller/dice/d4_dice/d4.glb" id="1_0fvi0"]
+[ext_resource type="Texture2D" uid="uid://yqmtismq1p2u" path="res://addons/dice_roller/dice/d4_dice/d4-top.png" id="2_1icuy"]
+[ext_resource type="Script" path="res://addons/dice_roller/dice/d4_dice/d4_dice.gd" id="2_yq2ad"]
+[ext_resource type="Shape3D" uid="uid://dq88br5weip8v" path="res://addons/dice_roller/dice/d4_dice/d4_bb.tres" id="3_5pswj"]
+[ext_resource type="Material" uid="uid://df72api08qe5j" path="res://addons/dice_roller/dice/highlight_material.tres" id="5_oqvjk"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_trcom"]
+albedo_texture = ExtResource("2_1icuy")
+
+[sub_resource type="QuadMesh" id="QuadMesh_fuovb"]
+material = ExtResource("5_oqvjk")
+size = Vector2(2, 2)
+
+[sub_resource type="PrismMesh" id="PrismMesh_t4srd"]
+size = Vector3(2, 2, 0.1)
+
+[node name="D4Dice" instance=ExtResource("1_0fvi0")]
+script = ExtResource("2_yq2ad")
+
+[node name="D4" parent="." index="0"]
+material_override = SubResource("StandardMaterial3D_trcom")
+
+[node name="Collider" type="CollisionShape3D" parent="." index="1"]
+shape = ExtResource("3_5pswj")
+
+[node name="FaceHighligth" type="MeshInstance3D" parent="." index="2"]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 0, 0, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_fuovb")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="FaceHighligth" index="0"]
+mesh = SubResource("PrismMesh_t4srd")
