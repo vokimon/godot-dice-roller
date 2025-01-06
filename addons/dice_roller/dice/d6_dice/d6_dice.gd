@@ -41,9 +41,9 @@ func _init():
 func _ready():
 	original_position = position
 	mass = dice_density * dice_size ** 3 
-	$Collider.shape.size = dice_size * Vector3.ONE
+	#$Collider.shape.size = dice_size * Vector3.ONE
 	$Collider.shape.margin = dice_size * 0.1
-	$DiceMesh.mesh.size = dice_size * Vector3.ONE
+	#$DiceMesh.mesh.size = dice_size * Vector3.ONE
 	$DiceMesh.material_override = $DiceMesh.material_override.duplicate()
 	$DiceMesh.material_override.albedo_color = dice_color
 	stop()
