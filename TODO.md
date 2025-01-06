@@ -4,12 +4,19 @@
 - [x] Propagate the 3 ways of rolling to the top level
 - [x] Fix: You can set face of one dice while the other still rolling
 - [x] Fix: Add last tween for the face to face up after rolling
-- [ ] Example: add button for quick roll
+- [x] Example: add button for quick roll
+- [x] Parametrizable box material/color
+- [x] d4 dice shape
+- [ ] Abstract common d4 and d6 code
 - [ ] Signal for start rolling
 - [ ] An attribute and method to forbid or allow rolling
 - [ ] Visual queue to show rolling is available or not
 - [ ] Adapt the size of the box to the number of dices
 - [ ] Do dices have to be 2 meters wide?
-- [ ] Parametrizable box material/color
 - [ ] Improve textures for the dices
+- [ ] Add d6 a bevel
+- [ ] d4 highlight to adapt to the dice shape
+- [ ] Example: Dice set editor
+- [ ] Example: Rolling box editor
+- [ ] Turn dice set editor into a in Editor field editor.
 - [ ] Enable other shapes of dice
