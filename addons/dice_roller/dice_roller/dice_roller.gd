@@ -1,7 +1,7 @@
 @icon("./dice_roller.svg")
 extends Node3D
 class_name DiceRoller
-const DiceScene = preload("../dice/dice.tscn")
+const DiceScene = preload("../dice/d6_dice/d6_dice.tscn")
 
 ## Margin away from the walls when repositioning
 const margin = 1.0

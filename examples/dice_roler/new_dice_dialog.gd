@@ -5,7 +5,7 @@ extends ConfirmationDialog
 @export var dice_color := Color.ANTIQUE_WHITE
 @export var dice_faces := 6
 
-const face6_texture : Texture2D = preload("res://addons/dice_roller/dice/dice-6.svg")
+const face6_texture : Texture2D = preload("res://addons/dice_roller/dice/d6_dice/d6_dice_icon.svg")
 
 func _ready() -> void:
 	pass
