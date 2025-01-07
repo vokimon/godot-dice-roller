@@ -53,9 +53,11 @@ func _on_tree_item_edited():
 	match column:
 		COL_COLOR:
 			color_picker.color = item.get_metadata(COL_COLOR)
-			color_popup.popup_on_parent(tree.get_custom_popup_rect())
+			var target_rect = tree.get_screen_transform()*tree.get_custom_popup_rect()
+			color_popup.popup_on_parent(target_rect)
 		COL_FACES:
-			faces_popup.popup_on_parent(tree.get_custom_popup_rect())
+			var target_rect = tree.get_screen_transform()*tree.get_custom_popup_rect()
+			faces_popup.popup_on_parent(target_rect)
 
 func _on_color_picker_changed(color: Color):
 	var item := tree.get_edited()
