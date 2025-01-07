@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.1 (2025-01-07)
+
+- ✨ Example: Full dice set editor: Add, Remove, Edit
+- ♻️ d4 and d6 code mostly joined
+
 ## 1.2.0 (2025-01-06)
 
 - ✨ Support for d4 dices
