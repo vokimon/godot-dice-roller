@@ -1,6 +1,7 @@
 asset_id: '3530'
 category: "1" # 2D Tools
 project_license: AGPLv3
+branch: main # needed for gha on tag builds
 previews:
 - youtube: AD8awHLpFxs
 
