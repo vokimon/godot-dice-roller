@@ -2,7 +2,7 @@ class_name DiceSetEditor
 extends ConfirmationDialog
 
 @onready var tree : Tree = $Tree
-@onready var faces_popup := $FacesPopup
+@onready var nsides_popup := $SidesPopup
 @onready var color_popup := $ColorPopup
 @onready var color_picker := $ColorPopup/ColorPicker
 
@@ -13,23 +13,23 @@ enum {
 
 enum {
 	COL_ICON,
-	COL_FACES,
+	COL_SIDES,
 	COL_COLOR,
 	COL_ID,
 	COL_REMOVE,
 }
 
 func _ready() -> void:
-	for faces in DiceDef.icons:
-		faces_popup.add_icon_item(DiceDef.icons[faces], str(faces), faces)
-	faces_popup.id_pressed.connect(_on_popup_faces_id_pressed)
+	for nsides in DiceDef.icons:
+		nsides_popup.add_icon_item(DiceDef.icons[nsides], str(nsides), nsides)
+	nsides_popup.id_pressed.connect(_on_popup_nsides_id_pressed)
 	
 	color_picker.color_changed.connect(_on_color_picker_changed)
 
 	var _root := tree.create_item()
 	tree.set_column_expand(COL_ICON, 0)
-	tree.set_column_title(COL_FACES, "Faces")
-	tree.set_column_expand(COL_FACES, 0)
+	tree.set_column_title(COL_SIDES, "Sides")
+	tree.set_column_expand(COL_SIDES, 0)
 	tree.set_column_title(COL_COLOR, "Color")
 	tree.set_column_expand(COL_COLOR, 0)
 	tree.set_column_title(COL_ID, "Name")
@@ -55,9 +55,9 @@ func _on_tree_item_edited():
 			color_picker.color = item.get_metadata(COL_COLOR)
 			var target_rect = tree.get_screen_transform()*tree.get_custom_popup_rect()
 			color_popup.popup_on_parent(target_rect)
-		COL_FACES:
+		COL_SIDES:
 			var target_rect = tree.get_screen_transform()*tree.get_custom_popup_rect()
-			faces_popup.popup_on_parent(target_rect)
+			nsides_popup.popup_on_parent(target_rect)
 
 func _on_color_picker_changed(color: Color):
 	var item := tree.get_edited()
@@ -65,11 +65,11 @@ func _on_color_picker_changed(color: Color):
 	item.set_icon_modulate(COL_COLOR, color)
 	item.set_icon_modulate(COL_ICON, color)
 
-func _on_popup_faces_id_pressed(id):
-	var faces = str(id)
+func _on_popup_nsides_id_pressed(id):
+	var nsides = str(id)
 	var item := tree.get_edited()
-	item.set_metadata(COL_FACES, id)
-	item.set_text(COL_FACES, faces)
+	item.set_metadata(COL_SIDES, id)
+	item.set_text(COL_SIDES, nsides)
 	item.set_icon(COL_ICON, DiceDef.icons[id])
 
 func add_add_row():
@@ -78,19 +78,19 @@ func add_add_row():
 	item.set_expand_right(COL_ICON, true)
 	item.add_button(COL_ICON, preload("./add-icon.svg"), BUTTON_ADD)
 
-func add_dice_row(faces: int, color: Color, id: String):
+func add_dice_row(nsides: int, color: Color, id: String):
 	var root := tree.get_root()
 	var item := tree.create_item(root, root.get_child_count()-1) # left the add row the last
 
-	item.set_icon(COL_ICON, DiceDef.icons[faces])
+	item.set_icon(COL_ICON, DiceDef.icons[nsides])
 	item.set_icon_max_width(COL_ICON, 32)
 	item.set_icon_modulate(COL_ICON, color)
 
-	item.set_cell_mode(COL_FACES, TreeItem.CELL_MODE_CUSTOM)
-	item.set_metadata(COL_FACES, faces)
-	item.set_text(COL_FACES, str(faces))
-	item.set_editable(COL_FACES, true)
-	item.set_text_alignment(COL_FACES, HORIZONTAL_ALIGNMENT_CENTER)
+	item.set_cell_mode(COL_SIDES, TreeItem.CELL_MODE_CUSTOM)
+	item.set_metadata(COL_SIDES, nsides)
+	item.set_text(COL_SIDES, str(nsides))
+	item.set_editable(COL_SIDES, true)
+	item.set_text_alignment(COL_SIDES, HORIZONTAL_ALIGNMENT_CENTER)
 
 	item.set_cell_mode(COL_COLOR, TreeItem.CELL_MODE_CUSTOM)
 	item.set_icon(COL_COLOR, preload('./color-icon.svg'))
@@ -113,7 +113,7 @@ func get_dice_set() -> Array[DiceDef]:
 		var def = DiceDef.new()
 		def.name = item.get_text(COL_ID)
 		def.color = item.get_metadata(COL_COLOR)
-		def.sides = item.get_metadata(COL_FACES)
+		def.sides = item.get_metadata(COL_SIDES)
 		dice_set.append(def)
 	print(dice_set)
 	return dice_set

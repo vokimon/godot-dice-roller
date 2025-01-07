@@ -19,7 +19,7 @@ column_titles_visible = true
 hide_folding = true
 hide_root = true
 
-[node name="FacesPopup" type="PopupMenu" parent="."]
+[node name="SidesPopup" type="PopupMenu" parent="."]
 prefer_native_menu = true
 
 [node name="ColorPopup" type="PopupPanel" parent="."]
