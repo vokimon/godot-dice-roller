@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://addons/dice_roller/dice_roller_control/dice_roller_control.gd" id="2_v500g"]
 [ext_resource type="Script" path="res://addons/dice_roller/dice_def.gd" id="3_ro3eo"]
 [ext_resource type="Texture2D" uid="uid://bbettxwvmopka" path="res://addons/dice_roller/dice/d6_dice/d6_dice.svg" id="4_8808l"]
-[ext_resource type="PackedScene" uid="uid://cd7mnbjd262j7" path="res://examples/dice_roler/new_dice_dialog.tscn" id="5_osnus"]
+[ext_resource type="PackedScene" uid="uid://ckylb177r5dm5" path="res://examples/dice_roler/dice_set_editor.tscn" id="6_er2o7"]
 
 [sub_resource type="Resource" id="Resource_7x16n"]
 script = ExtResource("3_ro3eo")
@@ -79,17 +79,16 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "Quick Roll"
 
-[node name="AddDiceButton" type="Button" parent="Layout/Buttons"]
+[node name="EditDiceSetButton" type="Button" parent="Layout/Buttons"]
 layout_mode = 2
-text = "Add Dice"
+text = "Dice Set"
 icon = ExtResource("4_8808l")
 
-[node name="NewDiceDialog" parent="." instance=ExtResource("5_osnus")]
-visible = false
+[node name="DiceSetEditor" parent="." instance=ExtResource("6_er2o7")]
 
 [connection signal="roll_finnished" from="Layout/DiceRollerControl" to="." method="_on_dice_roller_control_roll_finnished"]
 [connection signal="roll_started" from="Layout/DiceRollerControl" to="." method="_on_dice_roller_control_roll_started"]
 [connection signal="pressed" from="Layout/Buttons/RollButton" to="." method="_on_roll_button_pressed"]
 [connection signal="pressed" from="Layout/Buttons/QuickRollButton" to="." method="_on_quick_roll_button_pressed"]
-[connection signal="pressed" from="Layout/Buttons/AddDiceButton" to="." method="_on_add_dice_button_pressed"]
-[connection signal="confirmed" from="NewDiceDialog" to="." method="_on_new_dice_dialog_confirmed"]
+[connection signal="pressed" from="Layout/Buttons/EditDiceSetButton" to="." method="_on_edit_dice_set_button_pressed"]
+[connection signal="confirmed" from="DiceSetEditor" to="." method="_on_dice_set_editor_confirmed"]
