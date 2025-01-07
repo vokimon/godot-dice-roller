@@ -85,6 +85,7 @@ text = "Dice Set"
 icon = ExtResource("4_8808l")
 
 [node name="DiceSetEditor" parent="." instance=ExtResource("6_er2o7")]
+visible = false
 
 [connection signal="roll_finnished" from="Layout/DiceRollerControl" to="." method="_on_dice_roller_control_roll_finnished"]
 [connection signal="roll_started" from="Layout/DiceRollerControl" to="." method="_on_dice_roller_control_roll_started"]

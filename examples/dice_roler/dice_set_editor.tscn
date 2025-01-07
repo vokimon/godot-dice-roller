@@ -5,11 +5,14 @@
 [node name="DiceSetEditor" type="ConfirmationDialog"]
 title = "Dice Set Editor"
 size = Vector2i(400, 300)
+visible = true
 script = ExtResource("1_5123s")
 
 [node name="Tree" type="Tree" parent="."]
-offset_right = 1152.0
-offset_bottom = 613.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 392.0
+offset_bottom = 251.0
 size_flags_vertical = 3
 columns = 4
 column_titles_visible = true
