@@ -5,14 +5,14 @@ branch: main # needed for gha on tag builds
 previews:
 - youtube: AD8awHLpFxs
 
-- repoimage: /screenshots/example-landscape.png
-  repothumb: /screenshots/example-landscape-thumb.jpg
+- repoimage: screenshots/example-landscape.png
+  repothumb: screenshots/example-landscape-thumb.jpg
 
-- repoimage: /screenshots/example-portrait.png
-  repothumb: /screenshots/example-portrait-thumb.jpg
+- repoimage: screenshots/example-portrait.png
+  repothumb: screenshots/example-portrait-thumb.jpg
 
-- repoimage: /screenshots/example-editor.png
-  repothumb: /screenshots/example-editor-thumb.jpg
+- repoimage: screenshots/example-editor.png
+  repothumb: screenshots/example-editor-thumb.jpg
 
 description_files:
 - README.md
