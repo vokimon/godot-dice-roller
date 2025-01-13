@@ -10,7 +10,7 @@ on:
   #  paths:
   #    - "version"
   #    - ".github/workflows/publish-android.yml"
-  #    - "game/export_presets.android.example"
+  #    - "export_presets.android.example"
 
 env:
   GODOT_VERSION: 4.3
@@ -21,7 +21,7 @@ env:
   ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
   ANDROID_KEYSTORE_DEBUG_BASE64: ${{ secrets.ANDROID_KEYSTORE_DEBUG_BASE64 }}
   SERVICE_ACCOUNT_JSON: ${{ secrets.ANDROID_SERVICE_ACCOUNT_JSON }}
-  WORKING_DIRECTORY: game
+  WORKING_DIRECTORY: .
   APPNAME: VokiDiceRoller
   APPDOMAIN: net.canvoki.godot-dice-roller
 
@@ -33,10 +33,15 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v3
 
+      - name: Godot Asset Lib Client install
+        shell: bash
+        run: |
+          pip install --user godot-asset-library-client
+
       - name: Read version number and version code
         run: |
-          echo "VERSION_NAME=$(cat version | cut -f1 -d-)" >> $GITHUB_ENV
-          echo "VERSION_CODE=$(cat version | cut -f2 -d-)" >> $GITHUB_ENV
+          echo "VERSION_NAME=$(godot-asset-library-client project-field project_name)" >> $GITHUB_ENV
+          echo "VERSION_CODE=$(godot-asset-library-client project-field project_version)" >> $GITHUB_ENV
 
       - name: Create service-account.json
         if: false
@@ -50,7 +55,7 @@ jobs:
 
       - name: Create export_presets.cfg and inject values
         run: |
-          cp game/export_presets.android.example game/export_presets.cfg
+          cp export_presets.android.example export_presets.cfg
           sed -i "s|VERSION_CODE|$VERSION_CODE|g" $WORKING_DIRECTORY/export_presets.cfg
           sed -i "s|VERSION_NAME|$VERSION_NAME|g" $WORKING_DIRECTORY/export_presets.cfg
 
