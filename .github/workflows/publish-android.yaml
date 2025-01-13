@@ -1,0 +1,109 @@
+name: Android upload
+
+on:
+  workflow_dispatch:
+  #release:
+  #  types: [published]
+  #push:
+  #  tags:
+  #    - 'godot-dice-roller-[0-9]+.[0-9]+.[0-9]+'
+  #  paths:
+  #    - "version"
+  #    - ".github/workflows/publish-android.yml"
+  #    - "game/export_presets.android.example"
+
+env:
+  GODOT_VERSION: 4.3
+  ANDROID_SERVICE_ACCOUNT_JSON: ${{ secrets.ANDROID_SERVICE_ACCOUNT_JSON }}
+  ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+  ANDROID_KEYSTORE_ALIAS: ${{ secrets.ANDROID_KEYSTORE_ALIAS }}
+  ANDROID_STORE_PASSWORD: ${{ secrets.ANDROID_STORE_PASSWORD }}
+  ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+  ANDROID_KEYSTORE_DEBUG_BASE64: ${{ secrets.ANDROID_KEYSTORE_DEBUG_BASE64 }}
+  SERVICE_ACCOUNT_JSON: ${{ secrets.ANDROID_SERVICE_ACCOUNT_JSON }}
+  WORKING_DIRECTORY: game
+  APPNAME: VokiDiceRoller
+  APPDOMAIN: net.canvoki.godot-dice-roller
+
+jobs:
+  deploy:
+    #if: github.ref == 'refs/heads/prod'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
+
+      - name: Read version number and version code
+        run: |
+          echo "VERSION_NAME=$(cat version | cut -f1 -d-)" >> $GITHUB_ENV
+          echo "VERSION_CODE=$(cat version | cut -f2 -d-)" >> $GITHUB_ENV
+
+      - name: Create service-account.json
+        if: false
+        run: echo $SERVICE_ACCOUNT_JSON > service-account.json
+
+      - name: Create keystores
+        if: false
+        run: |
+          echo $ANDROID_KEYSTORE_BASE64 | base64 --decode > release.keystore
+          echo $ANDROID_KEYSTORE_DEBUG_BASE64 | base64 --decode > debug.keystore
+
+      - name: Create export_presets.cfg and inject values
+        run: |
+          cp game/export_presets.android.example game/export_presets.cfg
+          sed -i "s|VERSION_CODE|$VERSION_CODE|g" $WORKING_DIRECTORY/export_presets.cfg
+          sed -i "s|VERSION_NAME|$VERSION_NAME|g" $WORKING_DIRECTORY/export_presets.cfg
+
+      - name: Create export_credentials.cfg and inject values
+        if: false
+        run: |
+          mkdir $WORKING_DIRECTORY/.godot/
+          cp $WORKING_DIRECTORY/export_credentials.android.example $WORKING_DIRECTORY/.godot/export_credentials.cfg
+          sed -i "s|KEYSTORE_RELEASE_PATH|$GITHUB_WORKSPACE/release.keystore|g" $WORKING_DIRECTORY/.godot/export_credentials.cfg
+          sed -i "s|KEYSTORE_DEBUG_PATH|$GITHUB_WORKSPACE/debug.keystore|g" $WORKING_DIRECTORY/.godot/export_credentials.cfg
+          sed -i "s|ANDROID_KEYSTORE_ALIAS|$ANDROID_KEYSTORE_ALIAS|g" $WORKING_DIRECTORY/.godot/export_credentials.cfg
+          sed -i "s|ANDROID_KEYSTORE_PASSWORD|$ANDROID_KEYSTORE_PASSWORD|g" $WORKING_DIRECTORY/.godot/export_credentials.cfg
+
+      - name: Godot Android export
+        uses: dulvui/godot-android-export@v4.0.4
+        with:
+          godot-version: ${{ env.GODOT_VERSION }}
+          working-directory: $WORKING_DIRECTORY
+
+      - name: Publish to Play Store
+        if: false
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJson: service-account.json
+          packageName: ${{ env.APPDOMAIN}}
+          releaseFiles: ${{ env.APPNAME }}.aab
+          track: "internal"
+          status: completed
+
+      # GITHUB RELEASES
+      - name: Bundle aab to apk (signed)
+        if: false
+        run: |
+          wget -q https://github.com/google/bundletool/releases/download/1.14.0/bundletool-all-1.14.0.jar
+          java -jar bundletool-all-1.14.0.jar build-apks --bundle=${{ env.APPNAME }}.aab --output=${{ env.APPNAME }}.apks \
+          --ks=release.keystore --ks-pass=pass:"$ANDROID_STORE_PASSWORD" --ks-key-alias="$ANDROID_KEYSTORE_ALIAS" \
+          --key-pass=pass:"$ANDROID_KEYSTORE_PASSWORD" --mode=universal
+          unzip -p ${{ env.APPNAME }}.apks universal.apk > ${{ env.APPNAME }}.apk
+
+      # GITHUB RELEASES
+      - name: Bundle aab to apk (unsigned)
+        run: |
+          wget -q https://github.com/google/bundletool/releases/download/1.14.0/bundletool-all-1.14.0.jar
+          java -jar bundletool-all-1.14.0.jar build-apks --bundle=${{ env.APPNAME }}.aab --output=${{ env.APPNAME }}.apks \
+          --mode=universal
+          unzip -p ${{ env.APPNAME }}.apks universal.apk > ${{ env.APPNAME }}.apk
+
+      - name: Upload binaries to Github release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ./${{ env.APPNAME }}.apk
+          asset_name: ${{ env.APPNAME }}.apk
+          tag: ${{ env.VERSION_NAME }}-${{ env.VERSION_CODE }}
+          overwrite: true
+          body: "${{ env.APPNAME }} - version: ${{ env.VERSION_NAME }} code: ${{ env.VERSION_CODE }}"
