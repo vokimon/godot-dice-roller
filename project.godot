@@ -19,7 +19,7 @@ config/icon="res://icon.svg"
 
 [display]
 
-window/handheld/orientation=4
+window/handheld/orientation=6
 
 [rendering]
 
