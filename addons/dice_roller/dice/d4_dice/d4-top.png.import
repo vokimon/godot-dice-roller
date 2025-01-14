@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://yqmtismq1p2u"
 path.s3tc="res://.godot/imported/d4-top.png-0b792b8998b28b92edeb4ae3c91c377c.s3tc.ctex"
+path.etc2="res://.godot/imported/d4-top.png-0b792b8998b28b92edeb4ae3c91c377c.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://addons/dice_roller/dice/d4_dice/d4-top.png"
-dest_files=["res://.godot/imported/d4-top.png-0b792b8998b28b92edeb4ae3c91c377c.s3tc.ctex"]
+dest_files=["res://.godot/imported/d4-top.png-0b792b8998b28b92edeb4ae3c91c377c.s3tc.ctex", "res://.godot/imported/d4-top.png-0b792b8998b28b92edeb4ae3c91c377c.etc2.ctex"]
 
 [params]
 
