@@ -5,6 +5,7 @@ extends RigidBody3D
 @onready var original_position := position
 
 var sides = {}
+var highlight_orientation = {}
 
 const dice_size := 2.0
 const dice_density := 10.0
@@ -155,12 +156,13 @@ func show_face(value):
 	highlight()
 	roll_finished.emit(value)
 
-
 func highlight():
 	var side: int = upper_side()
 	var side_orientation: Vector3 = sides[side].normalized()
-	var rotation := Quaternion(Vector3.BACK, side_orientation).normalized()
-	highlight_face.rotation = rotation.get_euler(rotation_order)
+	var perpendicular_side = side-1 if side-1 else len(sides)
+	var perpendicular_direction = to_global(highlight_orientation[side]) - to_global(Vector3.ZERO)
+	highlight_face.look_at(to_global(sides[side]), perpendicular_direction)
+	prints("side", side, "perpendicular", perpendicular_side)
 	highlight_face.visible = true
 
 func dehighlight():

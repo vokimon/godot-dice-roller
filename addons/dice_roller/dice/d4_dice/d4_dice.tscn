@@ -11,9 +11,8 @@ albedo_texture = ExtResource("2_1icuy")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kxnbn"]
 
-[sub_resource type="QuadMesh" id="QuadMesh_fuovb"]
-material = ExtResource("5_oqvjk")
-size = Vector2(2, 2)
+[sub_resource type="PrismMesh" id="PrismMesh_ab1tp"]
+size = Vector3(3, 2.6, 0.3)
 
 [node name="D4Dice" instance=ExtResource("1_0fvi0")]
 script = ExtResource("2_yq2ad")
@@ -25,7 +24,10 @@ surface_material_override/0 = SubResource("StandardMaterial3D_kxnbn")
 [node name="Collider" type="CollisionShape3D" parent="." index="1"]
 shape = ExtResource("3_5pswj")
 
-[node name="FaceHighligth" type="MeshInstance3D" parent="." index="2"]
-transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 0, 0, 0)
-cast_shadow = 0
-mesh = SubResource("QuadMesh_fuovb")
+[node name="FaceHighligth" type="Node3D" parent="." index="2"]
+
+[node name="Mesh" type="MeshInstance3D" parent="FaceHighligth" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.333)
+material_override = ExtResource("5_oqvjk")
+mesh = SubResource("PrismMesh_ab1tp")
+skeleton = NodePath("../..")

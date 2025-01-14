@@ -1,10 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://cpqgcxm5wmtqk"]
+[gd_scene load_steps=10 format=3 uid="uid://cpqgcxm5wmtqk"]
 
 [ext_resource type="Script" path="res://addons/dice_roller/dice/d6_dice/d6_dice.gd" id="1_g48gd"]
 [ext_resource type="PackedScene" uid="uid://x324c2lmewii" path="res://addons/dice_roller/dice/d6_dice/d6.glb" id="1_loe3q"]
 [ext_resource type="Texture2D" uid="uid://ch6otp30d2hoj" path="res://addons/dice_roller/dice/d6_dice/dice_texture.png" id="2_8nk5g"]
 [ext_resource type="Texture2D" uid="uid://do3xsddtldsbe" path="res://addons/dice_roller/dice/d6_dice/dice_normal_map.png" id="4_ss6sl"]
-[ext_resource type="Material" uid="uid://df72api08qe5j" path="res://addons/dice_roller/dice/highlight_material.tres" id="5_3830b"]
+[ext_resource type="Shader" path="res://addons/dice_roller/dice/d6_dice/highlight_blur.gdshader" id="5_3sv3t"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_gfni6"]
 margin = 0.2
@@ -15,10 +15,17 @@ albedo_texture = ExtResource("2_8nk5g")
 normal_scale = -10.0
 normal_texture = ExtResource("4_ss6sl")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3ephm"]
+render_priority = 0
+shader = ExtResource("5_3sv3t")
+shader_parameter/density = 200.0
+shader_parameter/frequency = 1.0
+
 [sub_resource type="QuadMesh" id="QuadMesh_2exy7"]
-material = ExtResource("5_3830b")
+material = SubResource("ShaderMaterial_3ephm")
+flip_faces = true
 size = Vector2(2, 2)
-center_offset = Vector3(0, 0, 0.85)
+center_offset = Vector3(0, 0, -0.8)
 
 [node name="d6" instance=ExtResource("1_loe3q")]
 script = ExtResource("1_g48gd")
@@ -35,3 +42,5 @@ transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 0, 0, 0)
 cast_shadow = 0
 mesh = SubResource("QuadMesh_2exy7")
 skeleton = NodePath("../DiceMesh")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="FaceHighligth" index="0"]

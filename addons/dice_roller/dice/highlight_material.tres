@@ -5,5 +5,5 @@
 [resource]
 render_priority = 0
 shader = ExtResource("1_8ke6o")
-shader_parameter/density = 300.0
-shader_parameter/frequency = 0.5
+shader_parameter/density = 600.0
+shader_parameter/frequency = 1.0
