@@ -17,6 +17,10 @@ run/main_scene="res://examples/dice_roler/dice_roller_example.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[display]
+
+window/handheld/orientation=4
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
