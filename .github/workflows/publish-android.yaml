@@ -45,6 +45,7 @@ jobs:
           VERSION_CODE=$(printf "%03d" ${v[*]})
           echo "VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
           echo "VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV
+          python tools/android-metadata.py # generates android metadata from README.md, CHANGES.md and screenshots
 
       - name: Create service-account.json
         if: false
