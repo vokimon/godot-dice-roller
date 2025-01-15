@@ -2,12 +2,12 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="48"
-   height="48"
-   viewBox="0 0 48 48"
+   width="512"
+   height="512"
+   viewBox="0 0 512 512"
    version="1.1"
    id="svg1"
-   inkscape:version="1.4 (1:1.4+202410161351+e7c3feb100)"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
    sodipodi:docname="icon.svg"
    inkscape:export-filename="icon.png"
    inkscape:export-xdpi="1024"
@@ -27,15 +27,17 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="px"
-     inkscape:zoom="16.5625"
-     inkscape:cx="23.969811"
-     inkscape:cy="24.030189"
+     inkscape:zoom="1.463932"
+     inkscape:cx="261.96572"
+     inkscape:cy="273.91982"
      inkscape:window-width="1920"
-     inkscape:window-height="994"
+     inkscape:window-height="998"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     showguides="true" />
   <defs
      id="defs1">
     <linearGradient
@@ -59,13 +61,13 @@
        x2="19.290565"
        y2="19.924528"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="translate(-4.5584912,-2.0528302)" />
+       gradientTransform="matrix(10.666666,0,0,10.666666,-48.623905,-21.896854)" />
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient1"
        id="linearGradient5"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="translate(13.977358,-2.0528302)"
+       gradientTransform="matrix(10.666666,0,0,10.666666,149.09181,-21.896854)"
        x1="19.605659"
        y1="9.4490566"
        x2="19.290565"
@@ -75,7 +77,7 @@
        xlink:href="#linearGradient1"
        id="linearGradient7"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="translate(13.977358,18.354717)"
+       gradientTransform="matrix(10.666666,0,0,10.666666,149.09181,195.78364)"
        x1="19.605659"
        y1="9.4490566"
        x2="19.290565"
@@ -85,7 +87,7 @@
        xlink:href="#linearGradient1"
        id="linearGradient8"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="translate(-4.5584912,18.354717)"
+       gradientTransform="matrix(10.666666,0,0,10.666666,-48.623905,195.78364)"
        x1="19.605659"
        y1="9.4490566"
        x2="19.290565"
@@ -95,7 +97,7 @@
        xlink:href="#linearGradient1"
        id="linearGradient9"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="translate(4.7094327,8.1509435)"
+       gradientTransform="matrix(10.666666,0,0,10.666666,50.233947,86.943392)"
        x1="19.605659"
        y1="9.4490566"
        x2="19.290565"
@@ -106,49 +108,49 @@
      inkscape:groupmode="layer"
      id="layer1">
     <rect
-       style="fill:#338000;stroke:none;stroke-width:3.77953"
+       style="fill:#338000;stroke:none;stroke-width:40.315"
        id="rect2"
-       width="48"
-       height="48"
+       width="512"
+       height="512"
        x="0"
        y="0" />
     <rect
-       style="fill:#ffffff;stroke-width:11.8495;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:#ffffff;stroke-width:126.395;stroke-linecap:round;stroke-linejoin:round"
        id="rect1"
-       width="36.407547"
-       height="36.407547"
-       x="5.7962265"
-       y="5.7962265"
-       ry="7.6979566" />
+       width="388.34717"
+       height="388.34717"
+       x="61.826412"
+       y="61.826412"
+       ry="82.111534" />
     <circle
-       style="fill:#000000;stroke:url(#linearGradient2);stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+       style="fill:#000000;stroke:url(#linearGradient2);stroke-width:10.6667;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
        id="path1"
-       r="4.0754719"
-       cy="13.796227"
-       cx="14.732075" />
+       r="43.471695"
+       cy="147.15976"
+       cx="157.14212" />
     <circle
-       style="fill:#000000;stroke:url(#linearGradient5);stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+       style="fill:#000000;stroke:url(#linearGradient5);stroke-width:10.6667;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
        id="circle5"
-       r="4.0754719"
-       cy="13.796227"
-       cx="33.267925" />
+       r="43.471695"
+       cy="147.15976"
+       cx="354.85788" />
     <circle
-       style="fill:#000000;stroke:url(#linearGradient8);stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+       style="fill:#000000;stroke:url(#linearGradient8);stroke-width:10.6667;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
        id="circle6"
-       r="4.0754719"
-       cy="34.203773"
-       cx="14.732075" />
+       r="43.471695"
+       cy="364.84024"
+       cx="157.14212" />
     <circle
-       style="fill:#000000;stroke:url(#linearGradient7);stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+       style="fill:#000000;stroke:url(#linearGradient7);stroke-width:10.6667;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
        id="circle7"
-       r="4.0754719"
-       cy="34.203773"
-       cx="33.267925" />
+       r="43.471695"
+       cy="364.84024"
+       cx="354.85788" />
     <circle
-       style="fill:#000000;stroke:url(#linearGradient9);stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+       style="fill:#000000;stroke:url(#linearGradient9);stroke-width:10.6667;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
        id="circle8"
-       r="4.0754719"
-       cy="24"
-       cx="24" />
+       r="43.471695"
+       cy="256"
+       cx="256" />
   </g>
 </svg>
