@@ -21,14 +21,18 @@ env:
   ANDROID_KEYSTORE_DEBUG_BASE64: ${{ secrets.ANDROID_KEYSTORE_DEBUG_BASE64 }}
   SERVICE_ACCOUNT_JSON: ${{ secrets.ANDROID_SERVICE_ACCOUNT_JSON }}
   WORKING_DIRECTORY: .
-  APPNAME: GodotDiceRoller
-  APPDOMAIN: net.canvoki.godot-dice-roller
-  GODOT_VERSION: 4.3
+  APPNAME: Godot Dice Roller
+  APPDOMAIN: net.canvoki.godot_dice_roller
 
 jobs:
+
   deploy:
     #if: github.ref == 'refs/heads/prod'
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    container:
+      image: barichello/godot-ci:4.3
     steps:
       - name: Checkout source code
         uses: actions/checkout@v3
@@ -36,16 +40,26 @@ jobs:
       - name: Godot Asset Lib Client install
         shell: bash
         run: |
-          pip install --user godot-asset-library-client
+          apt update
+          apt install -y imagemagick python3-pip python-is-python3
+          echo ~/.local/bin >> $GITHUB_PATH
+          mkdir -p ~/.cache/pip
+          #chown -R root: ~/.cache/pip
+          pip install --user "godot-asset-library-client>=0.5"
 
       - name: Read version number and version code
+        shell: bash
         run: |
+          python tools/android-metadata.py # generates android metadata from README.md, CHANGES.md and screenshots
+          GODOT_VERSION=$(godot-asset-library-client project-field godot_version)
+          APPNAME=$(cat metadata/en-US/title.txt)
           VERSION_NAME=$(godot-asset-library-client project-field project_version)
           IFS='.' read -r -a v <<<"$VERSION_NAME"
           VERSION_CODE=$(printf "%03d" ${v[*]})
+          echo "GODOT_VERSION=$GODOT_VERSION" >> $GITHUB_ENV
+          echo "APPNAME=$APPNAME" >> $GITHUB_ENV
           echo "VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
           echo "VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV
-          python tools/android-metadata.py # generates android metadata from README.md, CHANGES.md and screenshots
 
       - name: Create service-account.json
         if: false
@@ -73,7 +87,11 @@ jobs:
           sed -i "s|ANDROID_KEYSTORE_ALIAS|$ANDROID_KEYSTORE_ALIAS|g" $WORKING_DIRECTORY/.godot/export_credentials.cfg
           sed -i "s|ANDROID_KEYSTORE_PASSWORD|$ANDROID_KEYSTORE_PASSWORD|g" $WORKING_DIRECTORY/.godot/export_credentials.cfg
 
-      - name: Godot Android export
+      - name: Godot Android export (barichello)
+        run: godot -v --export-release "Android" --headless
+
+      - name: Godot Android export (dulvui)
+        if: false
         uses: dulvui/godot-android-export@v4.0.4
         with:
           godot-version: ${{ env.GODOT_VERSION }}
