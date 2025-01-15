@@ -3,6 +3,10 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	# Temporary hack to avoid small widgets in Android
+	if OS.get_name() == "Android":
+		theme = preload("res://examples/dice_roler/android_theme.tres")
+
 	%ResultLabel.text = "Ready to Roll"
 
 func _on_roll_button_pressed() -> void:
