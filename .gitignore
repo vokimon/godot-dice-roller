@@ -26,4 +26,7 @@ gdUnit4
 # Blender
 *.blend1
 
+# Android
 metadata
+*apk*
+*.keystore
