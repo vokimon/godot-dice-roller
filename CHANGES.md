@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- ✨ Example available as Android App
+- 🏗️ Generate F-Droid metadata
+- 🐛 Proper shape for d4 dices highlight
+
 ## 1.2.1 (2025-01-07)
 
 - ✨ Example: Full dice set editor: Add, Remove, Edit
