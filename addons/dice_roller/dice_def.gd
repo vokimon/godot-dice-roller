@@ -9,4 +9,5 @@ extends Resource
 const icons =  {
 	4: preload("res://addons/dice_roller/dice/d4_dice/d4_dice.svg"),
 	6: preload("res://addons/dice_roller/dice/d6_dice/d6_dice.svg"),
+	10: preload("res://addons/dice_roller/dice/d10_dice/d10_dice.svg"),
 }
