@@ -105,7 +105,7 @@ func _process(_delta):
 	if position.y > mounted_elevation:
 		return shake("mounted")
 	var side = upper_side()
-	if not side:
+	if side == null:
 		return shake("tilted")
 
 	print("Dice %s solved [%s] - %.02fs"%([name, side, roll_time]))
@@ -113,7 +113,7 @@ func _process(_delta):
 	sleeping = true
 	show_face(side)
 
-func upper_side() -> int:
+func upper_side():
 	"Returns which dice side is up, or 0 when none is clear"
 	var highest_y := -INF
 	var highest_side := 0
@@ -126,7 +126,7 @@ func upper_side() -> int:
 	#	highest_y, highest_y - global_position.y, max_tilt, name
 	#]))
 	if highest_y - global_position.y < max_tilt():
-		return 0
+		return null
 	return highest_side
 
 func face_up_transform(value) -> Transform3D:
@@ -157,7 +157,7 @@ func show_face(value):
 	roll_finished.emit(value)
 
 func highlight():
-	var side: int = upper_side()
+	var side = upper_side()
 	var side_orientation: Vector3 = sides[side].normalized()
 	var perpendicular_side = side-1 if side-1 else len(sides)
 	var perpendicular_direction = to_global(highlight_orientation[side]) - to_global(Vector3.ZERO)
