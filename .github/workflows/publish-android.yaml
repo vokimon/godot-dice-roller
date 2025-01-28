@@ -44,7 +44,6 @@ jobs:
           apt install -y imagemagick python3-pip python-is-python3
           echo ~/.local/bin >> $GITHUB_PATH
           mkdir -p ~/.cache/pip
-          #chown -R root: ~/.cache/pip
           pip install --user "godot-asset-library-client>=0.5"
 
       - name: Read version number and version code
