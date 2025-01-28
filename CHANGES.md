@@ -2,18 +2,20 @@
 
 ## Unreleased
 
-- ✨ Example available as Android App
+- ✨ New dice: d10
+- 🐛 d4: proper shape for the highlight
+- ✨ Android support
+- ✨ Example scene, now available as Android App
 - 🏗️ Generate F-Droid metadata
-- 🐛 Proper shape for d4 dices highlight
 
 ## 1.2.1 (2025-01-07)
 
 - ✨ Example: Full dice set editor: Add, Remove, Edit
-- ♻️ d4 and d6 code mostly joined
+- ♻️ d4 and d6 code mostly merged
 
 ## 1.2.0 (2025-01-06)
 
-- ✨ Support for d4 dices
+- ✨ New dice: d4
 - 💄 Beveled borders for d6
 - ♻️ Generalization to favor inclusion of more shapes of dices
 

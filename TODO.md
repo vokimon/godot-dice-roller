@@ -3,17 +3,19 @@
 - [ ] Fix: Dices have lost the initial random spin, noticeable with few dices
 - [ ] Signal for start rolling
 - [ ] Stop long/infinite rollings. How? Reroll? Put stopped dices aside?
-- [ ] A mean to programmatically block or enable rolling
+- [ ] One shot rolling, games controlling when a rolling is required
 - [ ] Visual queue to show rolling is available (bouncing dices?)
 - [ ] Adapt the size of the box to the number of dices
 - [ ] Do dices have to be 2 meters wide and weight kilos?
-- [ ] Improve textures for the dices
+- [ ] Improve textures for the dices (wood, marble...)
 - [ ] Example: Rolling box editor
-- [ ] Turn dice set editor into a in Editor field editor.
-- [ ] More shapes of dice (d10, d100, d20...)
+- [ ] Example: Loading and saving dice sets
+- [ ] Turn dice set editor into a in Godot Editor field editor.
+- [ ] More dice shapes: d100, d20, d8, d12
 
 ## Done's
 
+- [x] More dice shapes: d10
 - [x] Android: UI controls appear small
 - [x] Android: App icons look ugly
 - [x] Fix: d4 highlight to adapt to the dice shape
