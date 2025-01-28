@@ -5,7 +5,7 @@ extends Dice
 const face_elevation_radians := deg_to_rad(50.0)
 func face_orientation(sector: int):
 	var azimuth := sector * TAU / 5.0
-	var elevation := deg_to_rad(40.0)
+	var elevation := deg_to_rad(39.0)
 	return Vector3(
 		+ cos(elevation) * sin(azimuth),
 		+ sin(elevation),
