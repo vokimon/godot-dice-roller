@@ -7,6 +7,8 @@ title = "Dice Set Editor"
 initial_position = 1
 size = Vector2i(800, 500)
 visible = true
+content_scale_aspect = 1
+ok_button_text = "Ok"
 script = ExtResource("1_5123s")
 
 [node name="Tree" type="Tree" parent="."]
@@ -24,6 +26,7 @@ hide_root = true
 prefer_native_menu = true
 
 [node name="ColorPopup" type="PopupPanel" parent="."]
+size = Vector2i(306, 584)
 
 [node name="ColorPicker" type="ColorPicker" parent="ColorPopup"]
 anchors_preset = 15
