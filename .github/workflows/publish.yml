@@ -92,6 +92,6 @@ jobs:
         echo "GODOT_ASSET_LIB_USER=${{ secrets.GODOT_ASSET_LIB_USER }}" >> .env
         echo "GODOT_ASSET_LIB_PASSWORD=${{ secrets.GODOT_ASSET_LIB_PASSWORD }}" >> .env
         pip install --user godot-asset-library-client
-        godot-asset-library-client publish tools/assetlib.yaml --send-previews --do
+        godot-asset-library-client upload tools/assetlib.yaml --send-previews --do
 
 # vim: et sw=2 ts=2
