@@ -42,10 +42,42 @@ height = 2,598076211353316 ~= 2.6
 """
 
 func _ready():
-	#var hl: Node3D = $FaceHighligth
-	#hl.rotate_y(deg_to_rad(120))
-	#var hlmesh: PrismMesh = $FaceHighligth/Mesh.mesh
-	#var hlinstance: MeshInstance3D = $FaceHighligth/Mesh
-	#hlinstance.position.y = hlmesh.size.y / 6.0
+	build_highlight()
 	super()
 	mass = mass / 4. # tetraedron is a qu artrof a cube
+
+func build_highlight():
+	var hl: Node3D = $FaceHighligth
+	var hlinstance: MeshInstance3D = $FaceHighligth/Mesh
+	var mesh: ArrayMesh = hlinstance.mesh
+	var primitive = []
+	primitive.resize(Mesh.ARRAY_MAX)
+	var d := -0.18
+	var n := +1.
+	var m := -0.78
+	var s := -1.18
+	var w := +0.8
+	var tex_fact := 0.15
+	primitive[Mesh.ARRAY_VERTEX] = PackedVector3Array([
+		Vector3(+0.0, n, d),
+		Vector3(+w, m, d),
+		Vector3(-w, m, d),
+		Vector3(+0.0, s, d),
+	])
+	primitive[Mesh.ARRAY_TEX_UV] = PackedVector2Array([
+		tex_fact * Vector2(+0.0, n),
+		tex_fact * Vector2(+w, m),
+		tex_fact * Vector2(-w, m),
+		tex_fact * Vector2(+0.0, s),
+	])
+	primitive[Mesh.ARRAY_INDEX] = PackedInt32Array([
+		1, 0, 3, 2,
+	])
+	primitive[Mesh.ARRAY_NORMAL] = PackedVector3Array([
+		Vector3(0.0, 0.0, -1.0),
+		Vector3(0.0, 0.0, -1.0),
+		Vector3(0.0, 0.0, -1.0),
+		Vector3(0.0, 0.0, -1.0),
+	])
+	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLE_STRIP, primitive)
+	
