@@ -189,8 +189,10 @@ func _input(event: InputEvent) -> void:
 func quick_roll():
 	"""Turn dices toward computer generated random values (non-physics)"""
 	var values: Array[int] = []
-	for dice in dice_set:
-		values.append(randi_range(1, dice.sides))
+	for dice: Dice in dices:
+		var dice_values := dice.sides.keys()
+		var chosen = dice_values[randi_range(0, dice_values.size()-1)]
+		values.append(chosen)
 	show_faces(values)
 	roll_started.emit()
 
