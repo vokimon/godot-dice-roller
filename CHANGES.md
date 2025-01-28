@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.3.0 (2025-01-28)
 
 - ✨ New dice: d10
 - 🐛 d4: proper shape for the highlight
