@@ -5,6 +5,7 @@ const DiceScenes = {
 	6: preload("../dice/d6_dice/d6_dice.tscn"),
 	4: preload("../dice/d4_dice/d4_dice.tscn"),
 	10: preload("../dice/d10_dice/d10_dice.tscn"),
+	20: preload("../dice/d20_dice/d20_dice.tscn"),
 }
 
 ## Margin away from the walls when repositioning
