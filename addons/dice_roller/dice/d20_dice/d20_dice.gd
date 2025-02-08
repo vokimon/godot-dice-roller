@@ -66,10 +66,10 @@ func _init():
 		3:  +mid_face_normal(+1),
 		17: +mid_face_normal(+2),
 
-		15: -cap_face_normal(-2),
+		14: -cap_face_normal(-2),
 		1:  -cap_face_normal(-1),
 		8:  -cap_face_normal(+0),
-		14: -cap_face_normal(+1),
+		15: -cap_face_normal(+1),
 		7:  -cap_face_normal(+2),
 		16: -mid_face_normal(-2),
 		10: -mid_face_normal(-1),
