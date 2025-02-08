@@ -1,3 +1,5 @@
+@icon("./d10x10_dice.svg")
+class_name D10x10Dice
 extends D10Dice
 
 func _generate_faces():
