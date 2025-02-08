@@ -28,10 +28,18 @@ e2 = asin(1-cos(pi/5)) / ( sqrt(3) * sin(pi/5) )
 
 h = 2 * r * tan(pi/5) * sin(pi/6) = r * tan(pi/5) = 
 r/h = 1 / tan(pi/5)
-e1 = asin(r/h) = pi/4
+e1 = asin(r/h) = 
+r/h = R * cos(pi/5) / (s * sqrt(3)/2)
+r/h = cos(pi/5) / (sqrt(3) * sin(pi/5))
+asin(R * cos(pi/5)/s * sqrt(3)/2)
+asin((s / (2 * sin(pi/5)) * cos(pi/5)/s * sqrt(3)/2)
+asin((s / (sin(pi/5)) * cos(pi/5)/s * sqrt(3))
+asin(cos(pi/5) * sqrt(3) / (sin(pi/5))
 
 Relative size: d6 is 14mm, while d20 is 22mm, so 1.571428571428571
 Source: https://www.dice.co.uk/outlines.htm
+
+
 
 """
 
@@ -43,7 +51,7 @@ func spherical(azimuth: float, elevation: float) -> Vector3:
 	)
 
 func cap_face_normal(count: int) -> Vector3:
-	var elevation := PI / 4
+	var elevation := asin(cos(PI/5) / (sqrt(3) * sin(PI/5)))
 	var azimuth := 2 * count * PI / 5 + PI
 	return spherical(azimuth, elevation)
 
@@ -59,13 +67,11 @@ func _init():
 		12: +cap_face_normal(+0),
 		19: +cap_face_normal(+1),
 		6:  +cap_face_normal(+2),
-
 		11: +mid_face_normal(-2),
 		5:  +mid_face_normal(-1),
 		9:  +mid_face_normal(+0),
 		3:  +mid_face_normal(+1),
 		17: +mid_face_normal(+2),
-
 		14: -cap_face_normal(-2),
 		1:  -cap_face_normal(-1),
 		8:  -cap_face_normal(+0),
