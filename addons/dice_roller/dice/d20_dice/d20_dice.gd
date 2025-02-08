@@ -13,21 +13,26 @@ of sides: h h s h h s.
 s sides are the ones matching an edge and the h sides
 are the ones crossing the height of a triangle.
 
+e1 = asin(r/h)
 e2 = asin((R-r)/h)
-R = s / 2 / sin(pi/5)
-r = R * cos(pi/5)
-h = s * cos(pi/6)
+h = s * cos(pi/6) = s * sqrt(3)/2 # from equilateral triangle
+R = s / (2 * sin(pi/5)) # From the top pentagon
+r = R * cos(pi/5) # Also from the pentagon
 
-R-r = s * (1-cos(pi/5)) /2/sin(pi/5)
+R-r = s * (1-cos(pi/5)) / (2 * sin(pi/5) )
 
-(R-r)/h = s * (1-cos(pi/5)) /2/sin(pi/5) /s/cos(pi/6)
-(R-r)/h = (1-cos(pi/5)) /2/sin(pi/5) /cos(pi/6)
-e2 = asin( (1-cos(pi/5)) /2/sin(pi/5) /cos(pi/6) )
+(R-r)/h = s * (1-cos(pi/5)) / (2 *sin(pi/5)) / s /(sqrt(3) / 2)
+(R-r)/h = s * (1-cos(pi/5)) / sin(pi/5) / s /sqrt(3)
+(R-r)/h = (1-cos(pi/5)) / ( sqrt(3) * sin(pi/5) )
+e2 = asin(1-cos(pi/5)) / ( sqrt(3) * sin(pi/5) )
 
+h = 2 * r * tan(pi/5) * sin(pi/6) = r * tan(pi/5) = 
+r/h = 1 / tan(pi/5)
+e1 = asin(r/h) = pi/4
 
-h = 2 * r * tan(pi/5) * sin(pi/6)
-r/h = 1 / (2 * tan(pi/5) * sin(pi/6))
-elev = asin(r/h) = pi/4
+Relative size: d6 is 14mm, while d20 is 22mm, so 1.571428571428571
+Source: https://www.dice.co.uk/outlines.htm
+
 """
 
 func spherical(azimuth: float, elevation: float) -> Vector3:
