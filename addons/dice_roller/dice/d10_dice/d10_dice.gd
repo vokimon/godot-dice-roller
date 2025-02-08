@@ -1,5 +1,5 @@
 @icon("./d10_dice.svg")
-class_name D10_dice
+class_name D10Dice
 extends Dice
 
 const face_elevation_radians := deg_to_rad(50.0)
@@ -12,8 +12,7 @@ func face_orientation(sector: int):
 		+ cos(elevation) * cos(azimuth),
 	)
 
-
-func _init():
+func _generate_faces():
 	sides = {
 		5: +face_orientation(+2),
 		3: +face_orientation(+1),
@@ -26,6 +25,9 @@ func _init():
 		8: -face_orientation(-1),
 		0: -face_orientation(-2),
 	}
+
+func _init():
+	_generate_faces()
 	highlight_orientation = {}
 	for value in sides:
 		highlight_orientation[value] = Vector3.UP * sign(sides[value].y)
