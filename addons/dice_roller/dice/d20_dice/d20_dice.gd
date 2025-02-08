@@ -4,43 +4,43 @@ extends Dice
 
 """
 An icosahedron is formed by equilateral triangles.
-As such if the side is s, their height will be:
-h = sqrt(s^2-(s/2)^2) = s*sqrt(3)/2
+As such if the side is l, their height will be:
+h = sqrt(l^2-(l/2)^2) = l*sqrt(3)/2
 By bisectioning an icosahedron with a plane passing
-by one of their edges, we have a six sided polygon
-of sides: h h s h h s.
+by one of their edges, we have an irregular hexagon
+of sides: h h l h h l.
 
-s sides are the ones matching an edge and the h sides
-are the ones crossing the height of a triangle.
+l sides are the ones matching an edge and the h sides
+are bisected triangles by their height.
+We are interested in the normals of the bisected ones.
+Notice that the first two h's are the negated of the
+later pair of h's.
+In spherical coordinates, the bisecting plane defines
+the the azimuth of the normal, and the tilt of the
+bisecting segment, the elevation.
 
 e1 = asin(r/h)
 e2 = asin((R-r)/h)
-h = s * cos(pi/6) = s * sqrt(3)/2 # from equilateral triangle
-R = s / (2 * sin(pi/5)) # From the top pentagon
+h = l * cos(pi/6) = l * sqrt(3)/2 # from equilateral triangle
+R = l / (2 * sin(pi/5)) # From the top pentagon
 r = R * cos(pi/5) # Also from the pentagon
 
-R-r = s * (1-cos(pi/5)) / (2 * sin(pi/5) )
+R-r = l * (1-cos(pi/5)) / (2 * sin(pi/5) )
 
-(R-r)/h = s * (1-cos(pi/5)) / (2 *sin(pi/5)) / s /(sqrt(3) / 2)
-(R-r)/h = s * (1-cos(pi/5)) / sin(pi/5) / s /sqrt(3)
+(R-r)/h = l * (1-cos(pi/5)) / (2 *sin(pi/5)) / l /(sqrt(3) / 2)
+(R-r)/h = l * (1-cos(pi/5)) / sin(pi/5) / l /sqrt(3)
 (R-r)/h = (1-cos(pi/5)) / ( sqrt(3) * sin(pi/5) )
 e2 = asin(1-cos(pi/5)) / ( sqrt(3) * sin(pi/5) )
 
 h = 2 * r * tan(pi/5) * sin(pi/6) = r * tan(pi/5) = 
-r/h = 1 / tan(pi/5)
-e1 = asin(r/h) = 
-r/h = R * cos(pi/5) / (s * sqrt(3)/2)
-r/h = cos(pi/5) / (sqrt(3) * sin(pi/5))
-asin(R * cos(pi/5)/s * sqrt(3)/2)
-asin((s / (2 * sin(pi/5)) * cos(pi/5)/s * sqrt(3)/2)
-asin((s / (sin(pi/5)) * cos(pi/5)/s * sqrt(3))
-asin(cos(pi/5) * sqrt(3) / (sin(pi/5))
+e1 = asin(r/h) 
+e1 = asin(R * cos(pi/5) / h)    # inline r
+e1 = asin(l * cos(pi/5) / (2 * sin(pi/5) * h))    # inline R
+e1 = asin(l * cos(pi/5) / (2 * sin(pi/5) * l * sqrt(3) / 2))  # inline h
+e1 = asin(cos(pi/5) / (sin(pi/5) * sqrt(3) ))    # l and 2 factors out
 
 Relative size: d6 is 14mm, while d20 is 22mm, so 1.571428571428571
 Source: https://www.dice.co.uk/outlines.htm
-
-
-
 """
 
 func spherical(azimuth: float, elevation: float) -> Vector3:
