@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ciwgbbx2oeisc"
-path="res://.godot/imported/d10x10_dice.svg-431b42d5965dcb754f5b67a746bdade0.ctex"
+uid="uid://gdsy776jlktv"
+path="res://.godot/imported/d10x10-texture.svg-6601c5411976eff8c7a182a484a9f3ae.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/dice_roller/dice/d10_dice/d10x10_dice.svg"
-dest_files=["res://.godot/imported/d10x10_dice.svg-431b42d5965dcb754f5b67a746bdade0.ctex"]
+source_file="res://addons/dice_roller/dice/d10x10_dice/d10x10-texture.svg"
+dest_files=["res://.godot/imported/d10x10-texture.svg-6601c5411976eff8c7a182a484a9f3ae.ctex"]
 
 [params]
 

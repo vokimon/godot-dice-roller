@@ -3,8 +3,8 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://sry3ys55ayhh"
-path.s3tc="res://.godot/imported/d10x10-texture.png-12fd4bff58e35864795e28c7d93421d9.s3tc.ctex"
-path.etc2="res://.godot/imported/d10x10-texture.png-12fd4bff58e35864795e28c7d93421d9.etc2.ctex"
+path.s3tc="res://.godot/imported/d10x10-texture.png-c0fcf703f3566a6173c6f22d415f05fb.s3tc.ctex"
+path.etc2="res://.godot/imported/d10x10-texture.png-c0fcf703f3566a6173c6f22d415f05fb.etc2.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
@@ -12,8 +12,8 @@ metadata={
 
 [deps]
 
-source_file="res://addons/dice_roller/dice/d10_dice/d10x10-texture.png"
-dest_files=["res://.godot/imported/d10x10-texture.png-12fd4bff58e35864795e28c7d93421d9.s3tc.ctex", "res://.godot/imported/d10x10-texture.png-12fd4bff58e35864795e28c7d93421d9.etc2.ctex"]
+source_file="res://addons/dice_roller/dice/d10x10_dice/d10x10-texture.png"
+dest_files=["res://.godot/imported/d10x10-texture.png-c0fcf703f3566a6173c6f22d415f05fb.s3tc.ctex", "res://.godot/imported/d10x10-texture.png-c0fcf703f3566a6173c6f22d415f05fb.etc2.ctex"]
 
 [params]
 
