@@ -69,6 +69,9 @@ func roll():
 func quick_roll():
 	roller.quick_roll()
 
+func show_faces(result: Array[int]):
+	roller.show_faces(result)
+
 func per_dice_result():
 	if not roller:
 		return {}
