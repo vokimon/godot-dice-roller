@@ -30,15 +30,18 @@ const dice_roller_scene = preload("../dice_roller/dice_roller.tscn")
 		if roller:
 			roller.roller_size = new_value
 
+## When true user may start a roll by left clicking
+## or a quick roll by right clicking
 @export var interactive := true:
 	set(new_value):
 		interactive = new_value
 		if roller:
 			roller.interactive = new_value
 
-
-signal roll_finnished(int)
+## Triggered when a roll simumation starts
 signal roll_started()
+## Triggered once the roll animation finishes
+signal roll_finnished(int)
 
 var roller: DiceRoller = null
 var viewport: SubViewport = null
@@ -63,15 +66,20 @@ func _ready():
 	roller.roller_size = roller_size
 	roller.interactive = interactive
 
+## Start a physics simulated roll
 func roll():
 	roller.roll()
 
+## Start a quick roll, that just rotates to a computer generated result
 func quick_roll():
 	roller.quick_roll()
 
+## Rotate the dices to a externally given result
 func show_faces(result: Array[int]):
 	roller.show_faces(result)
 
+## Returns a dictionary with individual dice results,
+## having dice names as keys
 func per_dice_result():
 	if not roller:
 		return {}
