@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- ✨ New dice: d20
+- ✨ New dice: d10x10
+- ✨ `interactive` flag to enable/disable roll on click
+- 💄Control icon clearer without outline and bigger dices
+
 ## 1.3.0 (2025-01-28)
 
 - ✨ New dice: d10

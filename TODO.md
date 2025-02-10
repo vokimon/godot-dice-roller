@@ -1,20 +1,29 @@
 # TODO's
 
 - [ ] Fix: Dices have lost the initial random spin, noticeable with few dices
-- [ ] Signal for start rolling
 - [ ] Stop long/infinite rollings. How? Reroll? Put stopped dices aside?
-- [ ] One shot rolling, games controlling when a rolling is required
 - [ ] Visual queue to show rolling is available (bouncing dices?)
 - [ ] Adapt the size of the box to the number of dices
 - [ ] Do dices have to be 2 meters wide and weight kilos?
 - [ ] Improve textures for the dices (wood, marble...)
 - [ ] Example: Rolling box editor
 - [ ] Example: Loading and saving dice sets
-- [ ] Turn dice set editor into a in Godot Editor field editor.
-- [ ] More dice shapes: d100, d20, d8, d12
+- [ ] Godot Editor for dice set attribute editor to look more than the example dice set editor
+- [ ] More dice shapes: d8, d12
+- [ ] D10x10: Should appear as "10x10" and not "100" in dice set editor
+    - [ ] Unrelate shape identification from the number of sides
+- [ ] d20: Review numbers position to match standard dice
+- [ ] d20: Review stability conditions, too bumpy
 
 ## Done's
 
+- [x] Signal for start rolling
+- [x] One shot rolling, games controlling when a rolling is required -> interactive flag covers that
+- [x] D10x10: Own icon (draw zeros on numbers)
+- [x] d20: scale up
+- [x] d20: adjust highlight
+- [x] More dice shapes: d10x10
+- [x] More dice shapes: d20
 - [x] More dice shapes: d10
 - [x] Android: UI controls appear small
 - [x] Android: App icons look ugly

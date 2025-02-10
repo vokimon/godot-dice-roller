@@ -10,10 +10,10 @@ func _ready() -> void:
 	%ResultLabel.text = "Ready to Roll"
 
 func _on_roll_button_pressed() -> void:
-	%DiceRollerControl.roll()
+	%DiceRollerControl.roll() # physics emulation roll
 
 func _on_quick_roll_button_pressed() -> void:
-	%DiceRollerControl.quick_roll()
+	%DiceRollerControl.quick_roll() # quick rotate roll
 
 func _on_dice_roller_control_roll_finnished(result: int) -> void:
 	%ResultLabel.text = "Result: %s"%[result]
