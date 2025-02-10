@@ -28,9 +28,11 @@ color = Color(0.980392, 0.921569, 0.843137, 1)
 sides = 6
 
 [node name="DiceRollerControl" type="SubViewportContainer"]
+offset_right = 88.0
 offset_bottom = 48.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 stretch = true
 script = ExtResource("1_4x3ke")
 dice_set = Array[ExtResource("2_x51pc")]([SubResource("Resource_lojf2"), SubResource("Resource_f0t8j"), SubResource("Resource_4cw0m"), SubResource("Resource_wjykp")])
+interactive = null

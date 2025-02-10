@@ -49,6 +49,7 @@ size_flags_vertical = 3
 stretch = true
 script = ExtResource("2_v500g")
 dice_set = Array[ExtResource("3_ro3eo")]([SubResource("Resource_7x16n"), SubResource("Resource_egpxp"), SubResource("Resource_n4ev2")])
+interactive = null
 
 [node name="Labels" type="HFlowContainer" parent="Layout"]
 layout_mode = 2

@@ -42,6 +42,7 @@ const default_set := {
 			$RollerBox.height = new_value.y
 			$RollerBox.depth = new_value.z
 			reload_dices()
+@export var interactive := false
 
 ## Emits the final value once the roll has finished
 signal roll_finnished(value: int)
@@ -180,6 +181,7 @@ func _on_finnished_dice_rolling(number: int, dice_name: String):
 
 func _input(event: InputEvent) -> void:
 	if rolling: return
+	if not interactive: return
 	if event is InputEventMouseButton:
 		if event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 			prepare()

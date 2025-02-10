@@ -30,6 +30,13 @@ const dice_roller_scene = preload("../dice_roller/dice_roller.tscn")
 		if roller:
 			roller.roller_size = new_value
 
+@export var interactive := true:
+	set(new_value):
+		interactive = new_value
+		if roller:
+			roller.interactive = new_value
+
+
 signal roll_finnished(int)
 signal roll_started()
 
@@ -54,6 +61,7 @@ func _ready():
 	roller.dice_set = dice_set
 	roller.roller_color = roller_color
 	roller.roller_size = roller_size
+	roller.interactive = interactive
 
 func roll():
 	roller.roll()
