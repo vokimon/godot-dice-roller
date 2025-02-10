@@ -7,6 +7,7 @@
 - ✨ `interactive` flag to enable/disable roll on click
 - ✨ Expose in control the `show_faces` method to represent external rolls
 - 💄Control icon clearer without outline and bigger dices
+- 📝 Improved documentation (README and reference)
 
 ## 1.3.0 (2025-01-28)
 
