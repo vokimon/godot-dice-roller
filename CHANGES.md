@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.4.0 (2025-02-10)
 
 - ✨ New dice: d20
 - ✨ New dice: d10x10

@@ -49,7 +49,7 @@ func _on_tree_button_clicked(item: TreeItem, _column: int, id: int, _mouse_butto
 func _on_tree_item_edited():
 	var item := tree.get_edited()
 	var column := tree.get_edited_column()
-	print("item edited: ", item, " column ", column)
+	#print("item edited: ", item, " column ", column)
 	match column:
 		COL_COLOR:
 			color_picker.color = item.get_metadata(COL_COLOR)

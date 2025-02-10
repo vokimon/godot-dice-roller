@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Godot Dice Roller (UI Control)"
 config/description="A UI control that rolls 3D dices in a box"
-config/version="1.3.0"
+config/version="1.4.0"
 run/main_scene="res://examples/dice_roler/dice_roller_example.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
