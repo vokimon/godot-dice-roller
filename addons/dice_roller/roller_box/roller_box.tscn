@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://rqfuu652op82"]
 
-[ext_resource type="Script" path="res://addons/dice_roller/roller_box/roller_box.gd" id="1_10iax"]
+[ext_resource type="Script" uid="uid://brknapsugro8t" path="res://addons/dice_roller/roller_box/roller_box.gd" id="1_10iax"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_gg0cj"]
 rough = true

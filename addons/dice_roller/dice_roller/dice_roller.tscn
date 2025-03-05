@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cnlssqpge8erk"]
 
-[ext_resource type="Script" path="res://addons/dice_roller/dice_roller/dice_roller.gd" id="1_t7cjj"]
+[ext_resource type="Script" uid="uid://b5v38jipgsfyn" path="res://addons/dice_roller/dice_roller/dice_roller.gd" id="1_t7cjj"]
 [ext_resource type="PackedScene" uid="uid://rqfuu652op82" path="res://addons/dice_roller/roller_box/roller_box.tscn" id="2_l4d7w"]
 
 [node name="DiceRoller" type="Node3D"]

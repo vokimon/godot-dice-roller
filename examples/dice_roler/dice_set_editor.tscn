@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://ckylb177r5dm5"]
 
-[ext_resource type="Script" path="res://examples/dice_roler/dice_set_editor.gd" id="1_5123s"]
+[ext_resource type="Script" uid="uid://cj70etrfut3ml" path="res://examples/dice_roler/dice_set_editor.gd" id="1_5123s"]
 
 [node name="DiceSetEditor" type="ConfirmationDialog"]
 title = "Dice Set Editor"

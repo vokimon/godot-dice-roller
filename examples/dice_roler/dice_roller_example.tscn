@@ -1,8 +1,8 @@
 [gd_scene load_steps=9 format=3 uid="uid://rcpqfanm0w6q"]
 
-[ext_resource type="Script" path="res://examples/dice_roler/dice_roller_example.gd" id="1_2c8eh"]
-[ext_resource type="Script" path="res://addons/dice_roller/dice_roller_control/dice_roller_control.gd" id="2_v500g"]
-[ext_resource type="Script" path="res://addons/dice_roller/dice_def.gd" id="3_ro3eo"]
+[ext_resource type="Script" uid="uid://dc6lp3kclhk51" path="res://examples/dice_roler/dice_roller_example.gd" id="1_2c8eh"]
+[ext_resource type="Script" uid="uid://dsiemp3pev01o" path="res://addons/dice_roller/dice_roller_control/dice_roller_control.gd" id="2_v500g"]
+[ext_resource type="Script" uid="uid://cohd4ovwrydr0" path="res://addons/dice_roller/dice_def.gd" id="3_ro3eo"]
 [ext_resource type="Texture2D" uid="uid://bbettxwvmopka" path="res://addons/dice_roller/dice/d6_dice/d6_dice.svg" id="4_8808l"]
 [ext_resource type="PackedScene" uid="uid://ckylb177r5dm5" path="res://examples/dice_roler/dice_set_editor.tscn" id="6_er2o7"]
 

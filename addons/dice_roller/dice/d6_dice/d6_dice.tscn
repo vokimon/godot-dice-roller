@@ -1,10 +1,10 @@
 [gd_scene load_steps=10 format=3 uid="uid://cpqgcxm5wmtqk"]
 
-[ext_resource type="Script" path="res://addons/dice_roller/dice/d6_dice/d6_dice.gd" id="1_g48gd"]
+[ext_resource type="Script" uid="uid://cctm43po4vuwi" path="res://addons/dice_roller/dice/d6_dice/d6_dice.gd" id="1_g48gd"]
 [ext_resource type="PackedScene" uid="uid://x324c2lmewii" path="res://addons/dice_roller/dice/d6_dice/d6.glb" id="1_loe3q"]
 [ext_resource type="Texture2D" uid="uid://ch6otp30d2hoj" path="res://addons/dice_roller/dice/d6_dice/dice_texture.png" id="2_8nk5g"]
 [ext_resource type="Texture2D" uid="uid://do3xsddtldsbe" path="res://addons/dice_roller/dice/d6_dice/dice_normal_map.png" id="4_ss6sl"]
-[ext_resource type="Shader" path="res://addons/dice_roller/dice/d6_dice/highlight_blur.gdshader" id="5_3sv3t"]
+[ext_resource type="Shader" uid="uid://bitcdkcbeinfk" path="res://addons/dice_roller/dice/d6_dice/highlight_blur.gdshader" id="5_3sv3t"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_gfni6"]
 margin = 0.2
