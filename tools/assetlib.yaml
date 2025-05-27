@@ -3,7 +3,8 @@ category: "1" # 2D Tools
 project_license: AGPLv3
 branch: main # needed for gha on tag builds
 previews:
-- youtube: AD8awHLpFxs
+#- youtube: AD8awHLpFxs # 1.0.4
+- youtube: aPzSeVVpj24 # 1.4.0
 
 - repoimage: screenshots/example-landscape.png
   repothumb: screenshots/example-landscape-thumb.jpg
