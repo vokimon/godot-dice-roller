@@ -53,8 +53,8 @@ shadow_mesh = SubResource("ArrayMesh_xvuis")
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_qq6nv"]
 points = PackedVector3Array(-0.145499, -1.04817, -0.261895, 0.800198, 0.0393735, 0.958435, 0.861027, 0.115879, 0.899754, -0.145925, 1.20691, 0.0483556, 0.91073, 0.0780415, -0.891219, -0.891133, -0.0782795, 0.910645, -0.932765, 0.0784818, -0.85416, 0.0888913, -1.26816, 0.0490441, 0.0880636, 1.25489, -0.0685525, 0.899754, -0.115879, 0.861027, 0.910658, -0.0782807, -0.891147, -0.843047, 0.154978, 0.862741, -0.854041, -0.0784878, -0.932837, -0.145934, -1.20697, 0.0483577, 0.0492303, 1.26816, 0.0887051, -0.802275, 0.115805, -0.918383, -0.918448, -0.115813, -0.802332, 0.958435, 0.0393735, 0.800198, 0.747018, -0.193783, 0.863543, -0.918383, 0.115805, 0.783083, 0.783083, 0.115805, -0.918383, -0.0294862, 1.25475, -0.107785, -0.106537, -1.12501, 0.203515, -0.918448, -0.115813, 0.783137, 0.783137, -0.115813, -0.918448, 0.0486364, -1.24908, -0.107254, 0.782426, 0.308875, -0.647087, -0.820279, -0.0393751, 0.958472, 0.782348, -0.309085, -0.647021, 0.318954, 0.967039, 0.202982, -0.646793, 0.309063, 0.782293, 0.863543, -0.193783, 0.746835)
 
-[sub_resource type="PrismMesh" id="PrismMesh_7o4q1"]
-size = Vector3(3, 2.6, 0.3)
+[sub_resource type="PrismMesh" id="PrismMesh_svqfi"]
+size = Vector3(2.3, 2.05, 0.3)
 
 [node name="d8" type="RigidBody3D"]
 script = ExtResource("2_qq6nv")
@@ -70,7 +70,7 @@ shape = SubResource("ConvexPolygonShape3D_qq6nv")
 [node name="FaceHighligth" type="Node3D" parent="."]
 
 [node name="Mesh" type="MeshInstance3D" parent="FaceHighligth"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.333)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, -0.65)
 material_override = ExtResource("3_svqfi")
-mesh = SubResource("PrismMesh_7o4q1")
+mesh = SubResource("PrismMesh_svqfi")
 skeleton = NodePath("../..")

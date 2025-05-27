@@ -25,15 +25,6 @@ func _init():
 		1: Vector3(+0,-1,+h).normalized(),
 		8: Vector3(+0,-1,-h).normalized(),
 	}
-	highlight_orientation = {}
-	for side in sides:
-		highlight_orientation[side] = Vector3.UP if sides[side].y > 1 else Vector3.DOWN
-	super()
-
-func _ready():
-	var hl: Node3D = $FaceHighligth
-	hl.rotate_y(deg_to_rad(120))
-	var hlmesh: PrismMesh = $FaceHighligth/Mesh.mesh
-	var hlinstance: MeshInstance3D = $FaceHighligth/Mesh
-	#hlinstance.position.y = -hlmesh.size.y * 1.0
+	for side in sides.keys():
+		highlight_orientation[side] = Vector3.DOWN if sides[side].y < 0.0 else Vector3.UP
 	super()
