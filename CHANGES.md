@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- 🏗️ Bump to Godot 4.4
+- ✨ New dice: d8
+- 💄 Unified d10 font with the one used in other dices
+
 ## 1.4.0 (2025-02-10)
 
 - ✨ New dice: d20
