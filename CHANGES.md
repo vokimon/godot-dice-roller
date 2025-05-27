@@ -3,6 +3,7 @@
 ## Unreleased
 
 - 🏗️ Bump to Godot 4.4
+- ✨ Example: Dice set loading and saving
 - ✨ New dice: d8
 - 💄 Unified d10 font with the one used in other dices
 

@@ -5,6 +5,13 @@ extends ConfirmationDialog
 @onready var nsides_popup := $SidesPopup
 @onready var color_popup := $ColorPopup
 @onready var color_picker := $ColorPopup/ColorPicker
+@onready var preset_name_edit := $PresetNameDialog/MarginContainer/VBoxContainer/PresetNameEdit
+
+const diceset_dir = "user://dicesets_v1/"
+
+var load_button : Button
+var save_button : Button
+var preset_list : Array[String] = []
 
 enum {
 	BUTTON_DELETE,
@@ -20,6 +27,71 @@ enum {
 }
 
 func _ready() -> void:
+	setup_dice_list()
+	setup_preset()
+
+
+## Preset methods
+
+func setup_preset():
+
+	load_button = add_button("Load", false, "Load")
+	save_button = add_button("Save", false, "Save")
+	custom_action.connect(_on_custom_action)
+
+	$PresetsPopup.id_pressed.connect(load_preset)
+	preset_name_edit.text_submitted.connect(save_preset)
+
+func _on_custom_action(action: String):
+	match action:
+		"Save":
+			ask_preset_name()
+		"Load":
+			update_preset_list()
+			popup_presets()
+
+func ask_preset_name():
+	preset_name_edit.text=''
+	$PresetNameDialog.popup_centered()
+	preset_name_edit.grab_focus()
+
+func save_preset(preset_name: String):
+	$PresetNameDialog.hide()
+	DirAccess.make_dir_recursive_absolute(diceset_dir)
+	var dice_set := get_dice_set()
+	var config = ConfigFile.new()
+	config.set_value('default','dice_set', dice_set)
+	config.save(diceset_dir.path_join(preset_name + ".diceset"))
+
+func update_preset_list():
+	preset_list = []
+	for file in DirAccess.get_files_at(diceset_dir):
+		if not file.ends_with('.diceset'):
+			continue
+		preset_list.append(file.trim_suffix('.diceset'))
+		
+func popup_presets():
+	var presets_popup : PopupMenu = $PresetsPopup
+	presets_popup.clear()
+	presets_popup.add_separator("Presets")
+	var id = 0
+	for preset in preset_list:
+		presets_popup.add_item(preset, id)
+		id+=1
+	presets_popup.popup()
+
+func load_preset(preset_id: int):
+	var preset_name = preset_list[preset_id]
+	var config = ConfigFile.new()
+	config.load(diceset_dir.path_join(preset_name + ".diceset"))
+	var dice_set = config.get_value('default','dice_set')
+	if not dice_set: return
+	set_dice_set(dice_set)
+
+
+## Dice list methods
+
+func setup_dice_list():
 	for nsides in DiceDef.icons:
 		nsides_popup.add_icon_item(DiceDef.icons[nsides], str(nsides), nsides)
 	nsides_popup.id_pressed.connect(_on_popup_nsides_id_pressed)
@@ -115,7 +187,7 @@ func get_dice_set() -> Array[DiceDef]:
 		def.color = item.get_metadata(COL_COLOR)
 		def.sides = item.get_metadata(COL_SIDES)
 		dice_set.append(def)
-	print(dice_set)
+	#print(dice_set)
 	return dice_set
 
 func clear_dice_set():

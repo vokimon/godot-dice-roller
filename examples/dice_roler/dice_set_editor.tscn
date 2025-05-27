@@ -40,3 +40,28 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="PresetsPopup" type="PopupMenu" parent="."]
+initial_position = 2
+
+[node name="PresetNameDialog" type="PopupPanel" parent="."]
+
+[node name="MarginContainer" type="MarginContainer" parent="PresetNameDialog"]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 164.0
+offset_bottom = 96.0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PresetNameDialog/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PresetNameDialog/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Name the dice set"
+
+[node name="PresetNameEdit" type="LineEdit" parent="PresetNameDialog/MarginContainer/VBoxContainer"]
+layout_mode = 2
