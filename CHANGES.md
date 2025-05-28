@@ -3,9 +3,10 @@
 ## Unreleased
 
 - 🏗️ Bump to Godot 4.4
-- ✨ Example: Dice set loading and saving
+- ✨ Example: Loading and saving dice sets
 - ✨ New dice: d8
-- 💄 Unified d10 font with the one used in other dices
+- 💄 Unified d10 text font with the one used in other dices
+- 🚧 WIP: FDroid metadata generation
 
 ## 1.4.0 (2025-02-10)
 

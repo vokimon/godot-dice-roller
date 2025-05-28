@@ -27,7 +27,7 @@ var roll_time := 0.0
 ## Emited when a roll finishes
 signal roll_finished(int)
 
-func _init():
+func _init() -> void:
 	continuous_cd = false
 	can_sleep = true
 	gravity_scale = 10
@@ -165,6 +165,6 @@ func highlight():
 	prints("side", side, "perpendicular", perpendicular_side)
 	highlight_face.visible = true
 
-func dehighlight():
+func dehighlight() -> void:
 	highlight_face.visible = false
 	
