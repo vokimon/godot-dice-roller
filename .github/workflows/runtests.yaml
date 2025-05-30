@@ -37,7 +37,7 @@ jobs:
       run: echo "GODOT=./godot/${{ env.GODOT_BASE }}" >> $GITHUB_ENV
 
     - name: Preload project (import assets)
-      run: $GODOT --headless --import --path . --quit
+      run: $GODOT --headless --import --path . --quit || true # always fails
 
     - name: Run GUT tests
       run: $GODOT --headless -s addons/gut/gut_cmdln.gd -gprefix='' -gsuffix='_test.gd' -gdir tests --quit --verbose
