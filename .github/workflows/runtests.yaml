@@ -1,33 +1,36 @@
-name: Run Godot Tests
+name: Godot GUT Tests
 
 on:
   push:
-    paths:
-      - '**.gd'
-      - '**.tscn'
-      - '.github/workflows/test.yml'
+    branches: [main]
   pull_request:
+    branches: [main]
+  workflow_dispatch:
 
 jobs:
-  godot-tests:
+  test:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Set up Godot
-        uses: chickensoft-games/setup-godot@v1
+      - name: Checkout repository
+        uses: actions/checkout@v3
         with:
-          version: '4.4.0' # Use exact version you're using
-          headless: true
+          submodules: true
 
-      - name: Run Godot Unit Tests
+      - name: Setup symlink for GUT
         run: |
-          godot --headless --run-tests --quit-after
+          mkdir -p addons
+          ln -sf ../externals/gut/addons/gut addons/gut
 
-      - name: Archive test results (optional)
-        if: always()
-        uses: actions/upload-artifact@v4
+      - name: Run GUT tests using Godot docker image
+        uses: addnab/docker-run-action@v3
         with:
-          name: godot-test-results
-          path: test_results/
+          image: godotengine/godot:4.4.1-headless
+          options: --rm
+          run: >
+            godot --headless
+                  -s addons/gut/gut_cmdln.gd
+                  -gprefix=''
+                  -gsuffix='_test.gd'
+                  -gdir tests
+                  --quit
