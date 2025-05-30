@@ -12,12 +12,10 @@ func after_each():
 
 func test__default_shape():
 	var dice = DiceDef.new()
-	add_cleanup(func(): dice.free())
 	assert_eq(dice.shape.name, "D6", "Default shape should be D6")
 
 func test__shape_migration():
 	var dice = DiceDef.new()
-	add_cleanup(func(): dice.free())
 	dice.sides = 10  # This should migrate to shape 'D10'
 	assert_eq(dice.shape.name, "D10", "Shape migration from sides failed")
 
