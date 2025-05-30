@@ -22,15 +22,8 @@ jobs:
           mkdir -p addons
           ln -sf ../externals/gut/addons/gut addons/gut
 
-      - name: Run GUT tests using Godot docker image
-        uses: addnab/docker-run-action@v3
+      - name: Docker test
+        uses: ceceppa/godot-gut-ci@main
         with:
-          image: godotengine/godot:4.4.1-linux-headless
-          options: --rm
-          run: >
-            godot --headless
-                  -s addons/gut/gut_cmdln.gd
-                  -gprefix=''
-                  -gsuffix='_test.gd'
-                  -gdir tests
-                  --quit
+          godot_version: 3.2.1 # uses godot 3.2.1
+          gut_params: -gdir=res://tests -gsuffix=_test.gd -gprefix=
