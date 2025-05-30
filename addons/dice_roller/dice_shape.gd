@@ -82,9 +82,6 @@ static func get_dice3d(name: String) -> Script:
 static func get_icon(name: String) -> Texture:
 	return get_dice3d(name).get_icon()
 
-static func from_id(name: String) -> DiceShape:
-	return DiceShape.new(name)
-
 func _init(_name: String="D6") -> void:
 	if not _registry.has(_name):
 		push_warning("DiceShape id '%s' is not registered." % _name)
