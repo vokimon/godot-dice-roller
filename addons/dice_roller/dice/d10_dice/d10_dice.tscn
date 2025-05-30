@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://cl827jmle36g2"]
 
-[ext_resource type="PackedScene" uid="uid://dfxj0oqas65ry" path="res://addons/dice_roller/dice/d10_dice/d10.blend" id="1_x4lcl"]
+[ext_resource type="PackedScene" uid="uid://rqxyk2x0ijet" path="res://addons/dice_roller/dice/d10_dice/d10.glb" id="1_x4lcl"]
 [ext_resource type="Texture2D" uid="uid://c5fvpeiddktkp" path="res://addons/dice_roller/dice/d10_dice/d10-texture.png" id="2_e2r1b"]
 [ext_resource type="Script" uid="uid://b1hw0ibnaxs22" path="res://addons/dice_roller/dice/d10_dice/d10_dice.gd" id="2_kfess"]
 [ext_resource type="Material" uid="uid://df72api08qe5j" path="res://addons/dice_roller/dice/highlight_material.tres" id="5_hbgsa"]

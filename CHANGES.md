@@ -3,13 +3,14 @@
 ## Unreleased
 
 - 🏗️ Bump to Godot 4.4 (Damn uuid's)
+- ✨ Use Jolt Physics engine
 - ✨ New dice: d8
-- ✨ Cleaner way to customize dice shapes
+- ✨ Cleaner custom dice shapes
 - ✨ BREAKING: DiceDef attribute 'sides' has become 'shape'
     - 'sides' (int: 6, 10, 100) -> 'shape' (DiceShape: D6, D10, D10x10)
     - DiceDefs will be automatically migrated when loaded and saved
-- ✨ DiceShape selector with icons in Property Editor
-- ✨ Example: Buttons to load and save dice sets
+- ✨ DiceShape icons in Property Editor
+- ✨ Example: Load and saving dice set
 - 💄 Unified d10 text font with the one used in other dices
 - 🚧 WIP: FDroid metadata generation
 

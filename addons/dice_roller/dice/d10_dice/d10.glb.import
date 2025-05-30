@@ -13,8 +13,8 @@ dest_files=["res://.godot/imported/d10.glb-b21da8324e6b14a7dd1cd4eb52202665.scn"
 
 [params]
 
-nodes/root_type=""
-nodes/root_name=""
+nodes/root_type="RigidBody3D"
+nodes/root_name="d10"
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
 nodes/import_as_skeleton_bones=false
