@@ -87,7 +87,9 @@ jobs:
           sed -i "s|ANDROID_KEYSTORE_PASSWORD|$ANDROID_KEYSTORE_PASSWORD|g" $WORKING_DIRECTORY/.godot/export_credentials.cfg
 
       - name: Godot Android export (barichello)
-        run: godot -v --export-release "Android" --headless --quit < /dev/null
+        run: |
+            godot -v --headless --quit < /dev/null
+            godot -v --export-release "Android" --headless --quit < /dev/null
 
       - name: Godot Android export (dulvui)
         if: false
