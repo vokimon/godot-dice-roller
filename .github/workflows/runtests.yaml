@@ -1,0 +1,33 @@
+name: Run Godot Tests
+
+on:
+  push:
+    paths:
+      - '**.gd'
+      - '**.tscn'
+      - '.github/workflows/test.yml'
+  pull_request:
+
+jobs:
+  godot-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Godot
+        uses: chickensoft-games/setup-godot@v1
+        with:
+          version: '4.4.0' # Use exact version you're using
+          headless: true
+
+      - name: Run Godot Unit Tests
+        run: |
+          godot --headless --run-tests --quit-after
+
+      - name: Archive test results (optional)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: godot-test-results
+          path: test_results/

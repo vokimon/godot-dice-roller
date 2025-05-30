@@ -23,7 +23,7 @@ window/handheld/orientation=6
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/dice_roller/plugin.cfg")
+enabled=PackedStringArray("res://addons/dice_roller/plugin.cfg", "res://addons/gut/plugin.cfg")
 
 [physics]
 
