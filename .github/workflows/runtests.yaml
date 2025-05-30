@@ -25,7 +25,7 @@ jobs:
       - name: Run GUT tests using Godot docker image
         uses: addnab/docker-run-action@v3
         with:
-          image: godotengine/godot:4.4.1-headless
+          image: godotengine/godot:4.4.1-linux-headless
           options: --rm
           run: >
             godot --headless
