@@ -12,7 +12,7 @@ func after_each():
 
 func test__default_shape():
 	var dice = DiceDef.new()
-	assert_eq(dice.shape.name, "D666", "Default shape should be D6")
+	assert_eq(dice.shape.name, "D6", "Default shape should be D6")
 
 func test__shape_migration():
 	var dice = DiceDef.new()
