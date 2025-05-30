@@ -32,7 +32,7 @@ jobs:
     permissions:
       contents: write
     container:
-      image: barichello/godot-ci:4.4.1-stable
+      image: barichello/godot-ci:4.4.1
     steps:
       - name: Checkout source code
         uses: actions/checkout@v3
