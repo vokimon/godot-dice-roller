@@ -10,7 +10,8 @@ on:
 env:
   GODOT_VERSION: 4.4.1
   GODOT_MIRROR: https://github.com/godotengine/godot/releases/download
-  GODOT_BASE: Godot_v${{GODOT_VERSION}}-stable_linux.x86_64  # centralized base name
+  GODOT_BASE: Godot_v4.4.1-stable_linux.x86_64  # centralized base name
+
 jobs:
   test:
     runs-on: ubuntu-latest
