@@ -5,13 +5,14 @@
 - 🏗️ Bump to Godot 4.4 (Damn uuid's)
 - ✨ Use Jolt Physics engine
 - ✨ New dice: d8
-- ✨ Example can load and save dice sets
-- ✨ Cleaner way to customize dice shapes
+- ✨ Easier and neater custom dices. Adresses #02.
+- ✨ Custom dice example: Poker dice
+- ✨ Example can load and save dice sets.
 - 💥 BREAKING: DiceDef attribute 'sides' has become 'shape'
     - 'sides' (int: 6, 10, 100) -> 'shape' (DiceShape: D6, D10, D10x10)
-    - DiceDefs in scenes will be automagically migrated after load and save
+    - Legacy DiceDefs automagically migrated after load and save
 - ✨ DiceShape icons in Property Editor
-- 🐛 Import d10 and d10x10 as glb and not directly as blender.
+- 🐛 Import d10 and d10x10 as glb and not directly as blend.
      Not requiring blender installed. Fixes #01.
 - 💄 Unified d10 text font with the one used in other dices
 - 🔧 Add first unit tests and run them in CI
