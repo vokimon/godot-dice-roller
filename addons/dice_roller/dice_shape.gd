@@ -76,12 +76,6 @@ static func options() -> Array:
 	return icons.keys()
 	return _registry.keys()
 
-static func get_dice3d(name: String) -> Script:	
-	return _registry.get(name, null)
-
-static func get_icon(name: String) -> Texture:
-	return get_dice3d(name).get_icon()
-
 func _init(_name: String="D6") -> void:
 	if not _registry.has(_name):
 		push_warning("DiceShape id '%s' is not registered." % _name)
