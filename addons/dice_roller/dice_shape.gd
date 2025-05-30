@@ -67,17 +67,10 @@ static func register(
 		push_warning("DiceShape '%s' is already registered" % id)
 	_registry[id] = dice_class
 
+## Support for legacy DiceDef with sides attribute
 static func from_sides(sides: int) -> DiceShape:
 	push_warning("Legacy setting DiceDef.sides with value: ", sides)
 	return new(sides_to_shapes[sides])
-
-static func to_sides(shape: DiceShape) -> int:
-	push_warning("Legacy access to DiceDef.sides ", shape)
-	var key := shape.to_string() if shape else "not string"
-	if not shapes_to_sides.has(key):
-		push_warning("No DiceShape available for deprecated sides '"+key+"'")
-		return 6
-	return shapes_to_sides[key]
 
 static func options() -> Array:
 	return icons.keys()
