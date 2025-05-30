@@ -5,8 +5,7 @@ class_name DiceShape
 @export var name: String = "D6":
 	set(value):
 		if value not in icons.keys():
-			print("DiceShape: setting UNREGISTERED shape '", value, "'")
-		print("DiceShape: setting shape '", value, "'")
+			push_warning("DiceShape: setting UNREGISTERED shape '", value, "'")
 		name=value
 
 static var _registry: Dictionary = {
@@ -69,14 +68,14 @@ static func register(
 	_registry[id] = dice_class
 
 static func from_sides(sides: int) -> DiceShape:
-	print("Legacy setting DiceDef.sides with value: ", sides)
+	push_warning("Legacy setting DiceDef.sides with value: ", sides)
 	return new(sides_to_shapes[sides])
 
 static func to_sides(shape: DiceShape) -> int:
-	print("Legacy access to DiceDef.sides ", shape)
+	push_warning("Legacy access to DiceDef.sides ", shape)
 	var key := shape.to_string() if shape else "not string"
 	if not shapes_to_sides.has(key):
-		print("Accessing obsolete 'sides' on a new shape '"+key+"'")
+		push_warning("No DiceShape available for deprecated sides '"+key+"'")
 		return 6
 	return shapes_to_sides[key]
 
@@ -97,7 +96,6 @@ func _init(_name: String="D6") -> void:
 	if not _registry.has(_name):
 		push_warning("DiceShape id '%s' is not registered." % _name)
 		print(_registry.keys())
-	print("DiceShape init: '%s'" % _name)
 	name = _name
 
 func _to_string() -> String:
