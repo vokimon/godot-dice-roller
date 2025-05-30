@@ -1,14 +1,6 @@
 @icon("./dice_roller.svg")
 extends Node3D
 class_name DiceRoller
-const DiceScenes = {
-	6: preload("../dice/d6_dice/d6_dice.tscn"),
-	4: preload("../dice/d4_dice/d4_dice.tscn"),
-	8: preload("../dice/d8_dice/d8_dice.tscn"),
-	10: preload("../dice/d10_dice/d10_dice.tscn"),
-	100: preload("../dice/d10x10_dice/d10x10_dice.tscn"),
-	20: preload("../dice/d20_dice/d20_dice.tscn"),
-}
 
 ## Margin away from the walls when repositioning
 const margin = 1.0
@@ -79,6 +71,7 @@ func set_default_dice_set():
 		var dice = DiceDef.new()
 		dice.name = name
 		dice.color = default_set[name].color
+		dice.shape = DiceShape.new("D6")
 		new_set.append(dice)
 	dice_set = new_set
 
@@ -121,13 +114,17 @@ func reload_dices():
 	clear_dices()
 	ensure_valid_and_unique_dice_names()
 	for dice: DiceDef in dice_set:
+		print("reloading dice: ", dice, dice.shape)
 		add_dice_escene(dice)
 	reposition_dices()
 
 func add_dice_escene(dice: DiceDef):
-	var packed_scene: PackedScene = DiceScenes[dice.sides] as PackedScene
-	if not packed_scene:
-		packed_scene = DiceScenes[6]
+	var packed_scene: PackedScene
+	if not dice.shape:
+		print("Shapeless dice def ", dice.name)
+		packed_scene = DiceShape.new("D6").scene()
+	else:
+		packed_scene = dice.shape.scene()
 	var scene = packed_scene.instantiate()
 	scene.name = dice.name
 	scene.dice_color = dice.color
