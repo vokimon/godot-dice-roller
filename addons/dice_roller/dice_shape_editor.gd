@@ -32,15 +32,19 @@ func update_property():
 	var value := get_edited_object().get(get_edited_property())
 	set_control_value(value)
 
+func _set(property: StringName, value: Variant) -> bool:
+	print("- ", property, " = ", value)
+	return false
+
 func setup(property_name: String, initial_value: DiceShape) -> void:
 	update_options()
 	set_control_value(initial_value)
 
 func set_control_value(value: DiceShape):
-	if value != null:
-		print("Null value arrived to the control")
+	if value == null:
+		print("Null value arrived to the control for ", get_edited_object())
 		return
-	print("Setting the widget to the value ", value, " ", value.name)
+	print("Setting the control to the value ", value, " ", value.name)
 	var idx := get_index_by_text(value.name)
 	if idx >= 0:
 		option_button.selected = idx

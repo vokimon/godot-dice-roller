@@ -11,7 +11,7 @@ name = "D6"
 
 [sub_resource type="Resource" id="Resource_qf6gv"]
 script = ExtResource("2_qf6gv")
-name = ""
+name = "Dice"
 color = Color(0.980392, 0.921569, 0.843137, 1)
 shape = SubResource("Resource_lmc47")
 sides = 0

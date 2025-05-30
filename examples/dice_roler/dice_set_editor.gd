@@ -168,7 +168,6 @@ func add_dice_row(shape: DiceShape, color: Color, id: String):
 	item.set_cell_mode(COL_COLOR, TreeItem.CELL_MODE_CUSTOM)
 	item.set_icon(COL_COLOR, color_icon)
 	item.set_icon_modulate(COL_COLOR, color)
-	#item.set_custom_bg_color(COL_COLOR, color)
 	item.set_metadata(COL_COLOR, color)
 	item.set_editable(COL_COLOR, true)
 

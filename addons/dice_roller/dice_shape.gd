@@ -4,9 +4,9 @@ class_name DiceShape
 
 @export var name: String = "D6":
 	set(value):
-		
 		if value not in icons.keys():
-			print("Setting shape to '", value, "'")
+			print("DiceShape: setting UNREGISTERED shape '", value, "'")
+		print("DiceShape: setting shape '", value, "'")
 		name=value
 
 static var _registry: Dictionary = {
@@ -96,7 +96,8 @@ static func from_id(name: String) -> DiceShape:
 func _init(_name: String="D6") -> void:
 	if not _registry.has(_name):
 		push_warning("DiceShape id '%s' is not registered." % _name)
-		print(_registry)
+		print(_registry.keys())
+	print("DiceShape init: '%s'" % _name)
 	name = _name
 
 func _to_string() -> String:
