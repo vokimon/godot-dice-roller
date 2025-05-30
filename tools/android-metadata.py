@@ -89,8 +89,9 @@ def generateIcon(metadata_path):
     ])
 
 def generateMetadata():
-    metadata_path = Path("metadata/en-US")
+    metadata_path = Path("fastlane/metadata/en-US")
     mkdir(metadata_path)
+    Path('fastlane/.gdignore').write_text('')
 
     generateDescriptions(metadata_path)
     generateChangelogs(metadata_path)
