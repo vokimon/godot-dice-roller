@@ -32,8 +32,8 @@ R-r = l * (1-cos(pi/5)) / (2 * sin(pi/5) )
 (R-r)/h = (1-cos(pi/5)) / ( sqrt(3) * sin(pi/5) )
 e2 = asin(1-cos(pi/5)) / ( sqrt(3) * sin(pi/5) )
 
-h = 2 * r * tan(pi/5) * sin(pi/6) = r * tan(pi/5) = 
-e1 = asin(r/h) 
+h = 2 * r * tan(pi/5) * sin(pi/6) = r * tan(pi/5) =
+e1 = asin(r/h)
 e1 = asin(R * cos(pi/5) / h)    # inline r
 e1 = asin(l * cos(pi/5) / (2 * sin(pi/5) * h))    # inline R
 e1 = asin(l * cos(pi/5) / (2 * sin(pi/5) * l * sqrt(3) / 2))  # inline h
@@ -42,6 +42,12 @@ e1 = asin(cos(pi/5) / (sin(pi/5) * sqrt(3) ))    # l and 2 factors out
 Relative size: d6 is 14mm, while d20 is 22mm, so 1.571428571428571
 Source: https://www.dice.co.uk/outlines.htm
 """
+
+static func icon() -> Texture2D:
+	return preload('./d20_dice.svg')
+
+static func scene() -> PackedScene:
+	return preload("./d20_dice.tscn")
 
 func spherical(azimuth: float, elevation: float) -> Vector3:
 	return Vector3(

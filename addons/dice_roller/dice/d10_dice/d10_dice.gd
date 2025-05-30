@@ -2,6 +2,12 @@
 class_name D10Dice
 extends Dice
 
+static func icon() -> Texture2D:
+	return preload('./d10_dice.svg')
+
+static func scene() -> PackedScene:
+	return preload("./d10_dice.tscn")
+
 const face_elevation_radians := deg_to_rad(50.0)
 func face_orientation(sector: int):
 	var azimuth := sector * TAU / 5.0

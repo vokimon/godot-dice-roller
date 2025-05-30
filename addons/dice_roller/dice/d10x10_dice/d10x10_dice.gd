@@ -2,6 +2,12 @@
 class_name D10x10Dice
 extends D10Dice
 
+static func icon() -> Texture2D:
+	return preload('./d10x10_dice.svg')
+
+static func scene() -> PackedScene:
+	return preload("./d10x10_dice.tscn")
+
 func _generate_faces():
 	sides = {
 		50: +face_orientation(+2),

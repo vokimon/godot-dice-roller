@@ -2,6 +2,12 @@
 class_name D6Dice
 extends Dice
 
+static func icon() -> Texture2D:
+	return preload('./d6_dice.svg')
+
+static func scene() -> PackedScene:
+	return preload("./d6_dice.tscn")
+
 func _init():
 	sides = {
 		1: Vector3.LEFT,

@@ -15,6 +15,12 @@ l = |d - (-d)|/sqrt(3) = 2
 d=sqrt(3)
 """
 
+static func icon() -> Texture2D:
+	return preload('./d8_dice.svg')
+
+static func scene() -> PackedScene:
+	return preload("./d8_dice.tscn")
+
 func _init():
 	var h := sqrt(2)
 	sides = {
