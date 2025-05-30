@@ -94,8 +94,8 @@ func load_preset(preset_id: int):
 ## Dice list methods
 
 func setup_dice_list():
-	for shape in DiceShape.options():
-		shapes_popup.add_icon_item(DiceShape.icon_for_shape(shape), shape)
+	for shape_name: String in DiceShape.options():
+		shapes_popup.add_icon_item(DiceShape.icon_for_shape(shape_name), shape_name)
 	shapes_popup.index_pressed.connect(_on_shape_popup_index_pressed)
 	color_picker.color_changed.connect(_on_color_picker_changed)
 
