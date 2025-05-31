@@ -1,4 +1,4 @@
-APPNAME=${APPNAME:=$(cat metadata/en-US/title.txt)}
+APPNAME=${APPNAME:=$(cat fastlane/metadata/en-US/title.txt)}
 KEYSTORE=${KEYSTORE:=vokimon.keystore}
 KEYNAME=${KEYNAME:=vokimon}
 GODOT_BIN=${GODOT_BIN:=../Godot*}
@@ -12,7 +12,7 @@ FINAL_EXPORT=${GODOT_EXPORT:=${APPNAME}-aligned.apk}
 # keytool  -list -keystore ${KEYSTORE}
 
 # Export project for Android
-$GODOT_BIN -v --headless --path . --export-release Android
+$GODOT_BIN -v --headless --path . --export-release Android --quit
 
 # Alinear ficheros, Android>=11, jarsigner<34 (ubuntu instala el 33)
 zipalign -f -v 4 "${GODOT_EXPORT}" "${FINAL_EXPORT}"
