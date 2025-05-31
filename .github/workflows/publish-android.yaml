@@ -96,7 +96,7 @@ jobs:
           DEST="$HOME/.local/share/godot/templates/${VERSION_TAG}"
 
           mkdir -p "$DEST"
-          wget --no-verbose "${BASE_URL}/${FILE_NAME}" -O templates.tpz
+          wget --no-verbose "${URL}" -O templates.tpz
           tar -xvf templates.tpz -C "$DEST"
 
       - name: Cache Godot export templates
