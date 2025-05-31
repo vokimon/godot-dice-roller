@@ -88,7 +88,8 @@ jobs:
 
       - name: Godot Android export (barichello)
         run: |
-            timeout 60s godot -v --import --headless --quit < /dev/null || true
+            timeout 40s $GODOT --headless --import --path . --quit || true # always fails
+            #timeout 60s godot -v --import --headless --quit < /dev/null || true
             godot -v --export-release "Android" --headless --quit < /dev/null
 
       - name: Godot Android export (dulvui)
