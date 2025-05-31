@@ -86,6 +86,24 @@ jobs:
           sed -i "s|ANDROID_KEYSTORE_ALIAS|$ANDROID_KEYSTORE_ALIAS|g" $WORKING_DIRECTORY/.godot/export_credentials.cfg
           sed -i "s|ANDROID_KEYSTORE_PASSWORD|$ANDROID_KEYSTORE_PASSWORD|g" $WORKING_DIRECTORY/.godot/export_credentials.cfg
 
+      - name: Download Godot Export Templates
+        run: |
+          VERSION="${{ env.GODOT_VERSION }}"
+          MAJOR_MINOR=$(echo "$VERSION" | cut -d. -f1-2)
+          BASE_URL="https://downloads.tuxfamily.org/godotengine/${VERSION}"
+          FILE_NAME="Godot_v${VERSION}-stable_export_templates.tpz"
+          DEST="$HOME/.local/share/godot/templates/${VERSION}.stable"
+
+          mkdir -p "$DEST"
+          curl -L "${BASE_URL}/${FILE_NAME}" -o templates.tpz
+          tar -xvf templates.tpz -C "$DEST"
+
+      - name: Cache Godot export templates
+        uses: actions/cache@v4
+        with:
+          path: ~/.local/share/godot/templates/${{ env.GODOT_VERSION }}.stable
+          key: godot-templates-${{ env.GODOT_VERSION }}
+
       - name: Godot Android export (barichello)
         run: |
             timeout 40s $GODOT --headless --import --path . --quit || true # always fails
