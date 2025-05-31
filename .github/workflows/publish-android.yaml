@@ -88,14 +88,15 @@ jobs:
 
       - name: Download Godot Export Templates
         run: |
+          
           VERSION="${{ env.GODOT_VERSION }}"
-          MAJOR_MINOR=$(echo "$VERSION" | cut -d. -f1-2)
-          BASE_URL="https://downloads.tuxfamily.org/godotengine/${VERSION}"
-          FILE_NAME="Godot_v${VERSION}-stable_export_templates.tpz"
-          DEST="$HOME/.local/share/godot/templates/${VERSION}.stable"
+          VERSION_TAG="${VERSION}-stable"
+          FILE_NAME="Godot_v${VERSION_TAG}_export_templates.tpz"
+          URL="https://github.com/godotengine/godot/releases/download/${VERSION_TAG}/${FILE_NAME}"
+          DEST="$HOME/.local/share/godot/templates/${VERSION_TAG}"
 
           mkdir -p "$DEST"
-          wget --quiet "${BASE_URL}/${FILE_NAME}" -O templates.tpz
+          wget --no-verbose "${BASE_URL}/${FILE_NAME}" -O templates.tpz
           tar -xvf templates.tpz -C "$DEST"
 
       - name: Cache Godot export templates
