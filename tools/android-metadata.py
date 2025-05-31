@@ -16,7 +16,7 @@ def last_version(metadata_path):
     digits = 2
     return '.'.join(
         str(int(last_code[i:i+digits]))
-        for i in range(0,len(last_code))
+        for i in range(0,len(last_code),digits)
     )
 
 
@@ -132,8 +132,12 @@ def adapt_android_preset(metadata_path):
     set(options, 'package/name', appname)
     set(options, 'package/unique_name', unique_name)
     set(options, 'launcher_icons/main_192x192', icon_main)
-    with Path("export_presets.cfg").open('w') as output:
+    presets_file = Path("export_presets.cfg")
+    with presets_file.open('w') as output:
         export_presets.write(output)
+    modified = presets_file.read_text().replace(" = ", "=")
+    presets_file.write_text(modified)
+    
 
 
 if __name__ == '__main__':
