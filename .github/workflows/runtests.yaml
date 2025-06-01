@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
+    - name: ⬇️ Checkout repository
       uses: actions/checkout@v3
       with:
         submodules: true
@@ -27,7 +27,7 @@ jobs:
         mkdir -p addons
         ln -sf ../externals/gut/addons/gut addons/gut
 
-    - name: Download Godot Headless
+    - name: ⬇️ Download Godot Headless
       run: |
         wget "${{ env.GODOT_MIRROR }}/${{ env.GODOT_VERSION }}-stable/${{ env.GODOT_BASE }}.zip"
         unzip "${{ env.GODOT_BASE }}.zip" -d godot
@@ -36,8 +36,17 @@ jobs:
     - name: Define GODOT binary path
       run: echo "GODOT=./godot/${{ env.GODOT_BASE }}" >> $GITHUB_ENV
 
-    - name: Preload project (import assets)
+    - name: 🔃 Preload project (import assets)
       run: timeout 40s $GODOT --headless --import --path . --quit || true # always fails
 
-    - name: Run GUT tests
+    - name: ✅ Run GUT tests
       run: $GODOT --headless -s addons/gut/gut_cmdln.gd -gprefix='' -gsuffix='_test.gd' -gdir tests -gexit --verbose
+
+    - name: 📢 Notify status changes
+      if: always()
+      uses: vokimon/gha-notify-telegram
+      with:
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        to: ${{ secrets.TELEGRAM_CHAT_ID }}
+        # the default to false should be more digest
+        report_green_to_green: false
