@@ -2,20 +2,19 @@
 
 ## 1.5.0 (2025-05-30)
 
-- 🏗️ Bump to Godot 4.4 (Damn uuid's)
-- ✨ Use Jolt Physics engine
+- 🏗️ Bump to Godot 4.4: Using Jolt physics and damn uuid
 - ✨ New dice: d8
 - ✨ Easier and neater custom dices. Adresses #02.
 - ✨ Custom dice example: Poker dice
-- ✨ Example can load and save dice sets.
+- ✨ Example app can load and save dice sets.
 - 💥 BREAKING: DiceDef.sides -> 'DiceDefshape'
     - 'sides' (int) -> 'shape' (DiceShape: D6, D10, D10x10)
     - Legacy DiceDefs automagically migrated after load and save
-- ✨ DiceShape icons in Property Editor
-- 🐛 Import d10 and d10x10 as glb and not directly as blend.
+- ✨ DiceShape icons shown in Property Editor
+- 🐛 Import d10 and d10x10 as glb and not as blend.
      Not requiring blender installed. Fixes #01.
 - 💄 Unified d10 text font with the one used in other dices
-- 🔧 Add first unit tests and run them in CI
+- 🔧 Unit tests. Setup CI and notifications.
 - 🚧 WIP: FDroid metadata generation
 
 ## 1.4.0 (2025-02-10)
