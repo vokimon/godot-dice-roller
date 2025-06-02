@@ -97,7 +97,7 @@ jobs:
 
           mkdir -p "$DEST"
           wget --no-verbose "${URL}" -O templates.tpz
-          unzip templates.tpz -C "$DEST"
+          unzip templates.tpz -d "$DEST"
 
       - name: Cache Godot export templates
         uses: actions/cache@v4
