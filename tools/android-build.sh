@@ -5,6 +5,8 @@ GODOT_BIN=${GODOT_BIN:=../Godot*}
 GODOT_EXPORT=${GODOT_EXPORT:=${APPNAME}.apk}
 FINAL_EXPORT=${GODOT_EXPORT:=${APPNAME}-aligned.apk}
 
+mkdir -p build
+
 # Generar clave de firma
 # keytool -genkey -v -v -keystore ${KEYSTORE} -alias ${KEYNAME} -keyalg RSA -keysize 2048 -validity 20000
 

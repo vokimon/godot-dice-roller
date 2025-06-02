@@ -104,6 +104,7 @@ def adapt_android_preset(metadata_path):
     appname = (metadata_path/'title.txt').read_text()
     version = last_version(metadata_path)
     code = version_to_code(version)
+    export_path = (Path('build')/appname.replace(" ", "")).with_suffix('.apk')
     unique_name = 'net.canvoki.godot_dice_roller'
     icon_main = str(metadata_path / 'icon.png')
 
@@ -126,7 +127,7 @@ def adapt_android_preset(metadata_path):
     export_presets = configparser.ConfigParser()
     export_presets.read('tools/export_presets_template.cfg')
     preset, options = get_named_preset(export_presets, "Android")
-    set(preset, 'export_path', f"{appname}.apk")
+    set(preset, 'export_path', str(export_path))
     set(options, 'version/name', version)
     set(options, 'version/code', code)
     set(options, 'package/name', appname)
