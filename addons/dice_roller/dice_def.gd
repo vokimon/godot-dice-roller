@@ -1,4 +1,4 @@
-@icon("./dice/d6_dice/d6_dice_icon.svg")
+@icon("./dice/d6_dice/d6_dice.svg")
 class_name DiceDef
 extends Resource
 
