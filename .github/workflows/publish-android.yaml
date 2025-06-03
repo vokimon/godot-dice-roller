@@ -107,7 +107,7 @@ jobs:
 
       - name: Godot Android export (dulvui)
         #if: false
-        uses: dulvui/godot-android-export@v4.0.4
+        uses: dulvui/godot-android-export@main
         with:
           godot-version: ${{ env.GODOT_VERSION }}
           working-directory: $WORKING_DIRECTORY
