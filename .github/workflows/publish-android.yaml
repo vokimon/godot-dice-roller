@@ -93,7 +93,7 @@ jobs:
           VERSION_TAG="${VERSION}-stable"
           FILE_NAME="Godot_v${VERSION_TAG}_export_templates.tpz"
           URL="https://github.com/godotengine/godot/releases/download/${VERSION_TAG}/${FILE_NAME}"
-          DEST="$HOME/.local/share/godot/templates/${VERSION_TAG}"
+          DEST="$HOME/.local/share/godot/export_templates/${VERSION_TAG}"
 
           mkdir -p "$DEST"
           wget --no-verbose "${URL}" -O templates.tpz
@@ -102,21 +102,21 @@ jobs:
       - name: Cache Godot export templates
         uses: actions/cache@v4
         with:
-          path: ~/.local/share/godot/templates/${{ env.GODOT_VERSION }}.stable
+          path: ~/.local/share/godot/export_templates/${{ env.GODOT_VERSION }}.stable
           key: godot-templates-${{ env.GODOT_VERSION }}
+
+      - name: Godot Android export (dulvui)
+        #if: false
+        uses: dulvui/godot-android-export@v4.0.4
+        with:
+          godot-version: ${{ env.GODOT_VERSION }}
+          working-directory: $WORKING_DIRECTORY
 
       - name: Godot Android export (barichello)
         run: |
             timeout 40s $GODOT --headless --import --path . --quit || true # always fails
             #timeout 60s godot -v --import --headless --quit < /dev/null || true
             godot -v --export-release "Android" --headless --quit < /dev/null
-
-      - name: Godot Android export (dulvui)
-        if: false
-        uses: dulvui/godot-android-export@v4.0.4
-        with:
-          godot-version: ${{ env.GODOT_VERSION }}
-          working-directory: $WORKING_DIRECTORY
 
       - name: Publish to Play Store
         if: false
