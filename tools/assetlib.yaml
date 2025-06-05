@@ -15,6 +15,12 @@ previews:
 - repoimage: screenshots/example-editor.png
   repothumb: screenshots/example-editor-thumb.jpg
 
+- repoimage: screenshots/example-poker.png
+  repothumb: screenshots/example-poker-thumb.jpg
+
+- repoimage: screenshots/example-allshapes.png
+  repothumb: screenshots/example-allshapes-thumb.jpg
+
 description_files:
 - README.md
 - CHANGES.md
