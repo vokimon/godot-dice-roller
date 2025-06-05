@@ -24,7 +24,6 @@ extends Resource
 			shape = DiceShape.from_sides(value)
 			sides = 0 # zero means migrated
 	get():
-		push_error("Using deprecated attribute DiceDef.sides, use shape instead")
 		return sides
 
 func _init():
