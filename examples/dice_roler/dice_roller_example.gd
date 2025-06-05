@@ -32,3 +32,5 @@ func _on_edit_dice_set_button_pressed() -> void:
 func _on_dice_set_editor_confirmed() -> void:
 	var dice_set = $DiceSetEditor.get_dice_set()
 	%DiceRollerControl.dice_set = dice_set
+	var size_factor : float = sqrt(len(dice_set)/3.0)
+	%DiceRollerControl.roller_size = Vector3(size_factor*9.0, 12.0, size_factor*5.0)
