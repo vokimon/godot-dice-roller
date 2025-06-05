@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://dka188l04khpq"]
+[gd_scene load_steps=9 format=3 uid="uid://dka188l04khpq"]
 
 [ext_resource type="Script" uid="uid://dsiemp3pev01o" path="res://addons/dice_roller/dice_roller_control/dice_roller_control.gd" id="1_4x3ke"]
 [ext_resource type="Script" uid="uid://cohd4ovwrydr0" path="res://addons/dice_roller/dice_def.gd" id="2_x51pc"]
+[ext_resource type="Script" uid="uid://xsgh2gwr4gub" path="res://addons/dice_roller/dice_shape.gd" id="3_hn0gh"]
 
 [sub_resource type="Resource" id="Resource_lojf2"]
 script = ExtResource("2_x51pc")
@@ -9,10 +10,15 @@ name = "yellow"
 color = Color(0.980392, 0.854902, 0, 1)
 sides = 20
 
+[sub_resource type="Resource" id="Resource_tvt5a"]
+script = ExtResource("3_hn0gh")
+name = "D6"
+
 [sub_resource type="Resource" id="Resource_f0t8j"]
 script = ExtResource("2_x51pc")
 name = "red"
 color = Color(0.980392, 0.0352941, 0.0470588, 1)
+shape = SubResource("Resource_tvt5a")
 sides = 8
 
 [sub_resource type="Resource" id="Resource_4cw0m"]

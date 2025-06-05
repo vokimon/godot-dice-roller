@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.5.0 (2025-05-30)
+## 1.5.0 (2025-06-05)
 
 - 🏗️ Bump to Godot 4.4: Using Jolt physics and damn uuid
 - ✨ New dice: d8

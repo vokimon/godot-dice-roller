@@ -15,6 +15,7 @@ static var _registry: Dictionary[String, Script] = {
 	'D10': D10Dice,
 	'D10x10': D10x10Dice,
 	'D20': D20Dice,
+	'D12': D12Dice,
 }
 
 static var shapes_to_sides : Dictionary[String, int] = {
