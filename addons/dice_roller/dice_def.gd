@@ -24,7 +24,7 @@ extends Resource
 			shape = DiceShape.from_sides(value)
 			sides = 0 # zero means migrated
 	get():
-		push_warning("Using deprecated attribute DiceDef.sides, use shape instead")
+		push_error("Using deprecated attribute DiceDef.sides, use shape instead")
 		return sides
 
 func _init():
@@ -32,4 +32,4 @@ func _init():
 		self.sides = sides # force migration to shape
 
 func _to_string() -> String:
-	return "DiceDef('"+ name + "' " + str(shape) + " "  + str(color) + " " + str(sides) + ")"
+	return "DiceDef('"+ name + "' " + str(shape) + " "  + str(color) + ")"
