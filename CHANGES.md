@@ -4,9 +4,11 @@
 
 - 🏗️ Bump to Godot 4.4: Using Jolt physics and damn uuid
 - ✨ New dice: d8
+- ✨ New dice: d12
+- ✨ New example custom dice: Poker dice
 - ✨ Easier and neater custom dices. Adresses #02.
-- ✨ Custom dice example: Poker dice
-- ✨ Example app can load and save dice sets.
+- ✨ Example app: loading and saving dice sets
+- ✨ Example app: adapts the roller size to the number of dices
 - 💥 BREAKING: DiceDef.sides -> 'DiceDefshape'
     - 'sides' (int) -> 'shape' (DiceShape: D6, D10, D10x10)
     - Legacy DiceDefs automagically migrated after load and save

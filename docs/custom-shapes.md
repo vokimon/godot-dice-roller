@@ -119,85 +119,47 @@ for more information about formulas and dimensions.
     static func scene() -> PackedScene:
         return preload("./d12_dice.tscn")
     ```
-- Collider:
-    - Open the 3D view. Menu Mesh/Create Collision Shape
-    - Select Placement: Sibbling and Type: Single Convex
-    - Rename the new shape to "CollisionShape3D" -> "Collider" (important for the code to work)
-- Material
-    - Click on DiceMesh
-    - Geometry/Material Override (not Overlay!) / New Standar Material
-    - Material Override / Albedo /Texture/ Load and select the d12-texture.svg
 
-- Normals: indicate which are the normal orientations of each face
-    - 
-- Face orientations indicate how to align the highlight with the face (which way is up) to rotate it around the normal.
+## Collider
 
-- Highlight
-    - Create a sub node named FaceHighligth (sic. with the typo)
-    - Inside FaceHighligth create a MeshInstance3D named Mesh
-    - Mesh -> New Cylinder Mesh (for regular polygons as faces)
-        - Adjust Radial segments to the number of sides of the faces
-        - Reduce the height to have a coin proportion
-        - As material, load `addons/dice_roller/dice/highlight_material.tres`
-    - Initial transforms:
-        - Transform/Rotate X 90 (or -90) To make it face the z axis (in godot, front)
-            - The Dice class will orientate the z axis to the normal of the selected face
-        - Scale it So that it is a little bigger than an actual face
-        - Translate aproximately toward z, more or less, the height of the dice
-        - Translation and scale will be fine adjusted later, but good initial guesses help.
+- Open the 3D view. Menu Mesh/Create Collision Shape
+- Select Placement: Sibbling and Type: Single Convex
+- Rename the new shape to "CollisionShape3D" -> "Collider" (important for the code to work)
 
+## Material
 
+- Click on DiceMesh in the scene
+- Geometry/Material Override (not Overlay!) / New Standar Material
+- Material Override / Albedo /Texture/ Load and select the d12-texture.svg
 
-## Scale, face normals and highlight orientation
+## Normals and highlight orientation
 
+- `_init`, should define `sides` and `highlight_orientation`, and afterwards call `super`
+- They are both dictionaries with the face value as key.
+- `sides` contains the normal of each face
+- `highlight_orientation` contain the up direction when aligning the highlight to the normal
+- If you don't know which normals correspond to each face number
+    - Assign them randomly and we will adjust later
+    - for the `highlight_orientation` just ensure they are not colinear with their normal
+        - colinear orientation and normal generates random orientation which are hard to debug
+    - Adjust normals by rolling and swaping the shown value with the result value.
 
-Faces are regular pentagons of size l.
-The height of the pentagon is:
+## Highlight
 
-    h = l * sqrt(5+2*sqrt(5))/2 ~= 1.539 l
-
-Faces intersect at dha = 116.565°.
-
-
-
-
-By expliting the shape symmetrically aligned with one of the edges,
-If we put two oposite faces horizontally,
-faces adjacents to the top one are at elevation 116.565 - 90 = 26.565°
-Azimuths are just multiples or 360/5=72°.
-Lower half faces normals and orientations are just
-the opposites of the ones on top.
-
-Distance from an edge to the center is phi.
-
-
-Proportions:
-
-- https://crystalmaggie.com/pages/dice-size-chart
-    - 16mm cube -> 19mm height dodecahedron
-- https://www.etsy.com/listing/781780501/dnd-dice-d20-dice-set-dd-dice-table-game?ga_order=most_relevant&pro=1
-    - 14mm cube -> 20mm width dodecahedron
-    - width is the width of the pentagon formed by the widths of the pentagons on one side.
-    - the width of a pentagon is the segment connecting two further edges.
-    - the width of the faces is 1 (they are the edges of the original cube to generate the dodecahedron
-- 
-
-
-
-
-
-
-2h = sqrt(phi² + 1/phi² ) = sqrt( (sqrt(5)+1)^2 + (sqrt(5)-1)^2 ) / 2
- = sqrt( (sqrt(5)+1)^2 + (sqrt(5)-1)^2 ) / 2
- = sqrt( (sqrt(5)+1)^2 + (sqrt(5)-1)^2 ) / 2
- = sqrt(6)
-
-
-(a+1)² + (a-1)^2 = 2(a^2 + 1)
-
-
-
-
-
+- Create a sub node named FaceHighligth (sic. with the typo)
+- Inside FaceHighligth create a MeshInstance3D named Mesh
+- Mesh -> New Cylinder Mesh (for regular polygons as faces)
+    - Adjust Radial segments to the number of sides of the faces
+    - Reduce the height to have a coin proportion
+    - As material, load `addons/dice_roller/dice/highlight_material.tres`
+- Initial transforms:
+    - Transform/Rotate X 90 (or -90) To make it face the z axis (in godot, front)
+        - The Dice class will orientate the z axis to the normal of the selected face
+    - Scale it So that it is a little bigger than an actual face
+    - Translate aproximately toward z, more or less, the height of the dice
+    - Translation and scale will be fine adjusted later, but good initial guesses help.
+- Adjust the `highlight_orientation` vectors so that the highlight is properly oriented with the selected face
+- Adjust translation and scale of `Mesh` to show around the face
+    - Do not adjust using FaceHighligth, since those transforms will be used to orientate it towards the face.
 
 
