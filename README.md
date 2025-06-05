@@ -32,7 +32,7 @@ Documentation: https://github.com/vokimon/godot-dice-roller/blob/main/docs
 
 ![Screenshot Portrait](screenshots/example-portrait.png)
 ![Screenshot Dice set editor](screenshots/example-editor.png)
-![Screenshot Dice set editor](screenshots/example-allshapes.png)
-![Screenshot Dice set editor](screenshots/example-poker.png)
+![Screenshot All avaiable dice shapes](screenshots/example-allshapes.png)
+![Screenshot Playing poker](screenshots/example-poker.png)
 
 
