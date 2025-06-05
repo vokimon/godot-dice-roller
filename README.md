@@ -7,8 +7,8 @@ A Godot UI control that rolls 3D dices in a box.
 ## Features
 
 * Configurable setup:
-    - Dynamic set of dices including d4, d6, d8, d10, d10x10
-    - Customization (color, shapes, drawing, material...)
+    - Dynamic set of dices including d4, d6, d8, d10, d10x10, d20
+    - Easy dice customization (color, shapes, engraving, material...)
     - Configurable rolling box size and color
 
 * 3 ways to roll:
@@ -26,22 +26,8 @@ A Godot UI control that rolls 3D dices in a box.
     - Whichever the resulting size, the camera adapts the zoom to fully see the rolling box floor
     - Automatically rotates the rolling box if the control aspect ratio is inverse to the one of the box
 
-## Usage
 
-* Install the addon in your project from the AssetLib
-    - Exclude files outside `addons/` to avoid conflicts
-* Enable the plugin in the project settings
-* Insert a `DiceRollerControl` as part of your UI
-    - Depending on the layout you might want to set a minimum control size
-    - Setup the dice set attribute with some dices
-    - You might want to adapt the box size to the number of dices to avoid rolls impossible to fit in
-* Trigger a roll by calling `roll()` method on the control.
-    - Alternativelly, use the `quick_roll() to skip physics simulation
-    - Also you may enable the `interactive` flag to roll on click or quickroll on right-click
-* Connect the `rollFinished(value)` to your code
-    - Use the incoming value from the signal as the added value or use the `result()` method
-    - You can also use the `per_dice_result()` to get individual values for each dice
-* You can emulate external rolls with  `show_faces(result)`
+Documentation: https://github.com/vokimon/godot-dice-roller/blob/main/docs
 
 
 ![Screenshot Portrait](screenshots/example-portrait.png)
