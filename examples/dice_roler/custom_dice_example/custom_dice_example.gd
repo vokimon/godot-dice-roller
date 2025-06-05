@@ -20,7 +20,7 @@ static func register():
 	DiceShape.register("Poker", CustomDiceExample)
 
 static func icon() -> Texture2D:
-	return preload("./custom_dice_example.png")
+	return preload("./custom_dice_example.svg")
 
 static func scene() -> PackedScene:
 	return preload("./custom_dice_example.tscn")

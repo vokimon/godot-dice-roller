@@ -1,6 +1,7 @@
 extends Control
 
 func _init() -> void:
+	# This ensures that our custom dice is registered
 	CustomDiceExample.register()
 
 # Called when the node enters the scene tree for the first time.
