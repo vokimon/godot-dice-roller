@@ -143,14 +143,12 @@ The normalized one is
     = sqrt((4phi² + 3phi + 4phi +3)/5)
     = sqrt((4phi +4 + 3phi + 4phi +3)/5)
     = sqrt((11 phi +7)/5)
-    
-
-
+  
 
 ## Canonical to normalized transform
 
-- Rotate on x acos(1/sqrt(5))
-- Scale phi/2
+- Rotate on x acos(1/sqrt(5)) ≃ 31,7175 degrees
+- Scale phi/2 ≃ 0.809017
 
 ## Face normals
 
