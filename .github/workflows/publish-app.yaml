@@ -1,0 +1,92 @@
+name: "godot-ci build-and-release"
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - '.+-[0-9]+.[0-9]+.[0-9]+'
+
+env:
+  GODOT_VERSION: 4.3
+  EXPORT_NAME: godot-dice-roller
+  PROJECT_PATH: .
+  
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-20.04
+    container:
+      image: barichello/godot-ci:main
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          lfs: true
+      - name: Templates
+        run: |
+          mkdir -v -p ~/.local/share/godot/export_templates
+          mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+          ls ~/.local/share/godot/export_templates/
+          ls ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+      - name: GitHub Tag Name
+        run: |
+         echo "Tag name from GITHUB_REF_NAME: $GITHUB_REF_NAME"
+         echo "Tag name from github.ref_name: ${{  github.ref_name }}"
+      - name: Setup folders
+        run: |
+          mkdir -p .godot/editor .godot/imported
+          mkdir -v -p build/windows
+          mkdir -v -p build/web
+          mkdir -v -p build/linux
+          mkdir -v -p build/mac
+          echo "$GITHUB_REF" > build/version.txt
+      - name: Web Build
+        run: |
+          cd $PROJECT_PATH
+          ls
+          godot -v --headless --export-release "HTML5" ../build/web/index.html
+      - name: Windows Build
+        run: |
+          cd $PROJECT_PATH
+          ls
+          godot -v --headless --export-release "Windows Desktop" ../build/windows/$EXPORT_NAME.exe
+      - name: Linux Build
+        run: |
+          cd $PROJECT_PATH
+          ls
+          godot -v --headless --export-release "Linux/X11" ../build/linux/$EXPORT_NAME.x86_64
+      - name: Mac Build
+        run: |
+          cd $PROJECT_PATH
+          ls
+          godot -v --headless --export-release "Mac OSX" ../build/mac/$EXPORT_NAME.zip
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: my-builds
+          path: build
+  release-itchio:
+    name: To itchio
+    needs: build  
+    runs-on: ubuntu-20.04
+    container:
+      image: barichello/godot-ci:4.1.1
+    steps:
+      - name: Download build 
+        uses: actions/download-artifact@v3
+        with:
+          name: my-builds
+      - name: Listar archivos en la carpeta
+        run: |
+          ls
+      - name: Upload bundles
+        env:
+          BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+          ITCH_GAME: ${{ secrets.ITCHIO_GAME }}
+          ITCH_USER: ${{ secrets.ITCHIO_USERNAME }}
+        run: |
+          echo $GITHUB_REF_NAME
+          butler push web $ITCH_USER/$ITCH_GAME:html5 --userversion $GITHUB_REF_NAME
+          butler push windows $ITCH_USER/$ITCH_GAME:windows --userversion $GITHUB_REF_NAME
+          butler push linux $ITCH_USER/$ITCH_GAME:linux --userversion $GITHUB_REF_NAME
+          butler push mac $ITCH_USER/$ITCH_GAME:mac --userversion $GITHUB_REF_NAME
