@@ -61,7 +61,7 @@ jobs:
           ls
           godot -v --headless --export-release "Mac OSX" ../build/mac/$EXPORT_NAME.zip
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: my-builds
           path: build
@@ -73,7 +73,7 @@ jobs:
       image: barichello/godot-ci:4.1.1
     steps:
       - name: Download build 
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: my-builds
       - name: Listar archivos en la carpeta
