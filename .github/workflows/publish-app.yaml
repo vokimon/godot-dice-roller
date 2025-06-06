@@ -23,6 +23,12 @@ jobs:
         with:
           lfs: true
           submodules: true
+
+      - name: Setup symlink for GUT
+        run: |
+          mkdir -p addons
+          ln -sf ../externals/gut/addons/gut addons/gut
+  
       - name: Templates
         run: |
           VERSION="${{ env.GODOT_VERSION }}"
