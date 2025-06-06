@@ -7,17 +7,17 @@ A Godot UI control that rolls 3D dices in a box.
 ## Features
 
 * Configurable setup:
-    - Dynamic set of dices including d4, d6, d8, d10, d10x10, d20
+    - Dynamic set of dices including d4, d6, d8, d10, d10x10, d12, d20
     - Easy dice customization (color, shapes, engraving, material...)
     - Configurable rolling box size and color
 
 * 3 ways to roll:
-    - Physics based dice rolling (slow but cool)
-    - Turning dices to a computer generated random value (faster but unnatural)
-    - Turning dices to a given value (useful when the actual rolling is done remotely)
+    - Physics emulated rolling (slow but cool)
+    - Turn to random generated values (faster but unrealistic)
+    - Turn to given values (useful when the actual rolling is done remotely)
 
 * Easy to integrate in your code:
-    - Trigger rolling programmatically from buttons or shortcuts
+    - Trigger rolling interactivelly o programmatically
     - A signal notifies after the rolling
     - Obtain results for individual dices or add up.
 
