@@ -1,4 +1,4 @@
-name: "godot-ci build-and-release"
+name: Build and release binaries
 
 on:
   workflow_dispatch:
@@ -58,7 +58,7 @@ jobs:
         run: |
           cd $PROJECT_PATH
           ls
-          godot -v --headless --export-release "HTML5" ../build/web/index.html
+          godot -v --headless --export-release "Web" ../build/web/index.html
       - name: Windows Build
         run: |
           cd $PROJECT_PATH
@@ -69,11 +69,11 @@ jobs:
           cd $PROJECT_PATH
           ls
           godot -v --headless --export-release "Linux/X11" ../build/linux/$EXPORT_NAME.x86_64
-      - name: Mac Build
-        run: |
-          cd $PROJECT_PATH
-          ls
-          godot -v --headless --export-release "Mac OSX" ../build/mac/$EXPORT_NAME.zip
+      #- name: Mac Build
+      #  run: |
+      #    cd $PROJECT_PATH
+      #    ls
+      #    godot -v --headless --export-release "Mac OSX" ../build/mac/$EXPORT_NAME.zip
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:

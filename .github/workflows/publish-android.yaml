@@ -1,4 +1,4 @@
-name: Android upload
+name: Android build and upload
 
 on:
   workflow_dispatch:
@@ -38,6 +38,12 @@ jobs:
         uses: actions/checkout@v3
         with:
           submodules: true
+
+      - name: Setup symlink for GUT
+        run: |
+          mkdir -p addons
+          ln -sf ../externals/gut/addons/gut addons/gut
+  
       - name: Godot Asset Lib Client install
         shell: bash
         run: |
