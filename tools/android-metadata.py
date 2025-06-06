@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 # generates android metadata from README.md, CHANGES.md and screenshots
 
 from pathlib import Path
