@@ -93,6 +93,7 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
         with:
+          static_site_generator: static
           artifact_name: web
 
 
