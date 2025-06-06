@@ -83,9 +83,6 @@ jobs:
       - name: Disable jeckyll
         run: touch build/web/.nojekyll
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3.9.3
         with:
@@ -97,6 +94,9 @@ jobs:
           commit_message: "Publish to gh-pages"
 
       # New way, not working yet. Complains on the content of the artifact
+      #- name: Setup Pages
+      #  uses: actions/configure-pages@v5
+
       #- name: Upload Artifact
       #  uses: actions/upload-artifact@v4
       #  with:
