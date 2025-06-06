@@ -7,7 +7,7 @@ on:
       - '.+-[0-9]+.[0-9]+.[0-9]+'
 
 env:
-  GODOT_VERSION: 4.4.1-stable
+  GODOT_VERSION: 4.4.1
   EXPORT_NAME: godot-dice-roller
   PROJECT_PATH: .
 
