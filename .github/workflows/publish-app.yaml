@@ -59,6 +59,27 @@ jobs:
           cd $PROJECT_PATH
           ls
           godot -v --headless --export-release "Web" ./build/web/index.html
+
+      # https://github.com/godotengine/godot-proposals/issues/6616#issuecomment-1513340085
+      - name: Add coi-service-worker
+        run: |
+          git clone https://github.com/gzuidhof/coi-serviceworker.git
+          mv coi-serviceworker/coi-serviceworker.js build/web/coi-serviceworker.js
+          sed -i '3 i <script src="coi-serviceworker.js"></script>' build/web/index.html
+
+      - name: Disable jeckyll
+        run: touch build/web/.nojekyll
+
+      - name: Deploy Web
+        uses: peaceiris/actions-gh-pages@v3.9.3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build/web
+          force_orphan: true
+          user_name: "github-ci[bot]"
+          user_email: "github-actions[bot]@users.noreply.github.com"
+          commit_message: "Publish to gh-pages"
+
       - name: Linux Build
         run: |
           cd $PROJECT_PATH
