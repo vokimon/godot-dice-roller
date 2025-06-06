@@ -24,10 +24,22 @@ jobs:
           lfs: true
       - name: Templates
         run: |
-          mkdir -v -p ~/.local/share/godot/export_templates
-          mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
-          ls ~/.local/share/godot/export_templates/
-          ls ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+
+          find $HOME/.local/share/godot/
+
+          VERSION="${{ env.GODOT_VERSION }}"
+          VERSION_TAG="${VERSION}-stable"
+          FILE_NAME="Godot_v${VERSION_TAG}_export_templates.tpz"
+          URL="https://github.com/godotengine/godot/releases/download/${VERSION_TAG}/${FILE_NAME}"
+          DEST="$HOME/.local/share/godot/export_templates/${VERSION_TAG}"
+
+          mkdir -p "$DEST"
+          wget --no-verbose "${URL}" -O templates.tpz
+          unzip templates.tpz -d "$DEST"
+
+          ls ${DEST}/..
+          ls ${DEST}
+
       - name: GitHub Tag Name
         run: |
          echo "Tag name from GITHUB_REF_NAME: $GITHUB_REF_NAME"
