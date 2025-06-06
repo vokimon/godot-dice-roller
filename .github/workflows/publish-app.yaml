@@ -11,6 +11,17 @@ env:
   EXPORT_NAME: godot-dice-roller
   PROJECT_PATH: .
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 jobs:
   build:
     name: Build
@@ -54,10 +65,9 @@ jobs:
           mkdir -v -p build/linux
           mkdir -v -p build/mac
           echo "$GITHUB_REF" > build/version.txt
+
       - name: Web Build
         run: |
-          cd $PROJECT_PATH
-          ls
           godot -v --headless --export-release "Web" ./build/web/index.html
 
       # https://github.com/godotengine/godot-proposals/issues/6616#issuecomment-1513340085
@@ -70,30 +80,33 @@ jobs:
       - name: Disable jeckyll
         run: touch build/web/.nojekyll
 
-      - name: Deploy Web
-        uses: peaceiris/actions-gh-pages@v3.9.3
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build/web
-          force_orphan: true
-          user_name: "github-ci[bot]"
-          user_email: "github-actions[bot]@users.noreply.github.com"
-          commit_message: "Publish to gh-pages"
+          name: web
+          path: build/web
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+        with:
+          artifact_name: web
+
 
       - name: Linux Build
         run: |
-          cd $PROJECT_PATH
-          ls
           godot -v --headless --export-release "Linux" ./build/linux/$EXPORT_NAME.x86_64
+
       - name: Windows Build
         run: |
-          cd $PROJECT_PATH
-          ls
           godot -v --headless --export-release "Windows Desktop" ./build/windows/$EXPORT_NAME.exe
+
+
       #- name: Mac Build
       #  run: |
-      #    cd $PROJECT_PATH
-      #    ls
       #    godot -v --headless --export-release "Mac OSX" ./build/mac/$EXPORT_NAME.zip
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
