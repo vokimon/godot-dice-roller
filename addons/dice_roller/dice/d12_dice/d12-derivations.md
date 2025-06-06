@@ -118,14 +118,14 @@ Then
 	h = 2(phi²)/sqrt(1+phi²)
 	h = 2(phi²)sqrt(1+phi²)/(1+phi²)
 	h = 2(phi +1)sqrt(1+phi²)/(1+phi²)
-	h = 2sqrt((phi +1)^2(1+phi²))/(1+phi²)
-	h = 2sqrt((phi^2 + 2phi +1)(1+phi²))/(1+phi²)
-	h = 2sqrt((phi +1 + 2phi +1)(1+phi²))/(1+phi²)
-	h = 2sqrt((3phi +2)(1+phi²))/(1+phi²)
-	h = 2sqrt((3phi +2)(phi+2))/(1+phi²)
-	h = 2sqrt(3phi² + 6phi + 2phi +4)/(1+phi²)
-	h = 2sqrt(3phi + 3 + 6phi + 2phi +4)/(1+phi²)
-	h = 2sqrt(11phi + 7)/(1+phi²)  
+	h = 2 sqrt((phi +1)^2(1+phi²))/(1+phi²)
+	h = 2 sqrt((phi^2 + 2phi +1)(1+phi²))/(1+phi²)
+	h = 2 sqrt((phi +1 + 2phi +1)(1+phi²))/(1+phi²)
+	h = 2 sqrt((3phi +2)(1+phi²))/(1+phi²)
+	h = 2 sqrt((3phi +2)(phi+2))/(1+phi²)
+	h = 2 sqrt(3phi² + 6phi + 2phi +4)/(1+phi²)
+	h = 2 sqrt(3phi + 3 + 6phi + 2phi +4)/(1+phi²)
+	h = 2 sqrt(11phi + 7)/(1+phi²)  
 	h = 2 sqrt(11phi + 7) (3-phi) /5  using [ 1/(1+phi^2) = (3-phi)/5 ]
 	h = 2 sqrt((11phi + 7) (3-phi)^2) /5
 	h = 2 sqrt((11phi + 7) (phi^2 -6phi +9)) /5
@@ -134,17 +134,18 @@ Then
 	h = 2 sqrt((11phi + 7) (-phi +2)/5)
 	h = 2 sqrt((-11phi -11 +22phi -7phi +14 ) /5)
 	h = 2 sqrt((+4phi +3 )/5)
-	h = 2 sqrt((+4phi +3 ) /5)
+
+The normalized one is
+
+    h/l = phi * sqrt((+4phi +3 )/5)
+    = sqrt(phi² (+4phi +3 )/5)
+    = sqrt((phi + 1) (+4phi +3 )/5)
+    = sqrt((4phi² + 3phi + 4phi +3)/5)
+    = sqrt((4phi +4 + 3phi + 4phi +3)/5)
+    = sqrt((11 phi +7)/5)
+    
 
 
-	h/l = (phi/2) 2 sqrt((+4phi +3 )/5)
-	= phi (8 -phi )/5
-	= (8phi -phi^2)/5 
-	= (8phi -phi +1)/5 
-	= (7phi +1)/5 
-	= (7 (sqrt(5)+1)/2 +1)/5 
-	= (7*sqrt(5)+7+2)/10
-	= (7*sqrt(5)+9)/10
 
 ## Canonical to normalized transform
 

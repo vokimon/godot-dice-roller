@@ -2,7 +2,7 @@
 
 Step by step tutorial on how to add a new dice shape.
 It is based on the process followed to add the D12 dice.
-Check [its documention](../addons/dice/d12_dice/d12-derivations.md)
+Check [its documention](../addons/dice_roller/dice/d12_dice/d12-derivations.md)
 for more information about formulas and dimensions.
 
 ## Project setup
@@ -78,22 +78,33 @@ for more information about formulas and dimensions.
         - Consider clicking "Remember Export Settings"
 
 
-## Engravings inkscape
+## Icon and face engravings with inkscape
 
-- Copy d12-layout.svg as d12-texture.svg
+Icon:
+
+- The icon will represent your dice shape when choosing one in a dice set.
+- Just take one of the icons and export the same size and keep same margins
+- Godot has problems with fonts in inkscape svg, so if you have any text:
+    - Copy the text
+    - Move the original to a hiden layer (in case you want to modify it later)
+    - Turn the copy into a path (Path/Object to Path)
+
+Face engravings:
+
+- Copy d12-blueprint.svg as d12-texture.svg
 - Open d12-texture.svg
-- Move all the layout to a layer Layout
+- Move all the blueprint to a layer Layout, to hide it later
 - Add a white box as background in its own layer at the bottom
 - Create a new layer for the numbers
 - Use the align tool Cn-sh-A to center the text on the faces (select first the face, then the content)
 - Use the transform tool Cn-sh-M to rotate the numbers +-36 degrees in a controlled way
 - When the text is done, copy the layer with the text, select all the copied texts and Path/Object to Path
-- Hide the layout and the original text layer before saving
+- Hide the blueprint and the original text layer before saving
 
 
 ## Godot import
 
-- Move the glb and the texture layout to a folder for all the d12 files
+- Move the glb and the texture blueprint to a folder for all the d12 files
     - but `.blend` since it gives problems if you don't have it installed
     - In your app just create a folder for it.
     - Integrated in `addons/dice_roller/dice/dice_d12/`
@@ -119,6 +130,43 @@ for more information about formulas and dimensions.
     static func scene() -> PackedScene:
         return preload("./d12_dice.tscn")
     ```
+
+## Registration
+
+If the dice is part of this add-on, you have to add the class
+in the `DiceShape._registry` dictionary in:
+
+https://github.com/vokimon/godot-dice-roller/blob/78e8a1ea4e6c59878cdd91079e1009d466f41019/addons/dice_roller/dice_shape.gd#L11
+
+```python
+static var _registry: Dictionary[String, Script] = {
+    ...
+	'D12': D12Dice, # You add this one
+    ...
+}
+```
+
+
+Else, if the dice is part of your own project using this add-on,
+just ensure you register your class in a early moment of your setup.
+
+In this case, in the `_init` method of your game, or your autoload scripts.
+
+```python
+    D12Dice.register()
+```
+
+And then, in `d12_dice.gd`
+
+```python
+static func register():
+    DiceShape.register("D12", D12Dice)
+```
+
+You can test it works, because your dice will be available as option
+to choose in either a DiceRoller a DiceRollerController
+or in the Dice Set Editor in the Example.
+
 
 ## Collider
 
