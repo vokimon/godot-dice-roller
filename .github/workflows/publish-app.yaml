@@ -22,7 +22,6 @@ concurrency:
   group: "pages"
   cancel-in-progress: false
 
-
 jobs:
   build:
     name: Build
@@ -87,18 +86,29 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3.9.3
         with:
-          name: web
-          path: build/web
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build/web
+          force_orphan: true
+          user_name: "github-ci[bot]"
+          user_email: "github-actions[bot]@users.noreply.github.com"
+          commit_message: "Publish to gh-pages"
 
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-        with:
-          static_site_generator: static
-          artifact_name: web
+      # New way, not working yet. Complains on the content of the artifact
+      #- name: Upload Artifact
+      #  uses: actions/upload-artifact@v4
+      #  with:
+      #    name: web
+      #    path: build/web
+
+      #- name: Deploy to GitHub Pages
+      #  id: deployment
+      #  uses: actions/deploy-pages@v4
+      #  with:
+      #    static_site_generator: static
+      #    artifact_name: web
 
 
       - name: Linux Build
