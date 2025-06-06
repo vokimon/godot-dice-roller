@@ -22,23 +22,21 @@ jobs:
         uses: actions/checkout@v2
         with:
           lfs: true
+          submodules: true
       - name: Templates
         run: |
-
-          find / | grep odot
-
           VERSION="${{ env.GODOT_VERSION }}"
           VERSION_TAG="${VERSION}-stable"
           FILE_NAME="Godot_v${VERSION_TAG}_export_templates.tpz"
           URL="https://github.com/godotengine/godot/releases/download/${VERSION_TAG}/${FILE_NAME}"
           DEST="$HOME/.local/share/godot/export_templates/${VERSION_TAG}"
 
-          mkdir -p "$DEST"
-          wget --no-verbose "${URL}" -O templates.tpz
-          unzip templates.tpz -d "$DEST"
+          # Barichello image already includes the templates.
+          #mkdir -p "$DEST"
+          #wget --no-verbose "${URL}" -O templates.tpz
+          #unzip templates.tpz -d "$DEST"
 
-          ls ${DEST}/..
-          ls ${DEST}
+          find ${DEST}
 
       - name: GitHub Tag Name
         run: |
