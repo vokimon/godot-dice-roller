@@ -31,12 +31,10 @@ jobs:
           URL="https://github.com/godotengine/godot/releases/download/${VERSION_TAG}/${FILE_NAME}"
           DEST="$HOME/.local/share/godot/export_templates/${VERSION_TAG}"
 
-          # Barichello image already includes the templates.
-          #mkdir -p "$DEST"
-          #wget --no-verbose "${URL}" -O templates.tpz
-          #unzip templates.tpz -d "$DEST"
-
-          find ${DEST}
+          # barichello image has templates in /root/, but our $HOME is /github/
+          mkdir -p $HOME/.local/share/godot
+          cp -rv /root/.local/share/godot/export_templates $HOME/.local/share/godot
+          find $HOME/.local/share/godot
 
       - name: GitHub Tag Name
         run: |
