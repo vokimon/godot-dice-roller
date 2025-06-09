@@ -12,7 +12,7 @@ for more information about formulas and dimensions.
     - They crash Godot for CI, and for users not having Blender installed.
     - Place them in the blender/ directory excluded from imports
 - For Dices distributed with the addon place them in
-    `res://addons/dice_roller/mydice`
+    `res://addons/dice_roller/dice/mydice`
 - For Dices in your own project, you can place them anywhere but we recommend to join them in a single folder.
 
 ## Blender construction
