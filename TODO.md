@@ -10,9 +10,17 @@
 - [ ] Godot Editor for dice set attribute editor to look more than the example dice set editor
 - [ ] d20: Review numbers position to match standard dice
 - [ ] d20: Review stability conditions, too bumpy
+- CI:
+    - Android:
+        - [ ] Godot complains ndk and sdk are not in the paths specified in editor config build-tools and platform-tools
+    - All
+        - Automatic upload to the release
 
 ## Done's
 
+- [x] CI: Distribution and deployment web
+- [x] CI: Distribution for windows
+- [x] CI: Distribution for linux
 - [x] D10x10: Should appear as "10x10" and not "100" in dice set editor
     - [x] Unrelate shape identification from the number of sides
 - [x] Example of custom engraving: Poker d6 dices
