@@ -1,4 +1,5 @@
 .godot/
+/build/
 /android/
 
 # Godot-specific ignores
