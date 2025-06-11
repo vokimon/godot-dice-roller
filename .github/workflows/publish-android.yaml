@@ -98,7 +98,7 @@ jobs:
         #if: steps.cache-godot.outputs.cache-hit != 'true'
         shell: bash
         env:
-        SETTINGS: |
+          SETTINGS: |
             export/android/android_sdk_path = "/github/home/.android/sdk"
             export/android/shutdown_adb_on_exit = true
             export/android/force_system_user = false
