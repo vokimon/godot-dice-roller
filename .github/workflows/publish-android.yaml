@@ -53,7 +53,8 @@ jobs:
         shell: bash
         run: |
           python tools/android-metadata.py # generates android metadata from README.md, CHANGES.md and screenshots
-          GODOT_VERSION=$(godot-asset-library-client project-field godot_version)
+          #GODOT_VERSION=$(godot-asset-library-client project-field godot_version)
+          GODOT_VERSION=4.4.1
           APPNAME=$(cat fastlane/metadata/en-US/title.txt)
           VERSION_NAME=$(godot-asset-library-client project-field project_version)
           IFS='.' read -r -a v <<<"$VERSION_NAME"
@@ -130,7 +131,7 @@ jobs:
       - name: 🏗️ Godot Android export (barichello)
         run: |
             mkdir -p build/android
-            timeout 40s $GODOT --headless --import --path . --quit || true # always fails
+            timeout 40s godot --headless --import --path . --quit || true # always fails
             #timeout 60s godot -v --import --headless --quit < /dev/null || true
             godot -v --export-release "Android" --headless --quit < /dev/null
             find build
