@@ -115,6 +115,9 @@ jobs:
           mkdir -p $(dirname "${SETTINGS_FILE}")
           [[ -f "${SETTINGS_FILE}" ]] || echo $SETTINGS_HEADER > ${SETTINGS_FILE}
           echo $SETTINGS >> ${SETTINGS_FILE}
+          ls /usr/lib/jvm/default-java
+          ls /usr/lib/android-sdk
+          cat ${SETTINGS_FILE}
 
       - name: Download Godot Export Templates
         run: |
