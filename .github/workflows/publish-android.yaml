@@ -126,24 +126,34 @@ jobs:
           wget --no-verbose "${URL}" -O templates.tpz
           unzip templates.tpz -d "$DEST"
 
+      - name: Setup
+        run: |
+          mkdir -v -p ~/.local/share/godot/export_templates/
+          mkdir -v -p ~/.config/
+          mv /root/.config/godot ~/.config/godot
+          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+          grep -r root ~/.config/godot
+
       - name: Cache Godot export templates
+        if: false
         uses: actions/cache@v4
         with:
           path: ~/.local/share/godot/export_templates/${{ env.GODOT_VERSION }}.stable
           key: godot-templates-${{ env.GODOT_VERSION }}
 
       - name: Godot Android export (dulvui)
+        if: false
         uses: dulvui/godot-android-export@main
         with:
           godot-version: ${{ env.GODOT_VERSION }}
           working-directory: $WORKING_DIRECTORY
 
       - name: Godot Android export (barichello)
-        if: false
         run: |
             timeout 40s $GODOT --headless --import --path . --quit || true # always fails
             #timeout 60s godot -v --import --headless --quit < /dev/null || true
             godot -v --export-release "Android" --headless --quit < /dev/null
+            find ~
 
       - name: Publish to Play Store
         if: false
