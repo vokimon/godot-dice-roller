@@ -26,7 +26,7 @@ env:
 
 jobs:
 
-  deploy:
+  deploy-android:
     #if: github.ref == 'refs/heads/prod'
     runs-on: ubuntu-latest
     permissions:
@@ -35,17 +35,12 @@ jobs:
       image: barichello/godot-ci:latest
     steps:
 
-      - name: Checkout source code
+      - name: ⬇️ Checkout source code
         uses: actions/checkout@v3
         with:
           submodules: true
 
-      - name: Setup symlink for GUT
-        run: |
-          mkdir -p addons
-          ln -sf ../externals/gut/addons/gut addons/gut
-  
-      - name: Godot Asset Lib Client install
+      - name: ⬇️ Godot Asset Lib Client install
         shell: bash
         run: |
           apt update
@@ -54,7 +49,7 @@ jobs:
           mkdir -p ~/.cache/pip
           pip install --user "godot-asset-library-client>=0.5"
 
-      - name: Read version number and version code
+      - name: 🪪 Read version number and version code
         shell: bash
         run: |
           python tools/android-metadata.py # generates android metadata from README.md, CHANGES.md and screenshots
@@ -67,16 +62,6 @@ jobs:
           echo "APPNAME=$APPNAME" >> $GITHUB_ENV
           echo "VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
           echo "VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV
-
-      - name: Create service-account.json
-        if: false
-        run: echo $SERVICE_ACCOUNT_JSON > service-account.json
-
-      - name: Create keystores
-        if: false
-        run: |
-          echo $ANDROID_KEYSTORE_BASE64 | base64 --decode > release.keystore
-          echo $ANDROID_KEYSTORE_DEBUG_BASE64 | base64 --decode > debug.keystore
 
       - name: Create export_presets.cfg and inject values
         run: |
@@ -94,6 +79,21 @@ jobs:
           sed -i "s|ANDROID_KEYSTORE_ALIAS|$ANDROID_KEYSTORE_ALIAS|g" $WORKING_DIRECTORY/.godot/export_credentials.cfg
           sed -i "s|ANDROID_KEYSTORE_PASSWORD|$ANDROID_KEYSTORE_PASSWORD|g" $WORKING_DIRECTORY/.godot/export_credentials.cfg
 
+      - name: Create keystores
+        if: false
+        run: |
+          echo $ANDROID_KEYSTORE_BASE64 | base64 --decode > release.keystore
+          echo $ANDROID_KEYSTORE_DEBUG_BASE64 | base64 --decode > debug.keystore
+
+      - name: 🔗 Setup symlink for GUT
+        run: |
+          mkdir -p addons
+          ln -sf ../externals/gut/addons/gut addons/gut
+  
+      - name: Create service-account.json
+        if: false
+        run: echo $SERVICE_ACCOUNT_JSON > service-account.json
+
       - name: Set Android SDK path in Godot Editor settings
         #if: steps.cache-godot.outputs.cache-hit != 'true'
         shell: bash
@@ -103,19 +103,20 @@ jobs:
 
             [resource]
           SETTINGS: |
-            export/android/android_sdk_path = "/github/home/.android/sdk"
+            export/android/android_sdk_path = "/usr/lib/android-sdk"
             export/android/shutdown_adb_on_exit = true
             export/android/force_system_user = false
         run: |
           SETTINGS_FILE=~/.config/godot/editor_settings-${{ env.GODOT_VERSION}}.tres
+          echo "PREVIOUS CONTENT"
+          cat $SETTINGS_FILE || true
           mkdir -p $(dirname "${SETTINGS_FILE}")
           [[ -f "${SETTINGS_FILE}" ]] || echo $SETTINGS_HEADER > ${SETTINGS_FILE}
           echo $SETTINGS >> ${SETTINGS_FILE}
-          find ~
 
       - name: Download Godot Export Templates
         run: |
-          
+          find / | grep android_release.apk
           VERSION="${{ env.GODOT_VERSION }}"
           VERSION_TAG="${VERSION}-stable"
           FILE_NAME="Godot_v${VERSION_TAG}_export_templates.tpz"
@@ -126,34 +127,13 @@ jobs:
           wget --no-verbose "${URL}" -O templates.tpz
           unzip templates.tpz -d "$DEST"
 
-      - name: Setup
+      - name: 🏗️ Godot Android export (barichello)
         run: |
-          mkdir -v -p ~/.local/share/godot/export_templates/
-          mkdir -v -p ~/.config/
-          mv /root/.config/godot ~/.config/godot
-          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
-          grep -r root ~/.config/godot
-
-      - name: Cache Godot export templates
-        if: false
-        uses: actions/cache@v4
-        with:
-          path: ~/.local/share/godot/export_templates/${{ env.GODOT_VERSION }}.stable
-          key: godot-templates-${{ env.GODOT_VERSION }}
-
-      - name: Godot Android export (dulvui)
-        if: false
-        uses: dulvui/godot-android-export@main
-        with:
-          godot-version: ${{ env.GODOT_VERSION }}
-          working-directory: $WORKING_DIRECTORY
-
-      - name: Godot Android export (barichello)
-        run: |
+            mkdir -p build/android
             timeout 40s $GODOT --headless --import --path . --quit || true # always fails
             #timeout 60s godot -v --import --headless --quit < /dev/null || true
             godot -v --export-release "Android" --headless --quit < /dev/null
-            find ~
+            find build
 
       - name: Publish to Play Store
         if: false
@@ -171,16 +151,19 @@ jobs:
         run: |
           wget -q https://github.com/google/bundletool/releases/download/1.14.0/bundletool-all-1.14.0.jar
           java -jar bundletool-all-1.14.0.jar build-apks --bundle=${{ env.APPNAME }}.aab --output=${{ env.APPNAME }}.apks \
-          --ks=release.keystore --ks-pass=pass:"$ANDROID_STORE_PASSWORD" --ks-key-alias="$ANDROID_KEYSTORE_ALIAS" \
-          --key-pass=pass:"$ANDROID_KEYSTORE_PASSWORD" --mode=universal
+            --ks=release.keystore --ks-pass=pass:"$ANDROID_STORE_PASSWORD" --ks-key-alias="$ANDROID_KEYSTORE_ALIAS" \
+            --key-pass=pass:"$ANDROID_KEYSTORE_PASSWORD" --mode=universal
           unzip -p ${{ env.APPNAME }}.apks universal.apk > ${{ env.APPNAME }}.apk
 
       # GITHUB RELEASES
       - name: Bundle aab to apk (unsigned)
+        if: false
         run: |
           wget -q https://github.com/google/bundletool/releases/download/1.14.0/bundletool-all-1.14.0.jar
-          java -jar bundletool-all-1.14.0.jar build-apks --bundle=${{ env.APPNAME }}.aab --output=${{ env.APPNAME }}.apks \
-          --mode=universal
+          java -jar bundletool-all-1.14.0.jar build-apks \
+            --bundle=${{ env.APPNAME }}.aab \
+            --output=${{ env.APPNAME }}.apks \
+            --mode=universal
           unzip -p ${{ env.APPNAME }}.apks universal.apk > ${{ env.APPNAME }}.apk
 
       - name: Upload binaries to Github release
@@ -189,6 +172,6 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ./${{ env.APPNAME }}.apk
           asset_name: ${{ env.APPNAME }}.apk
-          tag: ${{ env.VERSION_NAME }}-${{ env.VERSION_CODE }}
+          tag: godot-dice-roller-${{ env.VERSION_NAME }}
           overwrite: true
           body: "${{ env.APPNAME }} - version: ${{ env.VERSION_NAME }} code: ${{ env.VERSION_CODE }}"
