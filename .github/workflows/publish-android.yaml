@@ -119,17 +119,19 @@ jobs:
       - name: Download Godot Export Templates
         run: |
           # /root/.local/share/godot/export_templates/4.4.1.stable/android_release.apk
-          find / | grep android_release.apk
           VERSION="${{ env.GODOT_VERSION }}"
           VERSION_TAG="${VERSION}-stable"
           FILE_NAME="Godot_v${VERSION_TAG}_export_templates.tpz"
           URL="https://github.com/godotengine/godot/releases/download/${VERSION_TAG}/${FILE_NAME}"
           DEST="$HOME/.local/share/godot/export_templates/${VERSION_TAG}"
-          echo $DEST
+          echo "Original path $(find / | grep android_release.apk)"
+          echo "Destinat path $DEST"
+          mkdir -p ~/.local/share
+          cp -r /root/.local/share/godot ~/.local/share/godot
 
-          mkdir -p "$DEST"
-          wget --no-verbose "${URL}" -O templates.tpz
-          unzip templates.tpz -d "$DEST"
+          #mkdir -p "$DEST"
+          #wget --no-verbose "${URL}" -O templates.tpz
+          #unzip templates.tpz -d "$DEST"
 
       - name: 🏗️ Godot Android export (barichello)
         run: |
