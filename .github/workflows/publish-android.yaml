@@ -34,6 +34,7 @@ jobs:
     container:
       image: barichello/godot-ci:latest
     steps:
+
       - name: Checkout source code
         uses: actions/checkout@v3
         with:
@@ -44,17 +45,6 @@ jobs:
           mkdir -p addons
           ln -sf ../externals/gut/addons/gut addons/gut
   
-      - name: Set up JDK 1.8
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: 11
-
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v2
-        with:
-          packages: tools platform-tools
-
       - name: Godot Asset Lib Client install
         shell: bash
         run: |
@@ -104,6 +94,16 @@ jobs:
           sed -i "s|ANDROID_KEYSTORE_ALIAS|$ANDROID_KEYSTORE_ALIAS|g" $WORKING_DIRECTORY/.godot/export_credentials.cfg
           sed -i "s|ANDROID_KEYSTORE_PASSWORD|$ANDROID_KEYSTORE_PASSWORD|g" $WORKING_DIRECTORY/.godot/export_credentials.cfg
 
+      - name: Set Android SDK path in Godot Editor settings
+          #if: steps.cache-godot.outputs.cache-hit != 'true'
+          shell: bash
+          env:
+          SETTINGS: |
+              export/android/android_sdk_path = "/github/home/.android/sdk"
+              export/android/shutdown_adb_on_exit = true
+              export/android/force_system_user = false
+          run: echo $SETTINGS >> ~/.config/godot/editor_settings-3.tres
+
       - name: Download Godot Export Templates
         run: |
           
@@ -124,7 +124,6 @@ jobs:
           key: godot-templates-${{ env.GODOT_VERSION }}
 
       - name: Godot Android export (dulvui)
-        #if: false
         uses: dulvui/godot-android-export@main
         with:
           godot-version: ${{ env.GODOT_VERSION }}
