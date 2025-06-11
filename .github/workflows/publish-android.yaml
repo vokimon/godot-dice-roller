@@ -111,6 +111,7 @@ jobs:
           mkdir -p $(dirname "${SETTINGS_FILE}")
           [[ -f "${SETTINGS_FILE}" ]] || echo $SETTINGS_HEADER > ${SETTINGS_FILE}
           echo $SETTINGS >> ${SETTINGS_FILE}
+          find ~
 
       - name: Download Godot Export Templates
         run: |
