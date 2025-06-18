@@ -52,9 +52,13 @@ jobs:
           DEST="$HOME/.local/share/godot/export_templates/${VERSION_TAG}"
 
           # barichello image has templates in /root/, but our $HOME is /github/
-          mkdir -p $HOME/.local/share/godot
-          cp -rv /root/.local/share/godot/export_templates $HOME/.local/share/godot
-          find $HOME/.local/share/godot
+          if [ "$HOME" != '/root' ]; then
+              mkdir -p $HOME/.local/share/godot
+              cp -rv /root/.local/share/godot/export_templates $HOME/.local/share/godot
+              find $HOME/.local/share/godot
+          else
+              echo 
+          fi
 
       - name: GitHub Tag Name
         run: |

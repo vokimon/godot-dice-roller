@@ -97,6 +97,7 @@ jobs:
 
       - name: Set Android SDK path in Godot Editor settings
         #if: steps.cache-godot.outputs.cache-hit != 'true'
+        if: false
         shell: bash
         env:
           SETTINGS_HEADER: |
@@ -117,26 +118,32 @@ jobs:
           echo "$SETTINGS" >> ${SETTINGS_FILE}
           cat ${SETTINGS_FILE}
 
-      - name: Download Godot Export Templates
+      - name: Setup Environment
         run: |
+          find /root/.config/godot
+          cat /root/.config/godot/editor_settings-*
+          ls /usr/lib/jvm/java-17-openjdk-amd64
+          ls /usr/lib/android-sdk
           # /root/.local/share/godot/export_templates/4.4.1.stable/android_release.apk
           VERSION="${{ env.GODOT_VERSION }}"
           VERSION_TAG="${VERSION}-stable"
           FILE_NAME="Godot_v${VERSION_TAG}_export_templates.tpz"
           URL="https://github.com/godotengine/godot/releases/download/${VERSION_TAG}/${FILE_NAME}"
           DEST="$HOME/.local/share/godot/export_templates/${VERSION_TAG}"
-          echo "Original path $(find / | grep android_release.apk)"
+          echo "Original path $(dirname $(find / | grep android_release.apk))"
           echo "Destinat path $DEST"
-          mkdir -p ~/.local/share
-          cp -r /root/.local/share/godot ~/.local/share/godot
-
-          #mkdir -p "$DEST"
-          #wget --no-verbose "${URL}" -O templates.tpz
-          #unzip templates.tpz -d "$DEST"
+          if [ "$HOME" != "/root" ]; then
+              mkdir -p ~/.local/share
+              cp -r /root/.local/share/godot ~/.local/share/godot
+              mkdir -p ~/.config
+              cp -r /root/.config/godot ~/.config
+          fi
+          mkdir -p build/android
+          ls /usr/lib/jvm/java-17-openjdk-amd64
+          ls /usr/lib/android-sdk
 
       - name: 🏗️ Godot Android export (barichello)
         run: |
-            mkdir -p build/android
             timeout 40s godot --headless --import --path . --quit || true # always fails
             #timeout 60s godot -v --import --headless --quit < /dev/null || true
             godot -v --export-release "Android" --headless --quit < /dev/null
