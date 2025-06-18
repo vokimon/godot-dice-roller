@@ -86,15 +86,15 @@ jobs:
           echo $ANDROID_KEYSTORE_BASE64 | base64 --decode > release.keystore
           echo $ANDROID_KEYSTORE_DEBUG_BASE64 | base64 --decode > debug.keystore
 
+      - name: Create service-account.json
+        if: false
+        run: echo $SERVICE_ACCOUNT_JSON > service-account.json
+
       - name: 🔗 Setup symlink for GUT
         run: |
           mkdir -p addons
           ln -sf ../externals/gut/addons/gut addons/gut
   
-      - name: Create service-account.json
-        if: false
-        run: echo $SERVICE_ACCOUNT_JSON > service-account.json
-
       - name: Set Android SDK path in Godot Editor settings
         #if: steps.cache-godot.outputs.cache-hit != 'true'
         if: false
@@ -120,18 +120,16 @@ jobs:
 
       - name: Setup Environment
         run: |
+          # Barichello image and act cli sets home in /root
+          # with all the configuration and templates.
+          # But Github action runner uses /github as home.
+
+          # Debug
           find /root/.config/godot
           cat /root/.config/godot/editor_settings-*
           ls /usr/lib/jvm/java-17-openjdk-amd64
           ls /usr/lib/android-sdk
-          # /root/.local/share/godot/export_templates/4.4.1.stable/android_release.apk
-          VERSION="${{ env.GODOT_VERSION }}"
-          VERSION_TAG="${VERSION}-stable"
-          FILE_NAME="Godot_v${VERSION_TAG}_export_templates.tpz"
-          URL="https://github.com/godotengine/godot/releases/download/${VERSION_TAG}/${FILE_NAME}"
-          DEST="$HOME/.local/share/godot/export_templates/${VERSION_TAG}"
-          echo "Original path $(dirname $(find / | grep android_release.apk))"
-          echo "Destinat path $DEST"
+
           if [ "$HOME" != "/root" ]; then
               mkdir -p ~/.local/share
               cp -r /root/.local/share/godot ~/.local/share/godot
@@ -139,13 +137,10 @@ jobs:
               cp -r /root/.config/godot ~/.config
           fi
           mkdir -p build/android
-          ls /usr/lib/jvm/java-17-openjdk-amd64
-          ls /usr/lib/android-sdk
 
       - name: 🏗️ Godot Android export (barichello)
         run: |
-            timeout 40s godot --headless --import --path . --quit || true # always fails
-            #timeout 60s godot -v --import --headless --quit < /dev/null || true
+            timeout 60s godot -v --import --headless --quit < /dev/null || true
             godot -v --export-release "Android" --headless --quit < /dev/null
             find build
 
@@ -180,11 +175,17 @@ jobs:
             --mode=universal
           unzip -p ${{ env.APPNAME }}.apks universal.apk > ${{ env.APPNAME }}.apk
 
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-build
+          path: build
+
       - name: Upload binaries to Github release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ./${{ env.APPNAME }}.apk
+          file: build/android/${{ env.APPNAME }}.apk
           asset_name: ${{ env.APPNAME }}.apk
           tag: godot-dice-roller-${{ env.VERSION_NAME }}
           overwrite: true
