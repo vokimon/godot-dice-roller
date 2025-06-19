@@ -120,22 +120,19 @@ jobs:
 
       - name: Setup Environment
         run: |
-          # Barichello image and act cli sets home in /root
-          # with all the configuration and templates.
-          # But Github action runner uses /github as home.
-
-          # Debug
-          find /root/.config/godot
-          cat /root/.config/godot/editor_settings-*
-          ls /usr/lib/jvm/java-17-openjdk-amd64
-          ls /usr/lib/android-sdk
-
+          # Barichello image and act cli setup config and templates
+          # at /root as home, but Github action runner uses /home/github.
+          echo Home set to $HOME
           if [ "$HOME" != "/root" ]; then
+              echo Copying image config and templates to actual home from /root
               mkdir -p ~/.local/share
-              cp -r /root/.local/share/godot ~/.local/share/godot
+              cp -rv /root/.local/share/godot ~/.local/share/godot
               mkdir -p ~/.config
-              cp -r /root/.config/godot ~/.config
+              cp -rv /root/.config/godot ~/.config
+          else
+              echo No need to copy image home, already at $HOME
           fi
+          mkdir -p .godot/editor .godot/imported
           mkdir -p build/android
 
       - name: 🏗️ Godot Android export (barichello)
@@ -143,16 +140,6 @@ jobs:
             timeout 60s godot -v --import --headless --quit < /dev/null || true
             godot -v --export-release "Android" --headless --quit < /dev/null
             find build
-
-      - name: Publish to Play Store
-        if: false
-        uses: r0adkll/upload-google-play@v1
-        with:
-          serviceAccountJson: service-account.json
-          packageName: ${{ env.APPDOMAIN}}
-          releaseFiles: ${{ env.APPNAME }}.aab
-          track: "internal"
-          status: completed
 
       # GITHUB RELEASES
       - name: Bundle aab to apk (signed)
@@ -179,7 +166,17 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: android-build
-          path: build
+          path: build/android
+
+      - name: Publish to Play Store
+        if: false
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJson: service-account.json
+          packageName: ${{ env.APPDOMAIN}}
+          releaseFiles: ${{ env.APPNAME }}.aab
+          track: "internal"
+          status: completed
 
       - name: Upload binaries to Github release
         uses: svenstaro/upload-release-action@v2

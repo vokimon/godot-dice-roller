@@ -55,15 +55,17 @@ jobs:
           if [ "$HOME" != '/root' ]; then
               mkdir -p $HOME/.local/share/godot
               cp -rv /root/.local/share/godot/export_templates $HOME/.local/share/godot
-              find $HOME/.local/share/godot
+              mkdir -p ~/.config
+              cp -r /root/.config/godot ~/.config
           else
-              echo 
+              echo No need to copy image home, already at $HOME
           fi
 
       - name: GitHub Tag Name
         run: |
          echo "Tag name from GITHUB_REF_NAME: $GITHUB_REF_NAME"
          echo "Tag name from github.ref_name: ${{  github.ref_name }}"
+
       - name: Setup folders
         run: |
           mkdir -p .godot/editor .godot/imported
