@@ -1,3 +1,4 @@
+@icon("./custom_dice_example.svg")
 extends D6Dice
 class_name CustomDiceExample
 
