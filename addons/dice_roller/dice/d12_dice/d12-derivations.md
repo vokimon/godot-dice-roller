@@ -137,12 +137,12 @@ Then
 
 The normalized one is
 
-    h/l = phi * sqrt((+4phi +3 )/5)
-    = sqrt(phi² (+4phi +3 )/5)
-    = sqrt((phi + 1) (+4phi +3 )/5)
-    = sqrt((4phi² + 3phi + 4phi +3)/5)
-    = sqrt((4phi +4 + 3phi + 4phi +3)/5)
-    = sqrt((11 phi +7)/5)
+	h/l = phi * sqrt((+4phi +3 )/5)
+	= sqrt(phi² (+4phi +3 )/5)
+	= sqrt((phi + 1) (+4phi +3 )/5)
+	= sqrt((4phi² + 3phi + 4phi +3)/5)
+	= sqrt((4phi +4 + 3phi + 4phi +3)/5)
+	= sqrt((11 phi +7)/5)
   
 
 ## Canonical to normalized transform

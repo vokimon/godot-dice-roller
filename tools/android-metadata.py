@@ -90,17 +90,6 @@ def generateIcon(metadata_path):
         str(metadata_path/'icon.png')
     ])
 
-def generateMetadata():
-    metadata_path = Path("fastlane/metadata/en-US")
-    mkdir(metadata_path)
-    Path('fastlane/.gdignore').write_text('')
-
-    generateDescriptions(metadata_path)
-    generateChangelogs(metadata_path)
-    generateImages(metadata_path)
-    generateIcon(metadata_path)
-    adapt_android_preset(metadata_path)
-
 
 def adapt_android_preset(metadata_path):
     appname = (metadata_path/'title.txt').read_text()
@@ -140,7 +129,19 @@ def adapt_android_preset(metadata_path):
         export_presets.write(output)
     modified = presets_file.read_text().replace(" = ", "=")
     presets_file.write_text(modified)
-    
+
+
+def generateMetadata():
+    metadata_path = Path("fastlane/metadata/en-US")
+    mkdir(metadata_path)
+    Path('fastlane/.gdignore').write_text('')
+
+    generateDescriptions(metadata_path)
+    generateChangelogs(metadata_path)
+    generateImages(metadata_path)
+    generateIcon(metadata_path)
+    adapt_android_preset(metadata_path)
+
 
 
 if __name__ == '__main__':
