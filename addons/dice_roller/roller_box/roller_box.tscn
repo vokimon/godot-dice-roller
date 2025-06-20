@@ -23,7 +23,6 @@ physics_material_override = SubResource("PhysicsMaterial_gg0cj")
 script = ExtResource("1_10iax")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
-snap = 0.01
 use_collision = true
 flip_faces = true
 size = Vector3(10, 16, 6)
@@ -42,10 +41,15 @@ fov = 9.90325
 shape = SubResource("SphereShape3D_6p0cb")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.70639, -0.33215, -0.625052, -0.706238, 0.389796, 0.591005, 0.0473406, 0.858915, -0.509925, -3.22313, 5.76738, -2.54457)
+transform = Transform3D(-0.969936, -0.180272, -0.163478, -0.181251, 0.0868692, 0.979593, -0.162392, 0.979773, -0.116932, -3.32804, 5.76738, -2.54457)
+light_energy = 0.278
+shadow_enabled = true
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.84368, 5.34732, 1.83483)
+light_color = Color(2.64719e-06, 0.557616, 0.517154, 1)
+light_energy = 0.515
+shadow_enabled = true
 omni_range = 57.247
 omni_attenuation = 1.172
 

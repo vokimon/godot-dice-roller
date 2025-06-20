@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- 💄 Class icon for Poker dice
+- 💄 Dices cast shadows, lights adjusted
+- 🔧 Working workflows for Android, Windows, Linux and Web
+
 ## 1.5.0 (2025-06-05)
 
 - 🏗️ Bump to Godot 4.4: Using Jolt physics and damn uuid
