@@ -7,6 +7,9 @@
    id="svg287"
    sodipodi:docname="d12-texture.svg"
    inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   inkscape:export-filename="d12-texture.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -23,15 +26,15 @@
      inkscape:pagecheckerboard="1"
      inkscape:deskcolor="#505050"
      showgrid="false"
-     inkscape:zoom="0.56623785"
-     inkscape:cx="-13.245317"
-     inkscape:cy="517.4504"
+     inkscape:zoom="1.0966797"
+     inkscape:cx="512"
+     inkscape:cy="188.75156"
      inkscape:window-width="1829"
      inkscape:window-height="957"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer2" />
+     inkscape:current-layer="g453" />
   <desc
      id="desc261">d12.blend, (Blender 4.3.2)</desc>
   <g
@@ -57,84 +60,84 @@
        stroke-width="1"
        fill="#cccccc"
        fill-opacity="0.25"
-       points="716.194,444.597 759.986,579.417 901.74,579.424 945.553,444.611 830.874,361.287 "
+       points="901.74,579.424 945.553,444.611 830.874,361.287 716.194,444.597 759.986,579.417 "
        id="polygon263" />
     <polygon
        stroke="#000000"
        stroke-width="1"
        fill="#cccccc"
        fill-opacity="0.25"
-       points="486.808,880.867 601.5,797.561 557.708,662.742 415.954,662.727 372.141,797.54 "
+       points="557.708,662.742 415.954,662.727 372.141,797.54 486.808,880.867 601.5,797.561 "
        id="polygon265" />
     <polygon
        stroke="#000000"
        stroke-width="1"
        fill="#cccccc"
        fill-opacity="0.25"
-       points="672.388,579.412 716.194,444.597 601.515,361.273 486.835,444.595 530.634,579.405 "
+       points="601.515,361.273 486.835,444.595 530.634,579.405 672.388,579.412 716.194,444.597 "
        id="polygon267" />
     <polygon
        stroke="#000000"
        stroke-width="1"
        fill="#cccccc"
        fill-opacity="0.25"
-       points="186.594,662.713 230.387,797.533 372.141,797.54 415.954,662.727 301.275,579.403 "
+       points="372.141,797.54 415.954,662.727 301.275,579.403 186.594,662.713 230.387,797.533 "
        id="polygon269" />
     <polygon
        stroke="#000000"
        stroke-width="1"
        fill="#cccccc"
        fill-opacity="0.25"
-       points="787.082,226.467 830.874,361.287 972.628,361.302 1016.441,226.489 901.774,143.161 "
+       points="972.628,361.302 1016.441,226.489 901.774,143.161 787.082,226.467 830.874,361.287 "
        id="polygon271" />
     <polygon
        stroke="#000000"
        stroke-width="1"
        fill="#cccccc"
        fill-opacity="0.25"
-       points="645.328,226.46 787.082,226.467 830.888,91.652 716.209,8.328 601.529,91.65 "
+       points="830.888,91.652 716.209,8.328 601.529,91.65 645.328,226.46 787.082,226.467 "
        id="polygon273" />
     <polygon
        stroke="#000000"
        stroke-width="1"
        fill="#cccccc"
        fill-opacity="0.25"
-       points="1.028,797.511 115.695,880.839 230.387,797.533 186.594,662.713 44.841,662.698 "
+       points="230.387,797.533 186.594,662.713 44.841,662.698 1.028,797.511 115.695,880.839 "
        id="polygon275" />
     <polygon
        stroke="#000000"
        stroke-width="1"
        fill="#cccccc"
        fill-opacity="0.25"
-       points="530.634,579.405 486.835,444.595 345.081,444.588 301.275,579.403 415.954,662.727 "
+       points="345.081,444.588 301.275,579.403 415.954,662.727 530.634,579.405 486.835,444.595 "
        id="polygon277" />
     <polygon
        stroke="#000000"
        stroke-width="1"
        fill="#cccccc"
        fill-opacity="0.25"
-       points="186.581,932.348 301.26,1015.672 415.94,932.35 372.141,797.54 230.387,797.533 "
+       points="415.94,932.35 372.141,797.54 230.387,797.533 186.581,932.348 301.26,1015.672 "
        id="polygon279" />
     <polygon
        stroke="#000000"
        stroke-width="1"
        fill="#cccccc"
        fill-opacity="0.25"
-       points="645.328,226.46 601.515,361.273 716.194,444.597 830.874,361.287 787.082,226.467 "
+       points="716.194,444.597 830.874,361.287 787.082,226.467 645.328,226.46 601.515,361.273 "
        id="polygon281" />
     <polygon
        stroke="#000000"
        stroke-width="1"
        fill="#cccccc"
        fill-opacity="0.25"
-       points="459.761,361.258 601.515,361.273 645.328,226.46 530.661,143.133 415.969,226.439 "
+       points="645.328,226.46 530.661,143.133 415.969,226.439 459.761,361.258 601.515,361.273 "
        id="polygon283" />
     <polygon
        stroke="#000000"
        stroke-width="1"
        fill="#cccccc"
        fill-opacity="0.25"
-       points="115.729,444.576 71.916,579.389 186.594,662.713 301.275,579.403 257.483,444.583 "
+       points="186.594,662.713 301.275,579.403 257.483,444.583 115.729,444.576 71.916,579.389 "
        id="polygon285" />
   </g>
   <g
@@ -292,7 +295,7 @@
      style="display:inline">
     <g
        aria-label="11"
-       transform="scale(-1)"
+       transform="rotate(180,4.0815673,2.752624)"
        id="text407"
        style="font-size:148.421px;-inkscape-font-specification:sans-serif;text-align:center;text-anchor:middle;stroke-width:270.68;stroke-linecap:round;stop-color:#000000">
       <path
