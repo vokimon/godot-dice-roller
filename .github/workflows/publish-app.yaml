@@ -137,10 +137,11 @@ jobs:
         with:
           name: my-builds
           path: build
+
   release-itchio:
     name: To itchio
     needs: build  
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     container:
       image: barichello/godot-ci:latest
     steps:
@@ -148,7 +149,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: my-builds
-      - name: Listar archivos en la carpeta
+      - name: Debug
         run: |
           ls
       - name: Upload bundles
@@ -161,4 +162,4 @@ jobs:
           butler push web $ITCH_USER/$ITCH_GAME:html5 --userversion $GITHUB_REF_NAME
           butler push windows $ITCH_USER/$ITCH_GAME:windows --userversion $GITHUB_REF_NAME
           butler push linux $ITCH_USER/$ITCH_GAME:linux --userversion $GITHUB_REF_NAME
-          butler push mac $ITCH_USER/$ITCH_GAME:mac --userversion $GITHUB_REF_NAME
+          #butler push mac $ITCH_USER/$ITCH_GAME:mac --userversion $GITHUB_REF_NAME
