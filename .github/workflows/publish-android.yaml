@@ -55,7 +55,7 @@ jobs:
           python tools/android-metadata.py # generates android metadata from README.md, CHANGES.md and screenshots
           #GODOT_VERSION=$(godot-asset-library-client project-field godot_version)
           GODOT_VERSION=4.4.1
-          APPNAME=$(cat fastlane/metadata/en-US/title.txt)
+          APPNAME=$(cat fastlane/metadata/en-US/title.txt | sed 's/ //g'")
           VERSION_NAME=$(godot-asset-library-client project-field project_version)
           IFS='.' read -r -a v <<<"$VERSION_NAME"
           VERSION_CODE=$(printf "%03d" ${v[*]})
