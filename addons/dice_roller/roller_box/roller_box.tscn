@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://rqfuu652op82"]
+[gd_scene load_steps=5 format=3 uid="uid://rqfuu652op82"]
 
 [ext_resource type="Script" uid="uid://brknapsugro8t" path="res://addons/dice_roller/roller_box/roller_box.gd" id="1_10iax"]
 
@@ -11,8 +11,6 @@ albedo_color = Color(0, 0.282353, 0, 1)
 rim_enabled = true
 rim = 0.73
 rim_tint = 0.64
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_6p0cb"]
 
 [sub_resource type="Environment" id="Environment_uo4yi"]
 
@@ -36,9 +34,6 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 50,
 keep_aspect = 0
 current = true
 fov = 9.90325
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("SphereShape3D_6p0cb")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.969936, -0.180272, -0.163478, -0.181251, 0.0868692, 0.979593, -0.162392, 0.979773, -0.116932, -3.32804, 5.76738, -2.54457)
