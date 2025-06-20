@@ -66,9 +66,9 @@ jobs:
 
       - name: Create export_presets.cfg and inject values
         run: |
-          sed -i "s|VERSION_CODE|$VERSION_CODE|g" $WORKING_DIRECTORY/export_presets.cfg
-          sed -i "s|VERSION_NAME|$VERSION_NAME|g" $WORKING_DIRECTORY/export_presets.cfg
           sed -i "s|APPNAME|$APPNAME|g" $WORKING_DIRECTORY/export_presets.cfg
+          sed -i "s|VERSION_NAME|$VERSION_NAME|g" $WORKING_DIRECTORY/export_presets.cfg
+          sed -i "s|VERSION_CODE|$VERSION_CODE|g" $WORKING_DIRECTORY/export_presets.cfg
 
       - name: Create export_credentials.cfg and inject values
         if: false

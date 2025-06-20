@@ -43,28 +43,20 @@ jobs:
           mkdir -p addons
           ln -sf ../externals/gut/addons/gut addons/gut
   
-      - name: Templates
+      - name: Setup godot environment
         run: |
-          VERSION="${{ env.GODOT_VERSION }}"
-          VERSION_TAG="${VERSION}-stable"
-          FILE_NAME="Godot_v${VERSION_TAG}_export_templates.tpz"
-          URL="https://github.com/godotengine/godot/releases/download/${VERSION_TAG}/${FILE_NAME}"
-          DEST="$HOME/.local/share/godot/export_templates/${VERSION_TAG}"
-
-          # barichello image has templates in /root/, but our $HOME is /github/
-          if [ "$HOME" != '/root' ]; then
+          # Barichello image and act cli setup config and templates
+          # at /root as home, but Github action runner uses /home/github.
+          echo Home set to $HOME
+          if [ "$HOME" != "/root" ]; then
+              echo Copying image config and templates to actual home from /root
               mkdir -p $HOME/.local/share/godot
               cp -rv /root/.local/share/godot/export_templates $HOME/.local/share/godot
               mkdir -p ~/.config
-              cp -r /root/.config/godot ~/.config
+              cp -rv /root/.config/godot ~/.config
           else
               echo No need to copy image home, already at $HOME
           fi
-
-      - name: GitHub Tag Name
-        run: |
-         echo "Tag name from GITHUB_REF_NAME: $GITHUB_REF_NAME"
-         echo "Tag name from github.ref_name: ${{  github.ref_name }}"
 
       - name: Setup folders
         run: |
@@ -74,6 +66,11 @@ jobs:
           mkdir -v -p build/linux
           mkdir -v -p build/mac
           echo "$GITHUB_REF" > build/version.txt
+
+      - name: GitHub Tag Name
+        run: |
+         echo "Tag name from GITHUB_REF_NAME: $GITHUB_REF_NAME"
+         echo "Tag name from github.ref_name: ${{  github.ref_name }}"
 
       - name: Web Build
         run: |
