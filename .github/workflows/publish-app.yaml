@@ -196,6 +196,7 @@ jobs:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
           ITCH_GAME: ${{ secrets.ITCHIO_GAME }}
           ITCH_USER: ${{ secrets.ITCHIO_USERNAME }}
+        shell: bash
         run: |
           pushd build/web
           zip -r ${{env.ASSET_PREFIX}}-web.zip .
