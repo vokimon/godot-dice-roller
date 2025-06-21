@@ -170,7 +170,7 @@ jobs:
           name: ${{env.ASSET_PREFIX}}-exports
           path: build
 
-      - name: 🔼🐙 Upload binaries to Github release
+      - name: 🔼🐙 Upload binaries to Github release (svenstaro)
         if: false
         uses: svenstaro/upload-release-action@v2
         with:
@@ -180,7 +180,7 @@ jobs:
           tag: ${{env.ASSET_PREFIX}}
           overwrite: false
 
-      - name: 🔼🐙 Upload Release
+      - name: 🔼🐙 Upload binaries to Github release (ncipollo)
         if: false
         uses: ncipollo/release-action@v1
         with:
@@ -191,29 +191,19 @@ jobs:
           artifacts: ""
           bodyFile: fastlane/metadata/en-US/changelogs/${{env.VERSION_CODE}}.txt
   
-  release-itchio:
-    name: To itchio
-    needs: build  
-    runs-on: ubuntu-24.04
-    container:
-      image: barichello/godot-ci:latest
-    steps:
-      - name: Download build 
-        uses: actions/download-artifact@v4
-        with:
-          name: ${{env.ASSET_PREFIX}}-exports
-      - name: Debug
-        run: |
-          find
       - name: Upload bundles
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
           ITCH_GAME: ${{ secrets.ITCHIO_GAME }}
           ITCH_USER: ${{ secrets.ITCHIO_USERNAME }}
         run: |
-          butler push web $ITCH_USER/$ITCH_GAME:web --userversion $VERSION_NAME
-          butler push windows $ITCH_USER/$ITCH_GAME:windows --userversion $VERSION_NAME
-          butler push linux $ITCH_USER/$ITCH_GAME:linux --userversion $VERSION_NAME
+          pushd build/web
+          zip -r ${{env.ASSET_PREFIX}}-web.zip .
+          popd
+          butler push build/windows/${{env.ASSET_PREFIX}}-windows.exe $ITCH_USER/$ITCH_GAME:windows --userversion $VERSION_NAME
+          butler push build/linux/${{env.ASSET_PREFIX}}-linux.x86_64 $ITCH_USER/$ITCH_GAME:linux --userversion $VERSION_NAME
+          butler push build/web/${{env.ASSET_PREFIX}}-web.zip $ITCH_USER/$ITCH_GAME:web --userversion $VERSION_NAME
+          butler push build/web/${{env.ASSET_PREFIX}}-android.apk $ITCH_USER/$ITCH_GAME:android --userversion $VERSION_NAME
           #butler push mac $ITCH_USER/$ITCH_GAME:mac --userversion $VERSION_NAME
 
 
