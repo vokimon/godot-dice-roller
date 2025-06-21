@@ -71,7 +71,7 @@ jobs:
           echo "ASSET_PREFIX=$ASSET_PREFIX" >> $GITHUB_ENV
           cat $GITHUB_ENV
 
-      - name: Create Android keystores
+      - name: 🔑🤖Create Android keystores
         run: |
           if [ -n "${{secrets.ANDROID_KEYSTORE_RELEASE_BASE64}}" ]; then
             echo ${{secrets.ANDROID_KEYSTORE_RELEASE_BASE64}} | base64 --decode > release.keystore
@@ -107,8 +107,17 @@ jobs:
         run: |
             mkdir -p build/android
             timeout 60s godot -v --import --headless --quit < /dev/null || true
-            godot -v --export-release "Android" --headless --quit ./build/android/$EXPORT_NAME-$VERSION_NAME-android.apk < /dev/null
+            godot -v --export-release "Android" --headless --quit ./build/android/$ASSET_PREFIX-android.apk < /dev/null
             find build
+
+      - name: 🔑🤖 Sign android package
+        run: |
+            apksigner sign \
+                --ks ${GODOT_ANDROID_KEYSTORE_DEBUG_PATH} \
+                --ks-key-pass env:GODOT_ANDROID_KEYSTORE_DEBUG_PASSWORD \
+                --ks-key-alias ${{env.GODOT_ANDROID_KEYSTORE_DEBUG_USER}} \
+                ./build/android/$ASSET_PREFIX-android.apk
+
 
       # GITHUB RELEASES
       - name: Bundle aab to apk (signed)
@@ -139,7 +148,7 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: android-build
+          name: ${{env.ASSET_PREFIX}}-android-build
           path: build/android
 
       - name: Create service-account.json
