@@ -112,10 +112,12 @@ jobs:
 
       - name: 🔑🤖 Sign android package
         run: |
+            find build
+            ls
             apksigner sign \
-                --ks ${GODOT_ANDROID_KEYSTORE_DEBUG_PATH} \
-                --ks-key-pass env:GODOT_ANDROID_KEYSTORE_DEBUG_PASSWORD \
-                --ks-key-alias ${{env.GODOT_ANDROID_KEYSTORE_DEBUG_USER}} \
+                --ks "${GODOT_ANDROID_KEYSTORE_DEBUG_PATH}" \
+                --ks-pass env:GODOT_ANDROID_KEYSTORE_DEBUG_PASSWORD \
+                --ks-key-alias "${{env.GODOT_ANDROID_KEYSTORE_DEBUG_USER}}" \
                 ./build/android/$ASSET_PREFIX-android.apk
 
 
