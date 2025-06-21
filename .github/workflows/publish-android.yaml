@@ -45,7 +45,7 @@ jobs:
         shell: bash
         run: |
           apt update
-          apt install -y imagemagick python3-pip python-is-python3
+          apt install -y imagemagick python3-pip python-is-python3 apksigner
           echo ~/.local/bin >> $GITHUB_PATH
           mkdir -p ~/.cache/pip
           pip install --user "godot-asset-library-client>=0.5"
