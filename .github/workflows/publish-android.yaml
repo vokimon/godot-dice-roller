@@ -13,13 +13,14 @@ on:
   #    - "export_presets.android.example"
 
 env:
-  ANDROID_SERVICE_ACCOUNT_JSON: ${{ secrets.ANDROID_SERVICE_ACCOUNT_JSON }}
-  ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
-  ANDROID_KEYSTORE_ALIAS: ${{ secrets.ANDROID_KEYSTORE_ALIAS }}
-  ANDROID_STORE_PASSWORD: ${{ secrets.ANDROID_STORE_PASSWORD }}
-  ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-  ANDROID_KEYSTORE_DEBUG_BASE64: ${{ secrets.ANDROID_KEYSTORE_DEBUG_BASE64 }}
-  SERVICE_ACCOUNT_JSON: ${{ secrets.ANDROID_SERVICE_ACCOUNT_JSON }}
+  GODOT_ANDROID_KEYSTORE_RELEASE_USER:  ${{ secrets.ANDROID_KEYSTORE_RELEASE_ALIAS }}
+  GODOT_ANDROID_KEYSTORE_RELEASE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_RELEASE_PASSWORD }}
+  GODOT_ANDROID_KEYSTORE_DEBUG_USER:  ${{ secrets.ANDROID_KEYSTORE_DEBUG_ALIAS }}
+  GODOT_ANDROID_KEYSTORE_DEBUG_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_DEBUG_PASSWORD }}
+
+  #ANDROID_SERVICE_ACCOUNT_JSON: ${{ secrets.ANDROID_SERVICE_ACCOUNT_JSON }}
+  #ANDROID_STORE_PASSWORD: ${{ secrets.ANDROID_STORE_PASSWORD }}
+
   WORKING_DIRECTORY: .
   APPNAME: Godot Dice Roller
   APPDOMAIN: net.canvoki.godot_dice_roller
@@ -55,69 +56,37 @@ jobs:
           python tools/android-metadata.py # generates android metadata from README.md, CHANGES.md and screenshots
           #GODOT_VERSION=$(godot-asset-library-client project-field godot_version)
           GODOT_VERSION=4.4.1
-          APPNAME=$(cat fastlane/metadata/en-US/title.txt | sed 's/ //g'")
+          APPNAME=$(cat fastlane/metadata/en-US/title.txt | sed 's/ //g')
           VERSION_NAME=$(godot-asset-library-client project-field project_version)
           IFS='.' read -r -a v <<<"$VERSION_NAME"
           VERSION_CODE=$(printf "%03d" ${v[*]})
+          EXPORT_NAME=$(cat fastlane/metadata/en-US/title.txt | sed 's/ /-/g' | tr '[:upper:]' '[:lower:]')
+          ASSET_PREFIX="$EXPORT_NAME-$VERSION_NAME"
+
           echo "GODOT_VERSION=$GODOT_VERSION" >> $GITHUB_ENV
           echo "APPNAME=$APPNAME" >> $GITHUB_ENV
           echo "VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
           echo "VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV
+          echo "EXPORT_NAME=$EXPORT_NAME" >> $GITHUB_ENV
+          echo "ASSET_PREFIX=$ASSET_PREFIX" >> $GITHUB_ENV
+          cat $GITHUB_ENV
 
-      - name: Create export_presets.cfg and inject values
+      - name: Create Android keystores
         run: |
-          sed -i "s|APPNAME|$APPNAME|g" $WORKING_DIRECTORY/export_presets.cfg
-          sed -i "s|VERSION_NAME|$VERSION_NAME|g" $WORKING_DIRECTORY/export_presets.cfg
-          sed -i "s|VERSION_CODE|$VERSION_CODE|g" $WORKING_DIRECTORY/export_presets.cfg
-
-      - name: Create export_credentials.cfg and inject values
-        if: false
-        run: |
-          mkdir $WORKING_DIRECTORY/.godot/
-          cp $WORKING_DIRECTORY/export_credentials.android.example $WORKING_DIRECTORY/.godot/export_credentials.cfg
-          sed -i "s|KEYSTORE_RELEASE_PATH|$GITHUB_WORKSPACE/release.keystore|g" $WORKING_DIRECTORY/.godot/export_credentials.cfg
-          sed -i "s|KEYSTORE_DEBUG_PATH|$GITHUB_WORKSPACE/debug.keystore|g" $WORKING_DIRECTORY/.godot/export_credentials.cfg
-          sed -i "s|ANDROID_KEYSTORE_ALIAS|$ANDROID_KEYSTORE_ALIAS|g" $WORKING_DIRECTORY/.godot/export_credentials.cfg
-          sed -i "s|ANDROID_KEYSTORE_PASSWORD|$ANDROID_KEYSTORE_PASSWORD|g" $WORKING_DIRECTORY/.godot/export_credentials.cfg
-
-      - name: Create keystores
-        if: false
-        run: |
-          echo $ANDROID_KEYSTORE_BASE64 | base64 --decode > release.keystore
-          echo $ANDROID_KEYSTORE_DEBUG_BASE64 | base64 --decode > debug.keystore
-
-      - name: Create service-account.json
-        if: false
-        run: echo $SERVICE_ACCOUNT_JSON > service-account.json
+          if [ -n "${{secrets.ANDROID_KEYSTORE_RELEASE_BASE64}}" ]; then
+            echo ${{secrets.ANDROID_KEYSTORE_RELEASE_BASE64}} | base64 --decode > release.keystore
+            echo "GODOT_ANDROID_KEYSTORE_RELEASE_PATH=release.keystore" >> $GITHUB_ENV
+          fi
+          if [ -n "${{secrets.ANDROID_KEYSTORE_DEBUG_BASE64}}" ]; then
+            echo ${{secrets.ANDROID_KEYSTORE_DEBUG_BASE64}} | base64 --decode > debug.keystore
+            echo "GODOT_ANDROID_KEYSTORE_DEBUG_PATH=debug.keystore" >> $GITHUB_ENV
+          fi
 
       - name: 🔗 Setup symlink for GUT
         run: |
           mkdir -p addons
           ln -sf ../externals/gut/addons/gut addons/gut
   
-      - name: Set Android SDK path in Godot Editor settings
-        #if: steps.cache-godot.outputs.cache-hit != 'true'
-        if: false
-        shell: bash
-        env:
-          SETTINGS_HEADER: |
-            [gd_resource type="EditorSettings" load_steps=1 format=3]
-
-            [resource]
-          SETTINGS: |
-            export/android/android_sdk_path = "/usr/lib/android-sdk"
-            export/android/java_sdk_path = "/usr/lib/jvm/java-17-openjdk-amd64/"
-            export/android/shutdown_adb_on_exit = true
-            export/android/force_system_user = false
-        run: |
-          SETTINGS_FILE=~/.config/godot/editor_settings-${{ env.GODOT_VERSION}}.tres
-          echo "PREVIOUS CONTENT"
-          cat $SETTINGS_FILE || true
-          mkdir -p $(dirname "${SETTINGS_FILE}")
-          [[ -f "${SETTINGS_FILE}" ]] || echo $SETTINGS_HEADER > ${SETTINGS_FILE}
-          echo "$SETTINGS" >> ${SETTINGS_FILE}
-          cat ${SETTINGS_FILE}
-
       - name: Setup Environment
         run: |
           # Barichello image and act cli setup config and templates
@@ -133,12 +102,12 @@ jobs:
               echo No need to copy image home, already at $HOME
           fi
           mkdir -p .godot/editor .godot/imported
-          mkdir -p build/android
 
       - name: 🏗️ Godot Android export (barichello)
         run: |
+            mkdir -p build/android
             timeout 60s godot -v --import --headless --quit < /dev/null || true
-            godot -v --export-release "Android" --headless --quit < /dev/null
+            godot -v --export-release "Android" --headless --quit ./build/android/$EXPORT_NAME-$VERSION_NAME-android.apk < /dev/null
             find build
 
       # GITHUB RELEASES
@@ -146,9 +115,14 @@ jobs:
         if: false
         run: |
           wget -q https://github.com/google/bundletool/releases/download/1.14.0/bundletool-all-1.14.0.jar
-          java -jar bundletool-all-1.14.0.jar build-apks --bundle=${{ env.APPNAME }}.aab --output=${{ env.APPNAME }}.apks \
-            --ks=release.keystore --ks-pass=pass:"$ANDROID_STORE_PASSWORD" --ks-key-alias="$ANDROID_KEYSTORE_ALIAS" \
-            --key-pass=pass:"$ANDROID_KEYSTORE_PASSWORD" --mode=universal
+          java -jar bundletool-all-1.14.0.jar build-apks \
+            --bundle=${{ env.APPNAME }}.aab \
+            --output=${{ env.APPNAME }}.apks \
+            --ks=release.keystore \
+            --ks-pass=pass:"$ANDROID_STORE_PASSWORD" \
+            --ks-key-alias="$GODOT_ANDROID_KEYSTORE_RELEASE_USER" \
+            --key-pass=pass:"$GODOT_ANDROID_KEYSTORE_RELEASE_PASSWORD" \
+            --mode=universal
           unzip -p ${{ env.APPNAME }}.apks universal.apk > ${{ env.APPNAME }}.apk
 
       # GITHUB RELEASES
@@ -168,6 +142,10 @@ jobs:
           name: android-build
           path: build/android
 
+      - name: Create service-account.json
+        if: false
+        run: echo $ANDROID_SERVICE_ACCOUNT_JSON > service-account.json
+
       - name: Publish to Play Store
         if: false
         uses: r0adkll/upload-google-play@v1
@@ -178,12 +156,15 @@ jobs:
           track: "internal"
           status: completed
 
-      - name: Upload binaries to Github release
-        uses: svenstaro/upload-release-action@v2
+      - name: Upload Release
+        if: false
+        uses: ncipollo/release-action@v1
         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: build/android/${{ env.APPNAME }}.apk
-          asset_name: ${{ env.APPNAME }}.apk
-          tag: godot-dice-roller-${{ env.VERSION_NAME }}
-          overwrite: true
-          body: "${{ env.APPNAME }} - version: ${{ env.VERSION_NAME }} code: ${{ env.VERSION_CODE }}"
+          skipIfReleaseExists: true
+          allowUpdates: false
+          draft: true
+          generateReleaseNotes: true
+          artifacts: ""
+          bodyFile: fastlane/metadata/en-US/changelogs/${{env.VERSION_CODE}}.txt
+  
+
