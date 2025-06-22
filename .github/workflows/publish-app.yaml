@@ -187,14 +187,21 @@ jobs:
       - name: Github Release create
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
         run: |
-            pwd
-            ls -alF
             git config --global --add safe.directory $(pwd)
             gh release create ${{ env.ASSET_PREFIX }} \
-                --title "${{ env.VERSION_NAME }} ($(date -I))" \
+                --title "${{ env.ASSET_PREFIX }}" \
                 --notes-file fastlane/metadata/en-US/changelogs/${{env.VERSION_CODE}}.txt \
                 --draft
+            pushd build/web
+            zip -r ../$ASSET_PREFIX-html.zip .
+            popd
+            gh release upload ${{ env.ASSET_PREFIX }} build/$ASSET_PREFIX-html.zip
+            gh release upload ${{ env.ASSET_PREFIX }} build/windows/$ASSET_PREFIX-windows.exe
+            gh release upload ${{ env.ASSET_PREFIX }} build/android/$ASSET_PREFIX-android.apk
+            gh release upload ${{ env.ASSET_PREFIX }} build/linux/$ASSET_PREFIX-linux.x86_64
+
 
       - name: 🔼 Upload bundles
         if: ${{ inputs.upload_itchio && env.BUTLER_API_KEY != '' }}
