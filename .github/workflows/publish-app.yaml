@@ -81,6 +81,8 @@ jobs:
           echo ~/.local/bin >> $GITHUB_PATH
           mkdir -p ~/.cache/pip
           pip install --user "godot-asset-library-client>=0.5"
+          wget --no-verbose https://github.com/cli/cli/releases/download/v2.74.2/gh_2.74.2_linux_amd64.deb
+          dpkg -i gh_2.74.2_linux_amd64.deb
 
       - name: ⬇️ Checkout source code
         uses: actions/checkout@v2
