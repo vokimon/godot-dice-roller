@@ -64,7 +64,7 @@ def generateChangelogs(metadata_path: Path):
             # Unreleased
             continue
         version_code = version_to_code(version)
-        dump((changelog_path/version_code).with_suffix('.txt'), chapter)
+        dump((changelog_path/version_code).with_suffix('.txt'), "##" + chapter)
 
 def generateImages(metadata_path):
     images_path = metadata_path/'images'
