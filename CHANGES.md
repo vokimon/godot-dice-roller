@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.5.1 (2025-06-22)
 
 - 🐛 Using slightly absorvent dice material to avoid prolonged wobbling
 - 🐛 Misaligned 11 face in d12

@@ -182,6 +182,16 @@ jobs:
       #    mkdir -v -p build/mac
       #    godot -v --headless --export-release "Mac OSX" ./build/mac/$ASSET_PREFIX-mac.zip
 
+      - name: Github Release create
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+            cat fastlane/metadata/en-US/changelogs/${{env.VERSION_CODE}}.txt 
+            gh release create ${{ env.ASSET_PREFIX }} \
+                --title "${{ env.VERSION_NAME }} ($(date -I))" \
+                -notes-file release-notes.md \
+                --draft
+
       - name: 🔼 Upload bundles
         if: ${{ inputs.upload_itchio && env.BUTLER_API_KEY != '' }}
         env:
@@ -215,6 +225,13 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build/web
 
+      - name: 🔼🐙 Upload binaries to Github Release
+        if: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+            gh release upload ${{ steps.release.outputs.tag_name }} $f
+
 
       - name: 🔼🐙 Upload binaries to Github release (svenstaro)
         if: ${{ inputs.upload_github && inputs.build_linux }}
@@ -223,6 +240,16 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ./build/linux/${{env.ASSET_PREFIX}}-linux.x86_64
           asset_name: ${{env.ASSET_PREFIX}}-linux.x86_64
+          tag: ${{env.ASSET_PREFIX}}
+          overwrite: true
+
+      - name: 🔼🐙 Upload binaries to Github release (svenstaro)
+        if: ${{ inputs.upload_github && inputs.build_windows }}
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ./build/linux/${{env.ASSET_PREFIX}}-windows.exe
+          asset_name: ${{env.ASSET_PREFIX}}-windows.exe
           tag: ${{env.ASSET_PREFIX}}
           overwrite: true
 
