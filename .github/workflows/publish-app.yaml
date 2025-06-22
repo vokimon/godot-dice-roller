@@ -118,7 +118,7 @@ jobs:
           APPNAME=$(cat fastlane/metadata/en-US/title.txt | sed 's/ //g')
           VERSION_NAME=$(godot-asset-library-client project-field project_version)
           IFS='.' read -r -a v <<<"$VERSION_NAME"
-          VERSION_CODE=$(printf "%03d" ${v[*]})
+          VERSION_CODE=$(printf "%02d" ${v[*]})
           EXPORT_NAME=$(cat fastlane/metadata/en-US/title.txt | sed 's/ /-/g' | tr '[:upper:]' '[:lower:]')
           ASSET_PREFIX="$EXPORT_NAME-$VERSION_NAME"
 
