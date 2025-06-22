@@ -2,6 +2,35 @@ name: Build and release binaries
 
 on:
   workflow_dispatch:
+    inputs:
+        build_web:
+            type: boolean
+            description: Build for Web
+            default: true
+        build_linux:
+            type: boolean
+            description: Build for Linux
+            default: true
+        build_windows:
+            type: boolean
+            description: Build for Windows
+            default: true
+        build_android:
+            type: boolean
+            description: Build for Android
+            default: true
+        build_mac:
+            type: boolean
+            description: Build for Mac
+            default: false
+        upload_itchio:
+            type: boolean
+            description: Upload to itch.io
+            default: false
+        upload_github:
+            type: boolean
+            description: Upload to github realeas
+            default: false
   push:
     tags:
       - '.+-[0-9]+.[0-9]+.[0-9]+'
@@ -14,6 +43,7 @@ env:
   GODOT_ANDROID_KEYSTORE_RELEASE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_RELEASE_PASSWORD }}
   GODOT_ANDROID_KEYSTORE_DEBUG_USER:  ${{ secrets.ANDROID_KEYSTORE_DEBUG_ALIAS }}
   GODOT_ANDROID_KEYSTORE_DEBUG_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_DEBUG_PASSWORD }}
+  BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
 
   #ANDROID_SERVICE_ACCOUNT_JSON: ${{ secrets.ANDROID_SERVICE_ACCOUNT_JSON }}
   #ANDROID_STORE_PASSWORD: ${{ secrets.ANDROID_STORE_PASSWORD }}
@@ -152,11 +182,20 @@ jobs:
       #    mkdir -v -p build/mac
       #    godot -v --headless --export-release "Mac OSX" ./build/mac/$ASSET_PREFIX-mac.zip
 
-      - name: 🔼🕸 Deploy Web
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build/web
+      - name: 🔼 Upload bundles
+        if: ${{ inputs.upload_itchio && env.BUTLER_API_KEY != '' }}
+        env:
+          BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+          ITCH_GAME: ${{ secrets.ITCHIO_GAME }}
+          ITCH_USER: ${{ secrets.ITCHIO_USERNAME }}
+        shell: bash
+        run: |
+          butler push build/windows $ITCH_USER/$ITCH_GAME:windows --userversion $VERSION_NAME
+          butler push build/linux $ITCH_USER/$ITCH_GAME:linux --userversion $VERSION_NAME
+          butler push build/web $ITCH_USER/$ITCH_GAME:web --userversion $VERSION_NAME
+          butler push build/android $ITCH_USER/$ITCH_GAME:android --userversion $VERSION_NAME
+          #butler push build/mac $ITCH_USER/$ITCH_GAME:mac --userversion $VERSION_NAME
+
 
       - name: 🔼🕸️ Upload Web Artifact
         uses: actions/upload-artifact@v4
@@ -170,15 +209,22 @@ jobs:
           name: ${{env.ASSET_PREFIX}}-exports
           path: build
 
+      - name: 🔼🕸 Deploy Web
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build/web
+
+
       - name: 🔼🐙 Upload binaries to Github release (svenstaro)
-        if: false
+        if: ${{ inputs.upload_github && inputs.build_linux }}
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ./build/linux/${{env.ASSET_PREFIX}}-linux.x86_64
           asset_name: ${{env.ASSET_PREFIX}}-linux.x86_64
           tag: ${{env.ASSET_PREFIX}}
-          overwrite: false
+          overwrite: true
 
       - name: 🔼🐙 Upload binaries to Github release (ncipollo)
         if: false
@@ -191,22 +237,3 @@ jobs:
           artifacts: ""
           bodyFile: fastlane/metadata/en-US/changelogs/${{env.VERSION_CODE}}.txt
   
-      - name: Upload bundles
-        env:
-          BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
-          ITCH_GAME: ${{ secrets.ITCHIO_GAME }}
-          ITCH_USER: ${{ secrets.ITCHIO_USERNAME }}
-        shell: bash
-        run: |
-          pushd build/web
-          zip -r ${{env.ASSET_PREFIX}}-web.zip .
-          popd
-          butler push build/windows/${{env.ASSET_PREFIX}}-windows.exe $ITCH_USER/$ITCH_GAME:windows --userversion $VERSION_NAME
-          butler push build/linux/${{env.ASSET_PREFIX}}-linux.x86_64 $ITCH_USER/$ITCH_GAME:linux --userversion $VERSION_NAME
-          butler push build/web/${{env.ASSET_PREFIX}}-web.zip $ITCH_USER/$ITCH_GAME:web --userversion $VERSION_NAME
-          butler push build/web/${{env.ASSET_PREFIX}}-android.apk $ITCH_USER/$ITCH_GAME:android --userversion $VERSION_NAME
-          #butler push mac $ITCH_USER/$ITCH_GAME:mac --userversion $VERSION_NAME
-
-
-
-

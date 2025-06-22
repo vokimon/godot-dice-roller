@@ -5,7 +5,7 @@
 - 💄 Class icon for Poker dice
 - 💄 Dices cast shadows, lights adjusted
 - 🐛 misaligned 11 face in d12
-- 🔧 Working workflows for Android, Windows, Linux and Web
+- 🔧 Automated builds for Android, Windows, Linux and Web
 
 ## 1.5.0 (2025-06-05)
 
