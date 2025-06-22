@@ -190,6 +190,7 @@ jobs:
         run: |
             pwd
             ls -alF
+            git config --global --add safe.directory $(pwd)
             gh release create ${{ env.ASSET_PREFIX }} \
                 --title "${{ env.VERSION_NAME }} ($(date -I))" \
                 --notes-file fastlane/metadata/en-US/changelogs/${{env.VERSION_CODE}}.txt \
