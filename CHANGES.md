@@ -2,10 +2,12 @@
 
 ## Unreleased
 
+- 🐛 Using slightly absorvent dice material to avoid prolonged wobbling
+- 🐛 Misaligned 11 face in d12
 - 💄 Class icon for Poker dice
 - 💄 Dices cast shadows, lights adjusted
-- 🐛 misaligned 11 face in d12
 - 🔧 Automated builds for Android, Windows, Linux and Web
+- 🔧 Automated uploads to github and itch.io
 
 ## 1.5.0 (2025-06-05)
 

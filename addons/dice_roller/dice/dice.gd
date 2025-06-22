@@ -32,6 +32,9 @@ func _init() -> void:
 	can_sleep = true
 	gravity_scale = 10
 	freeze_mode = RigidBody3D.FREEZE_MODE_STATIC
+	physics_material_override = PhysicsMaterial.new()
+	physics_material_override.absorbent = true
+	physics_material_override.bounce = 0.1
 
 # Children that the sub classes should provide
 
