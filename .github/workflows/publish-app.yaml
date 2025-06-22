@@ -188,10 +188,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-            cat fastlane/metadata/en-US/changelogs/${{env.VERSION_CODE}}.txt 
             gh release create ${{ env.ASSET_PREFIX }} \
                 --title "${{ env.VERSION_NAME }} ($(date -I))" \
-                -notes-file release-notes.md \
+                -notes-file fastlane/metadata/en-US/changelogs/${{env.VERSION_CODE}}.txt \
                 --draft
 
       - name: 🔼 Upload bundles
