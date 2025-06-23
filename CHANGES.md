@@ -4,8 +4,8 @@
 
 - 🐛 Using slightly absorvent dice material to avoid prolonged wobbling
 - 🐛 Misaligned 11 face in d12
-- 💄 Class icon for Poker dice
 - 💄 Dices cast shadows, lights adjusted
+- 💄 Class icon for Poker dice
 - 🔧 Automated builds for Android, Windows, Linux and Web
 - 🔧 Automated uploads to github and itch.io
 

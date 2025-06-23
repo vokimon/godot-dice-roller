@@ -142,6 +142,9 @@ jobs:
           sed -i '3 i <script src="coi-serviceworker.js"></script>' build/web/index.html
           echo Disabling jekyll compilation in github pages
           touch build/web/.nojekyll
+          pushd build/web
+              zip -r ../$ASSET_PREFIX-html.zip .
+          popd
 
       - name: 🏗️🐧 Linux Build
         run: |
@@ -185,23 +188,23 @@ jobs:
       #    godot -v --headless --export-release "Mac OSX" ./build/mac/$ASSET_PREFIX-mac.zip
 
       - name: Github Release create
+        if: ${{ inputs.upload_github_release && env.BUTLER_API_KEY != '' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: bash
         run: |
-            pushd build/web
-            zip -r ../$ASSET_PREFIX-html.zip .
-            popd
             git config --global --add safe.directory $(pwd)
+            # Until published, will refer an untagged commit
             gh release create ${{ env.ASSET_PREFIX }} \
                 --verify-tag \
                 --title "${{ env.ASSET_PREFIX }}" \
                 --notes-file fastlane/metadata/en-US/changelogs/${{env.VERSION_CODE}}.txt \
-                "build/$ASSET_PREFIX-html.zip#Web package" \
-                "build/windows/$ASSET_PREFIX-windows.exe#Windows binary" \
-                "build/linux/$ASSET_PREFIX-linux.x86_64#Linux binary" \
-                "build/android/$ASSET_PREFIX-android.apk#Android apk" \
+                "build/$ASSET_PREFIX-html.zip" \
+                "build/windows/$ASSET_PREFIX-windows.exe" \
+                "build/linux/$ASSET_PREFIX-linux.x86_64" \
+                "build/android/$ASSET_PREFIX-android.apk" \
                 --draft
+            gh release list
 
 
       - name: 🔼 Upload bundles
@@ -237,42 +240,6 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build/web
 
-      - name: 🔼🐙 Upload binaries to Github Release
-        if: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-            gh release upload ${{ steps.release.outputs.tag_name }} $f
 
 
-      - name: 🔼🐙 Upload binaries to Github release (svenstaro)
-        if: ${{ inputs.upload_github && inputs.build_linux }}
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ./build/linux/${{env.ASSET_PREFIX}}-linux.x86_64
-          asset_name: ${{env.ASSET_PREFIX}}-linux.x86_64
-          tag: ${{env.ASSET_PREFIX}}
-          overwrite: true
 
-      - name: 🔼🐙 Upload binaries to Github release (svenstaro)
-        if: ${{ inputs.upload_github && inputs.build_windows }}
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ./build/linux/${{env.ASSET_PREFIX}}-windows.exe
-          asset_name: ${{env.ASSET_PREFIX}}-windows.exe
-          tag: ${{env.ASSET_PREFIX}}
-          overwrite: true
-
-      - name: 🔼🐙 Upload binaries to Github release (ncipollo)
-        if: false
-        uses: ncipollo/release-action@v1
-        with:
-          skipIfReleaseExists: true
-          allowUpdates: false
-          draft: true
-          generateReleaseNotes: true
-          artifacts: ""
-          bodyFile: fastlane/metadata/en-US/changelogs/${{env.VERSION_CODE}}.txt
-  
