@@ -5,7 +5,7 @@ var dice_shape_inspector
 
 func _enter_tree() -> void:
 	""" Plugin initialization """
-	print("Reloading plugin")
+	#print("Reloading plugin")
 	add_custom_type("DiceShape", "Resource", preload("./dice_shape.gd"), preload("./dice/d6_dice/d6_dice.svg"))
 	dice_shape_inspector = preload("./dice_shape_inspector.gd").new()
 	add_inspector_plugin(dice_shape_inspector)

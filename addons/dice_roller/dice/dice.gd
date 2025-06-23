@@ -86,7 +86,7 @@ func roll():
 
 func shake(reason: String):
 	"""Move a bad rolled dice"""
-	print("Dice {0}: Reshaking {1}".format([name, reason]))
+	#print("Dice {0}: Reshaking {1}".format([name, reason]))
 	apply_impulse(
 		mass * 10. * Vector3(0,1,0),
 		dice_size * Vector3(randf_range(-1,1),randf_range(-1,1),randf_range(-1,1)),
@@ -111,7 +111,7 @@ func _process(_delta):
 	if side == null:
 		return shake("tilted")
 
-	print("Dice %s solved [%s] - %.02fs"%([name, side, roll_time]))
+	#print("Dice %s solved [%s] - %.02fs"%([name, side, roll_time]))
 	freeze = true
 	sleeping = true
 	show_face(side)
@@ -165,7 +165,7 @@ func highlight():
 	var perpendicular_side = side-1 if side-1 else len(sides)
 	var perpendicular_direction = to_global(highlight_orientation[side]) - to_global(Vector3.ZERO)
 	highlight_face.look_at(to_global(sides[side]), perpendicular_direction)
-	prints("side", side, "perpendicular", perpendicular_side)
+	#prints("side", side, "perpendicular", perpendicular_side)
 	highlight_face.visible = true
 
 func dehighlight() -> void:

@@ -114,14 +114,14 @@ func reload_dices():
 	clear_dices()
 	ensure_valid_and_unique_dice_names()
 	for dice: DiceDef in dice_set:
-		print("reloading dice: ", dice, dice.shape)
+		#print("reloading dice: ", dice, dice.shape)
 		add_dice_escene(dice)
 	reposition_dices()
 
 func add_dice_escene(dice: DiceDef):
 	var packed_scene: PackedScene
 	if not dice.shape:
-		print("Shapeless dice def ", dice.name)
+		push_warning("Shapeless dice def ", dice.name)
 		packed_scene = DiceShape.new("D6").scene()
 	else:
 		packed_scene = dice.shape.scene()
@@ -169,11 +169,11 @@ func reposition_dices():
 func _on_finnished_dice_rolling(number: int, dice_name: String):
 	## One dice communicates has finished its rolling
 	result[dice_name] = number
-	print("Dice done: ", dice_name, " value ", number)
+	#print("Dice done: ", dice_name, " value ", number)
 	if result.size() < dices.size():
 		# Not all dices finished
 		return
-	print("Roll finished: ", result, " -> ", total_value)
+	#print("Roll finished: ", result, " -> ", total_value)
 	rolling = false
 	roll_finnished.emit(total_value)
 

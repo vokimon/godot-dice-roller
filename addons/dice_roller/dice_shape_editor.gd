@@ -10,7 +10,7 @@ func _init():
 
 func _on_item_selected(index):
 	var selected = option_button.get_item_text(index)
-	print("Emiting ", get_edited_property(), " ", DiceShape.new(selected))
+	#print("Emiting ", get_edited_property(), " ", DiceShape.new(selected))
 	emit_changed(get_edited_property(), DiceShape.new(selected), "", true)
 
 func update_options():
@@ -33,7 +33,7 @@ func update_property():
 	set_control_value(value)
 
 func _set(property: StringName, value: Variant) -> bool:
-	print("- ", property, " = ", value)
+	#print("- ", property, " = ", value)
 	return false
 
 func setup(property_name: String, initial_value: DiceShape) -> void:
@@ -42,9 +42,9 @@ func setup(property_name: String, initial_value: DiceShape) -> void:
 
 func set_control_value(value: DiceShape):
 	if value == null:
-		print("Null value arrived to the control for ", get_edited_object())
+		#print("Null value arrived to the control for ", get_edited_object())
 		return
-	print("Setting the control to the value ", value, " ", value.name)
+	#print("Setting the control to the value ", value, " ", value.name)
 	var idx := get_index_by_text(value.name)
 	if idx >= 0:
 		option_button.selected = idx
