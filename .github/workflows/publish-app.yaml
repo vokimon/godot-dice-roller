@@ -31,6 +31,10 @@ on:
             type: boolean
             description: Upload as github release
             default: false
+        upload_github_pages:
+            type: boolean
+            description: Upload web app as github page
+            default: false
   push:
     tags:
       - '.+-[0-9]+.[0-9]+.[0-9]+'
@@ -194,6 +198,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: bash
         run: |
+            # TODO: upload only the built ones
+            # TODO: support updating existing release
             git config --global --add safe.directory $(pwd)
             # Until published, will refer an untagged commit
             gh release create ${{ env.ASSET_PREFIX }} \
@@ -223,7 +229,8 @@ jobs:
           #butler push build/mac $ITCH_USER/$ITCH_GAME:mac --userversion $VERSION_NAME
 
 
-      - name: 🔼🕸️ Upload Web Artifact
+      - name: 🔼🕸️ Upload Web as gh-page
+        if: ${{ inputs.upload_github_pages }}
         uses: actions/upload-artifact@v4
         with:
           name: ${{env.ASSET_PREFIX}}-web
