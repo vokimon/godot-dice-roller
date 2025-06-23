@@ -169,18 +169,18 @@ jobs:
 
       - name: 🏗️🤖 Android Build
         run: |
-            mkdir -p build/android
-            timeout 60s godot -v --import --headless --quit < /dev/null || true
-            godot -v --export-release "Android" --headless --quit ./build/android/$ASSET_PREFIX-android.apk < /dev/null
+          mkdir -p build/android
+          timeout 60s godot -v --import --headless --quit < /dev/null || true
+          godot -v --export-release "Android" --headless --quit ./build/android/$ASSET_PREFIX-android.apk < /dev/null
 
       - name: 🔑🤖 Sign android package
         run: |
-            # Godot should sign the apk with the proper envs, but it doesnt.
-            apksigner sign \
-                --ks "${GODOT_ANDROID_KEYSTORE_RELEASE_PATH}" \
-                --ks-pass env:GODOT_ANDROID_KEYSTORE_RELEASE_PASSWORD \
-                --ks-key-alias "${{env.GODOT_ANDROID_KEYSTORE_RELEASE_USER}}" \
-                ./build/android/$ASSET_PREFIX-android.apk
+          # Godot should sign the apk with the proper envs, but it doesnt.
+          apksigner sign \
+            --ks "${GODOT_ANDROID_KEYSTORE_RELEASE_PATH}" \
+            --ks-pass env:GODOT_ANDROID_KEYSTORE_RELEASE_PASSWORD \
+            --ks-key-alias "${{env.GODOT_ANDROID_KEYSTORE_RELEASE_USER}}" \
+            ./build/android/$ASSET_PREFIX-android.apk
 
       #- name: 🏗️🍎 Mac Build
       #  run: |
