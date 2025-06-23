@@ -27,7 +27,7 @@ on:
             type: boolean
             description: Upload to itch.io
             default: false
-        upload_github:
+        upload_github_release:
             type: boolean
             description: Upload to github realeas
             default: false
@@ -189,7 +189,7 @@ jobs:
       #    godot -v --headless --export-release "Mac OSX" ./build/mac/$ASSET_PREFIX-mac.zip
 
       - name: Github Release create
-        if: ${{ inputs.upload_github_release && env.BUTLER_API_KEY != '' }}
+        if: ${{ inputs.upload_github_release }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: bash
