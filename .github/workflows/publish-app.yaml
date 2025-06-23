@@ -29,7 +29,7 @@ on:
             default: false
         upload_github_release:
             type: boolean
-            description: Upload to github realeas
+            description: Upload as github release
             default: false
   push:
     tags:
