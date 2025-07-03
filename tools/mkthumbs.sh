@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for img in screenshots/*.png
+for img in screenshots/*.png screenshots/*.webp
 do
 	echo "Processing: $img..."
 	convert "$img"  -auto-orient \
