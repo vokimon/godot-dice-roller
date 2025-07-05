@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.5.2 (2025-07-05)
+
+- 🏗️ Changes to enable F-Droid release
+- 💄 Updated screenshots
+- 🔧 Unify and cleanup binary export and deploy workflow
+- 🧹 Remove `ssh_export` options in pressets
+- 🧹 Removed most print traces
+
 ## 1.5.1 (2025-06-22)
 
 - 🐛 Using slightly absorvent dice material to avoid prolonged wobbling

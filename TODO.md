@@ -1,7 +1,5 @@
 # TODO's
 
-- [ ] Fix: Jolt has introduced a final vibration that makes the roll longer
-- [ ] Fix: Dices have lost the initial random spin, noticeable with few dices
 - [ ] Stop long/infinite rollings. How? Reroll? Put stopped dices aside?
 - [ ] Visual queue to show rolling is available (bouncing dices?)
 - [ ] Realistic sizes: Do dices have to be 2 meters wide and weight kilos?
@@ -10,14 +8,15 @@
 - [ ] Godot Editor for dice set attribute editor to look more than the example dice set editor
 - [ ] d20: Review numbers position to match standard dice
 - [ ] d20: Review stability conditions, too bumpy
-- CI:
-    - Android:
-        - [ ] Godot complains ndk and sdk are not in the paths specified in editor config build-tools and platform-tools
-    - All
-        - Automatic upload to the release
+- [ ] CI: FDroid release
 
 ## Done's
 
+- [x] CI: Automatic upload to itch.io
+- [x] CI: Automatic upload to Github release
+- [x] CI: Godot complains ndk and sdk are not in the paths specified in editor config build-tools and platform-tools
+- [x] Fix: Jolt has introduced a final vibration that makes the roll longer
+- [x] Fix: Dices have lost the initial random spin, noticeable with few dices
 - [x] CI: Distribution and deployment web
 - [x] CI: Distribution for windows
 - [x] CI: Distribution for linux
