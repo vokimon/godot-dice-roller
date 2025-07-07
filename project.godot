@@ -15,6 +15,7 @@ config/description="A UI control that rolls 3D dices in a box"
 config/version="1.5.2"
 run/main_scene="res://examples/dice_roler/dice_roller_example.tscn"
 config/features=PackedStringArray("4.4", "GL Compatibility")
+boot_splash/image="uid://bebdla3qkt68"
 config/icon="res://icon.svg"
 
 [display]
