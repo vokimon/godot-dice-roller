@@ -77,7 +77,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: ⬇️ Godot Asset Lib Client install
+      - name: ⬇️ Install build dependencies
         shell: bash
         run: |
           apt update

@@ -1,0 +1,5 @@
+## 1.0.1 (2024-12-02)
+
+- ♻️  Example out of the addon
+- 📝 Documentation and metadata
+

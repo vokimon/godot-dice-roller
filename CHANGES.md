@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- 💄 Example: added splash screen
+- 🏗️ fdroid requires fastlane data to be committed
+
 ## 1.5.2 (2025-07-05)
 
 - 🏗️ Changes to enable F-Droid release

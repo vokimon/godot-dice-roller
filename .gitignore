@@ -28,7 +28,6 @@ gdUnit4
 *.blend1
 
 # Android
-metadata
 *apk*
 *.keystore
 addons/gut

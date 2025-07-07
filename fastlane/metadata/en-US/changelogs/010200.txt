@@ -1,0 +1,6 @@
+## 1.2.0 (2025-01-06)
+
+- ✨ New dice: d4
+- 💄 Beveled borders for d6
+- ♻️ Generalization to favor inclusion of more shapes of dices
+

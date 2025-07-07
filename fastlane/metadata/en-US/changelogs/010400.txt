@@ -1,0 +1,9 @@
+## 1.4.0 (2025-02-10)
+
+- ✨ New dice: d20
+- ✨ New dice: d10x10
+- ✨ `interactive` flag to enable/disable roll on click
+- ✨ Expose in control the `show_faces` method to represent external rolls
+- 💄Control icon clearer without outline and bigger dices
+- 📝 Improved documentation (README and reference)
+
