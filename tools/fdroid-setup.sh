@@ -23,7 +23,7 @@ fi
 
 if [ ! -e "$FDROID_DATA_PATH" ]
 then
-    run git clone --depth=1 https://gitlab.com/$GITLAB_USER/fdroid-data $FDROID_DATA_PATH
+    run git clone --depth=100 git@gitlab.com:vokimon/fdroid-data.git  $FDROID_DATA_PATH
     pushd $FDROID_DATA_PATH
         run git remote set-branches origin $APP
         run git fetch origin $APP && run git checkout $APP || run git checkout -b $APP
@@ -31,7 +31,6 @@ then
     # hard link since soft link is not visible on 
     run ln $SCRIPTPATH/fdroid-build.sh "$FDROID_DATA_PATH"/fdroid-build.sh
 fi
-
 run sudo chown -R 1000:1000 $FDROID_DATA_PATH $FDROID_SERVER_PATH
 
 run docker run --rm \
