@@ -67,7 +67,7 @@ def generateChangelogs(metadata_path: Path):
         dump((changelog_path/version_code).with_suffix('.txt'), "##" + chapter)
 
 def generateImages(metadata_path):
-    images_path = metadata_path/'images'
+    images_path = metadata_path/'images'/'phoneScreenshots'
     mkdir(images_path)
     for screenshot in Path().glob("screenshots/*png"):
         target = images_path/screenshot.name
@@ -87,7 +87,7 @@ def generateIcon(metadata_path):
         'SRT',
         '0',
         '+repage',
-        str(metadata_path/'icon.png')
+        str(metadata_path/'images'/'icon.png')
     ])
 
 
