@@ -21,7 +21,7 @@ on:
             default: true
         build_mac:
             type: boolean
-            description: Build for Mac
+            description: Build for Mac (Not working yet)
             default: false
         upload_itchio:
             type: boolean

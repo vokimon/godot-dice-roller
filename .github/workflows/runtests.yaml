@@ -1,4 +1,4 @@
-name: Godot GUT Tests
+name: CI
 
 on:
   push:
