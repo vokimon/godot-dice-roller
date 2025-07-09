@@ -51,8 +51,6 @@ func _on_custom_action(action: String):
 		"Load":
 			preset_loader.reload()
 			preset_loader.show()
-			#update_preset_list()
-			#popup_presets()
 
 func ask_preset_name():
 	for old_dice_icon in diceset_preview.get_children():
@@ -74,23 +72,6 @@ func save_preset(preset_name: String):
 	config.set_value('default','dice_set', dice_set)
 	config.save(diceset_dir.path_join(preset_name + ".diceset"))
 
-func update_preset_list():
-	preset_list = []
-	for file in DirAccess.get_files_at(diceset_dir):
-		if not file.ends_with('.diceset'):
-			continue
-		preset_list.append(file.trim_suffix('.diceset'))
-		
-func popup_presets():
-	var presets_popup : PopupMenu = $PresetsPopup
-	presets_popup.clear()
-	presets_popup.add_separator("Presets")
-	var id = 0
-	for preset in preset_list:
-		presets_popup.add_item(preset, id)
-		id+=1
-	presets_popup.popup()
-
 #func load_preset(preset_id: int):
 #	var preset_name = preset_list[preset_id]
 #	load_preset(preset_name)
@@ -101,14 +82,11 @@ func _on_preset_loader_selected(preset_name: String):
 	set_dice_set(dice_set)
 	preset_loader.hide()
 
-
 func read_preset(preset_name):
 	var config = ConfigFile.new()
 	config.load(diceset_dir.path_join(preset_name + ".diceset"))
 	var dice_set = config.get_value('default','dice_set')
 	return dice_set
-	
-
 
 ## Dice list methods
 
