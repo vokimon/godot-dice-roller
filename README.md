@@ -1,3 +1,9 @@
+[![CI Status](https://github.com/vokimon/godot-dice-roller/actions/workflows/runtests.yaml/badge.svg)](https://github.com/vokimon/godot-dice-roller/actions/workflows/runtests.yaml)
+[![Last Release](https://img.shields.io/github/release/vokimon/godot-dice-roller.svg?logo=github)](https://github.com/vokimon/godot-dice-roller/releases/latest)
+<!-- [![Get it on F-Droid](https://img.shields.io/f-droid/v/net.canvoki.godot_dice_roller.svg?logo=F-Droid)](https://f-droid.org/packages/net.canvoki.godot_dice_roller) -->
+[![Itch.io](https://img.shields.io/badge/itch.io-%23FF0B34.svg?logo=Itch.io&logoColor=white)](https://vokimon.itch.io/godot-dice-roller)
+<!-- [![Flathub](https://img.shields.io/flathub/v/net.canvoki.godot_dice_roller?label=Flathub&logo=flathub&logoColor=white)][] -->
+
 # godot-dice-roller
 
 A Godot UI control that rolls 3D dices in a box.
