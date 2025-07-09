@@ -8,7 +8,6 @@ title = "Dice Set Editor"
 initial_position = 1
 size = Vector2i(800, 500)
 visible = true
-content_scale_aspect = 1
 ok_button_text = "Ok"
 script = ExtResource("1_5123s")
 
