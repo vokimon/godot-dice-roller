@@ -12,10 +12,10 @@ func _ready() -> void:
 	get_tree().get_root().size_changed.connect(resize)
 
 func resize():
-	# KLUDGE: For some reason dialog buttons are not part of the dialog size
-	var buttons_adjust  := Vector2i(0, 46)
+	# TODO: Use theme frame size instead of magic numbers
+	var frame_size  := Vector2i(22, 46)
 	var screen_size := get_tree().get_root().size
 	var parent : AcceptDialog = get_parent()
-	parent.size = size.min(screen_size - buttons_adjust)
+	parent.size = size.min(screen_size - frame_size)
 	# Also when resized, as Godot 4.4.1, it loses the centered position
 	parent.position = (screen_size - parent.size)/2
