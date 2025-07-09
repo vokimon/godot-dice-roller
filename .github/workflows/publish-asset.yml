@@ -1,7 +1,7 @@
 # This workflow will upload a Godot Asset to the Asset Library
 # everytime a tag is pushed or a release is published.
 
-name: Godot Asset Library Upload
+name: Build and publish Godot addon
 
 on:
   release:
