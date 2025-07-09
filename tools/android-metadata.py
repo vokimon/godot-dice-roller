@@ -141,7 +141,6 @@ def updateSplash(metadata_path):
     splash_svgfile = Path('examples/dice_roler/splash.svg')
 
     from lxml import etree
-    import cairosvg
 
     nsmap = dict(
         svg='http://www.w3.org/2000/svg',

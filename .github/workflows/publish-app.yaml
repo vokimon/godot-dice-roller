@@ -84,7 +84,7 @@ jobs:
           apt install -y imagemagick python3-pip python-is-python3 apksigner
           echo ~/.local/bin >> $GITHUB_PATH
           mkdir -p ~/.cache/pip
-          pip install --user "godot-asset-library-client>=0.5"
+          pip install --user "godot-asset-library-client>=0.5" lxml
           wget --no-verbose https://github.com/cli/cli/releases/download/v2.74.2/gh_2.74.2_linux_amd64.deb
           dpkg -i gh_2.74.2_linux_amd64.deb
 
