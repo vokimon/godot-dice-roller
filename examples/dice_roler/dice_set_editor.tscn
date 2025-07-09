@@ -64,6 +64,10 @@ layout_mode = 2
 layout_mode = 2
 text = "Name the dice set"
 
+[node name="DicesetPreview" type="HBoxContainer" parent="PresetNameDialog/MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
 [node name="PresetNameEdit" type="LineEdit" parent="PresetNameDialog/MarginContainer/VBoxContainer"]
 layout_mode = 2
 

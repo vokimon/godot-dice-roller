@@ -6,6 +6,7 @@ extends ConfirmationDialog
 @onready var color_popup := $ColorPopup
 @onready var color_picker := $ColorPopup/ColorPicker
 @onready var preset_name_edit := $PresetNameDialog/MarginContainer/VBoxContainer/PresetNameEdit
+@onready var diceset_preview := $PresetNameDialog/MarginContainer/VBoxContainer/DicesetPreview
 @onready var preset_loader := $PresetLoader
 
 const delete_icon := preload("./delete-icon.svg")
@@ -54,7 +55,14 @@ func _on_custom_action(action: String):
 			#popup_presets()
 
 func ask_preset_name():
-	preset_name_edit.text=''
+	for old_dice_icon in diceset_preview.get_children():
+		old_dice_icon.free()
+	for dicedef in get_dice_set():
+		var icon_control := TextureRect.new()
+		icon_control.texture = dicedef.shape.icon()
+		icon_control.modulate = dicedef.color
+		diceset_preview.add_child(icon_control)
+	preset_name_edit.text = ''
 	$PresetNameDialog.popup_centered()
 	preset_name_edit.grab_focus()
 
