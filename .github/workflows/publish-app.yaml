@@ -155,11 +155,17 @@ jobs:
         run: |
           mkdir -v -p build/linux
           godot -v --headless --export-release "Linux" ./build/linux/$ASSET_PREFIX-linux.x86_64
+          pushd build/linux
+              tar cvfz ../$ASSET_PREFIX-linux.tar.gz .
+          popd
 
       - name: 🏗️🪟 Windows Build
         run: |
           mkdir -v -p build/windows
           godot -v --headless --export-release "Windows Desktop" ./build/windows/$ASSET_PREFIX-windows.exe
+          pushd build/windows
+              zip -r ../$ASSET_PREFIX-windows.zip .
+          popd
 
       - name: 🔑🤖Create Android keystores
         run: |
@@ -187,10 +193,23 @@ jobs:
             --ks-key-alias "${{env.GODOT_ANDROID_KEYSTORE_RELEASE_USER}}" \
             ./build/android/$ASSET_PREFIX-android.apk
 
+      # TODO
       #- name: 🏗️🍎 Mac Build
       #  run: |
       #    mkdir -v -p build/mac
       #    godot -v --headless --export-release "Mac OSX" ./build/mac/$ASSET_PREFIX-mac.zip
+
+      - name: 🔼🕸 Deploy Web
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build/web
+
+      - name: 🔼 Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{env.ASSET_PREFIX}}-exports
+          path: build
 
       - name: Github Release create
         if: ${{ inputs.upload_github_release }}
@@ -207,14 +226,13 @@ jobs:
                 --title "${{ env.ASSET_PREFIX }}" \
                 --notes-file fastlane/metadata/en-US/changelogs/${{env.VERSION_CODE}}.txt \
                 "build/$ASSET_PREFIX-html.zip" \
-                "build/windows/$ASSET_PREFIX-windows.exe" \
-                "build/linux/$ASSET_PREFIX-linux.x86_64" \
+                "build/$ASSET_PREFIX-windows.zip" \
+                "build/$ASSET_PREFIX-linux.tar.gz" \
                 "build/android/$ASSET_PREFIX-android.apk" \
                 --draft
             gh release list
 
-
-      - name: 🔼 Upload bundles
+      - name: 🔼 Upload to itch.io
         if: ${{ inputs.upload_itchio && env.BUTLER_API_KEY != '' }}
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
@@ -227,27 +245,5 @@ jobs:
           butler push build/web $ITCH_USER/$ITCH_GAME:web --userversion $VERSION_NAME
           butler push build/android $ITCH_USER/$ITCH_GAME:android --userversion $VERSION_NAME
           #butler push build/mac $ITCH_USER/$ITCH_GAME:mac --userversion $VERSION_NAME
-
-
-      - name: 🔼🕸️ Upload Web as gh-page
-        if: ${{ inputs.upload_github_pages }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{env.ASSET_PREFIX}}-web
-          path: build/web
-
-      - name: 🔼🐧🪟🤖 Upload Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{env.ASSET_PREFIX}}-exports
-          path: build
-
-      - name: 🔼🕸 Deploy Web
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build/web
-
-
 
 

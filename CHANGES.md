@@ -2,7 +2,12 @@
 
 ## Unreleased
 
+- ✨ Preset preview when loading presets
+- ✨ Delete an existing preset
+- 🐛 Responsive Diceset editor and loader dialogs
+- 🐛 Published Linux and Windows binaries missed the PCK
 - 💄 Example: added splash screen
+- 💄 Bigger diceset button
 - 🏗️ fdroid requires fastlane data to be committed
 
 ## 1.5.2 (2025-07-05)
