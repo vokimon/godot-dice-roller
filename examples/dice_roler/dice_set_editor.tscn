@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://ckylb177r5dm5"]
+[gd_scene load_steps=3 format=3 uid="uid://ckylb177r5dm5"]
 
 [ext_resource type="Script" uid="uid://cj70etrfut3ml" path="res://examples/dice_roler/dice_set_editor.gd" id="1_5123s"]
+[ext_resource type="PackedScene" uid="uid://bsu4a4i0b54qv" path="res://examples/dice_roler/preset_loader.tscn" id="2_d8jwp"]
 
 [node name="DiceSetEditor" type="ConfirmationDialog"]
 title = "Dice Set Editor"
@@ -65,3 +66,6 @@ text = "Name the dice set"
 
 [node name="PresetNameEdit" type="LineEdit" parent="PresetNameDialog/MarginContainer/VBoxContainer"]
 layout_mode = 2
+
+[node name="PresetLoader" parent="." instance=ExtResource("2_d8jwp")]
+visible = false

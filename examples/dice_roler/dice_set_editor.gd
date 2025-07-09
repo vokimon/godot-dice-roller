@@ -6,6 +6,7 @@ extends ConfirmationDialog
 @onready var color_popup := $ColorPopup
 @onready var color_picker := $ColorPopup/ColorPicker
 @onready var preset_name_edit := $PresetNameDialog/MarginContainer/VBoxContainer/PresetNameEdit
+@onready var preset_loader := $PresetLoader
 
 const delete_icon := preload("./delete-icon.svg")
 const color_icon := preload('./color-icon.svg')
@@ -40,7 +41,7 @@ func setup_preset():
 	save_button = add_button("Save", false, "Save")
 	custom_action.connect(_on_custom_action)
 
-	$PresetsPopup.id_pressed.connect(load_preset)
+	preset_loader.preset_selected.connect(_on_preset_loader_selected)
 	preset_name_edit.text_submitted.connect(save_preset)
 
 func _on_custom_action(action: String):
@@ -48,8 +49,10 @@ func _on_custom_action(action: String):
 		"Save":
 			ask_preset_name()
 		"Load":
-			update_preset_list()
-			popup_presets()
+			preset_loader.reload()
+			preset_loader.show()
+			#update_preset_list()
+			#popup_presets()
 
 func ask_preset_name():
 	preset_name_edit.text=''
@@ -81,14 +84,23 @@ func popup_presets():
 		id+=1
 	presets_popup.popup()
 
-func load_preset(preset_id: int):
-	var preset_name = preset_list[preset_id]
+#func load_preset(preset_id: int):
+#	var preset_name = preset_list[preset_id]
+#	load_preset(preset_name)
+
+func _on_preset_loader_selected(preset_name: String):
+	var dice_set = read_preset(preset_name)
+	if not dice_set: return
+	set_dice_set(dice_set)
+	preset_loader.hide()
+
+
+func read_preset(preset_name):
 	var config = ConfigFile.new()
 	config.load(diceset_dir.path_join(preset_name + ".diceset"))
 	var dice_set = config.get_value('default','dice_set')
-	print_rich(dice_set)
-	if not dice_set: return
-	set_dice_set(dice_set)
+	return dice_set
+	
 
 
 ## Dice list methods
@@ -106,6 +118,7 @@ func setup_dice_list():
 	tree.set_column_title(COL_COLOR, "Color")
 	tree.set_column_expand(COL_COLOR, 0)
 	tree.set_column_title(COL_ID, "Name")
+	
 	tree.button_clicked.connect(_on_tree_button_clicked)
 	tree.item_edited.connect(_on_tree_item_edited)
 	add_add_row()

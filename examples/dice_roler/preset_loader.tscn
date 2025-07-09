@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=3 uid="uid://bsu4a4i0b54qv"]
+
+[ext_resource type="Script" uid="uid://bfo5t0g12e54s" path="res://examples/dice_roler/preset_loader.gd" id="1_kupvj"]
+
+[node name="PresetLoader" type="AcceptDialog"]
+title = "Load a preset"
+initial_position = 1
+size = Vector2i(800, 500)
+visible = true
+ok_button_text = "Close"
+script = ExtResource("1_kupvj")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 792.0
+offset_bottom = 451.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ItemList" type="Tree" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
