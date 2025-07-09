@@ -3,6 +3,12 @@
 # generates android metadata from README.md, CHANGES.md and screenshots
 
 from pathlib import Path
+import os
+import contextlib
+
+def program_exists(program):
+    import shutil
+    return shutil.which(program) is not None
 
 def mkdir(path):
     path.mkdir(exist_ok=True, parents=True)
@@ -130,16 +136,64 @@ def adapt_android_preset(metadata_path):
     modified = presets_file.read_text().replace(" = ", "=")
     presets_file.write_text(modified)
 
+def updateSplash(metadata_path):
+    version = last_version(metadata_path)
+    splash_svgfile = Path('examples/dice_roler/splash.svg')
+
+    from lxml import etree
+    import cairosvg
+
+    nsmap = dict(
+        svg='http://www.w3.org/2000/svg',
+        inkscape="http://www.inkscape.org/namespaces/inkscape",
+        sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd",
+        xlink="http://www.w3.org/1999/xlink",
+    )
+
+    parser = etree.XMLParser(remove_blank_text=True)
+    tree = etree.parse(splash_svgfile, parser)
+    root = tree.getroot()
+
+    el = root.xpath("//svg:text[@id='version']/svg:tspan", namespaces=nsmap)
+    if not el:
+        print("Warning: No element with id version found is splash screen svg")
+        return
+    if el[0].text == version:
+        print(f"Skipping splash screen version update, already {version}")
+        return
+
+    print(f"Updating splash screen version from {el[0].text} to {version}")
+    el[0].text = version
+    for prefix, nsurl in nsmap.items():
+        etree.register_namespace(prefix, nsurl)
+    print(f"Generating {splash_svgfile}...")
+    tree.write(splash_svgfile, encoding='utf-8', xml_declaration=True, pretty_print=True)
+    png_file = splash_svgfile.with_suffix(".png")
+    print(f"Generating {png_file}...")
+
+    if not program_exists("inkscape"):
+        print("WARNING: Inkscape not detected. Splash png not updated.")
+        return
+
+    import subprocess
+    subprocess.run([
+        'inkscape',
+        str(splash_svgfile),
+        '--export-type=png',
+        '--export-filename='+str(png_file)
+    ])
+
+
 
 def generateMetadata():
     metadata_path = Path("fastlane/metadata/en-US")
     mkdir(metadata_path)
     Path('fastlane/.gdignore').write_text('')
-
     generateDescriptions(metadata_path)
     generateChangelogs(metadata_path)
     generateImages(metadata_path)
     generateIcon(metadata_path)
+    updateSplash(metadata_path)
     adapt_android_preset(metadata_path)
 
 
