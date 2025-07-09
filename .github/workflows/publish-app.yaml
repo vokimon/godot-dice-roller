@@ -152,6 +152,7 @@ jobs:
           popd
 
       - name: 🏗️🐧 Linux Build
+        shell: bash
         run: |
           mkdir -v -p build/linux
           godot -v --headless --export-release "Linux" ./build/linux/$ASSET_PREFIX-linux.x86_64
@@ -160,6 +161,7 @@ jobs:
           popd
 
       - name: 🏗️🪟 Windows Build
+        shell: bash
         run: |
           mkdir -v -p build/windows
           godot -v --headless --export-release "Windows Desktop" ./build/windows/$ASSET_PREFIX-windows.exe
