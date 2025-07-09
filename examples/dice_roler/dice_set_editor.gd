@@ -32,7 +32,6 @@ func _ready() -> void:
 	setup_dice_list()
 	setup_preset()
 
-
 ## Preset methods
 
 func setup_preset():

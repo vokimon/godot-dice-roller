@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://bsu4a4i0b54qv"]
+[gd_scene load_steps=3 format=3 uid="uid://bsu4a4i0b54qv"]
 
 [ext_resource type="Script" uid="uid://bfo5t0g12e54s" path="res://examples/dice_roler/preset_loader.gd" id="1_kupvj"]
+[ext_resource type="Script" uid="uid://darv2rf2yrpi" path="res://examples/dice_roler/window_responsiver.gd" id="2_f71pt"]
 
 [node name="PresetLoader" type="AcceptDialog"]
 title = "Load a preset"
@@ -16,11 +17,15 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 8.0
 offset_top = 8.0
-offset_right = -8.0
-offset_bottom = -49.0
+offset_right = 792.0
+offset_bottom = 451.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="ItemList" type="Tree" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+
+[node name="WindowResponsiver" type="Node" parent="."]
+script = ExtResource("2_f71pt")
+metadata/_custom_type_script = "uid://darv2rf2yrpi"
