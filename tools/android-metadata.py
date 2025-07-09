@@ -103,7 +103,7 @@ def adapt_android_preset(metadata_path):
     code = version_to_code(version)
     export_path = (Path('build/android')/appname.replace(" ", "-").lower()).with_suffix('.apk')
     unique_name = 'net.canvoki.godot_dice_roller'
-    icon_main = str(metadata_path / 'icon.png')
+    icon_main = str(metadata_path/'images'/'icon.png')
 
     import configparser
     import json
