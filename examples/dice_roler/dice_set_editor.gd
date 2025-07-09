@@ -149,7 +149,7 @@ func add_add_row():
 	item.add_button(COL_ICON, preload("./add-icon.svg"), BUTTON_ADD)
 
 func add_dice_row(shape: DiceShape, color: Color, id: String):
-	print("Adding dice row: ", shape, " ", color, " ", id)
+	#print("Adding dice row: ", shape, " ", color, " ", id)
 	var root := tree.get_root()
 	var item := tree.create_item(root, root.get_child_count()-1) # left the add row the last
 	

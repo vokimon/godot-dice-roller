@@ -44,7 +44,6 @@ func update_tree():
 
 	for preset_name in preset_list:
 		var preset : Array[DiceDef] = preset_list[preset_name]
-		print(preset_name, preset)
 		var item : TreeItem = tree.create_item(root)
 		item.set_text(0, preset_name)
 		var i = 1
@@ -52,7 +51,6 @@ func update_tree():
 			if i >= tree.columns:
 				tree.columns = i+1
 				tree.set_column_expand(i, false)
-				print("expanding to ", i)
 			item.set_cell_mode(i, TreeItem.CELL_MODE_ICON)
 			item.set_icon(i, dice.shape.icon())
 			item.set_icon_max_width(i, 32)
@@ -79,7 +77,6 @@ func delete_preset(preset_name: String):
 func _on_item_selected():
 	var item : TreeItem = tree.get_selected()
 	var preset_name = item.get_text(0)
-	print_rich(preset_name)
 	preset_selected.emit(preset_name)
 
 func read_preset(preset_name):
