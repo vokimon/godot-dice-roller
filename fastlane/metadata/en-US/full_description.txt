@@ -22,10 +22,3 @@
 
 
 Documentation: https://github.com/vokimon/godot-dice-roller/blob/main/docs
-
-
-
-
-
-
-[![Get it on F-Droid](https://img.shields.io/f-droid/v/net.canvoki.godot_dice_roller.svg?logo=F-Droid)](https://f-droid.org/packages/net.canvoki.godot_dice_roller)

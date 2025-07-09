@@ -1,10 +1,11 @@
 # Changelog
 
-## Unreleased
+## 1.5.3 (2025-07-09)
 
 - ✨ Preset preview when loading presets
+- ✨ Preset preview when saving a preset
 - ✨ Delete an existing preset
-- 🐛 Responsive Diceset editor and loader dialogs
+- 🐛 Responsive dialogs (diceset editor, loader...)
 - 🐛 Published Linux and Windows binaries missed the PCK
 - 💄 Example: added splash screen
 - 💄 Bigger diceset button
