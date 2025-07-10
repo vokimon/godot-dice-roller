@@ -5,6 +5,7 @@
 - ✨ Delete an existing preset
 - 🐛 Responsive dialogs (diceset editor, loader...)
 - 🐛 Published Linux and Windows binaries missed the PCK
+- 🐛 Example: crash on empty diceset
 - 💄 Example: added splash screen
 - 💄 Bigger diceset button
 - 🏗️ fdroid requires fastlane data to be committed

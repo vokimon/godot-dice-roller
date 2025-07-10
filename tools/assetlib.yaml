@@ -9,9 +9,6 @@ previews:
 - repoimage: screenshots/example-landscape.png
   repothumb: screenshots/example-landscape-thumb.jpg
 
-- repoimage: screenshots/example-portrait.png
-  repothumb: screenshots/example-portrait-thumb.jpg
-
 - repoimage: screenshots/example-editor.png
   repothumb: screenshots/example-editor-thumb.jpg
 
@@ -20,6 +17,9 @@ previews:
 
 - repoimage: screenshots/example-allshapes.png
   repothumb: screenshots/example-allshapes-thumb.jpg
+
+- repoimage: screenshots/example-diceset-presets.png
+  repothumb: screenshots/example-diceset-presets-thumb.jpg
 
 description_files:
 - README.md

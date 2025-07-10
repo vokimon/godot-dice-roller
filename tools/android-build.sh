@@ -1,6 +1,6 @@
 #!/bin/bash
 
-APPNAME=${APPNAME:=$(cat fastlane/metadata/en-US/title.txt)}
+APPNAME=${APPNAME:=$(cat fastlane/metadata/android/en-US/title.txt)}
 APPVERSION=$(grep '## ' CHANGES.md | head -n1 | cut -d " " -f 2)
 APPFILE=$(echo $APPNAME | sed "s/[[:blank:]]//g")
 KEYSTORE=${KEYSTORE:=vokimon.keystore}
