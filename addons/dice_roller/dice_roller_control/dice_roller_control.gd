@@ -9,9 +9,12 @@ const dice_roller_scene = preload("../dice_roller/dice_roller.tscn")
 ## The set of dices to be thrown. If empty, a default set will be used.
 @export var dice_set: Array[DiceDef] = []:
 	set(new_value):
-		dice_set = new_value
-		if roller:
-			roller.dice_set = new_value
+		if not roller:
+			dice_set = new_value
+			return
+		roller.dice_set = new_value
+		# Roller might change it
+		dice_set = roller.dice_set
 
 ## Color of the rolling box
 @export var roller_color: Color = Color.DARK_GREEN:
