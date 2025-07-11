@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 run() {
     echo -e "\033[34;1m$@\033[0m"
     "$@"
@@ -29,4 +31,4 @@ run flatpak install --or-update --user ${APP}.flatpak
 #run flatpak-builder --user --install --force-clean build-dir ${APP}.yaml
 
 run flatpak run ${APP}
-
+run flatpak uninstall ${APP}

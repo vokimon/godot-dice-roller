@@ -22,6 +22,7 @@ modules:
         url: https://github.com/vokimon/godot-dice-roller.git
         commit: main
         #commit: godot-dice-roller-1.5.3
+        dest: source
 
       - type: archive
         url: https://github.com/vokimon/godot-dice-roller/releases/download/godot-dice-roller-1.5.3/godot-dice-roller-1.5.3-linux.tar.gz
@@ -30,9 +31,9 @@ modules:
 
     build-commands:
       - install -Dm644 source/godot-dice-roller-*-linux.pck ${FLATPAK_DEST}/bin/godot-runner.pck
-      - install -Dm644 tools/flatpak/${FLATPAK_ID}.desktop ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop
-      - install -Dm644 tools/flatpak/${FLATPAK_ID}.metainfo.xml ${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml
-      - install -Dm644 tools/flatpak/${FLATPAK_ID}.svg ${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/${FLATPAK_ID}.svg
+      - install -Dm644 source/tools/flatpak/${FLATPAK_ID}.desktop ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop
+      - install -Dm644 source/tools/flatpak/${FLATPAK_ID}.metainfo.xml ${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml
+      - install -Dm644 source/icon.svg ${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/${FLATPAK_ID}.svg
 
     cleanup:
       - /share/icons/hicolor/icon-theme.cache

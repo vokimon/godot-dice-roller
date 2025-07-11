@@ -1,5 +1,7 @@
+#!/bin/bash
 # This scripts setups or starts a local fdroid build environment
 
+set -e
 SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 FDROID_SERVER_PATH=$SCRIPTPATH/fdroid-server
 FDROID_DATA_PATH=$SCRIPTPATH/fdroid-data
