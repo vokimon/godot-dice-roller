@@ -1,6 +1,5 @@
 .godot/
 /build/
-/android/
 
 # Godot-specific ignores
 .import/
@@ -31,3 +30,11 @@ gdUnit4
 *apk*
 *.keystore
 addons/gut
+
+# act binary and config files
+tools/act
+.act-*
+
+# fdroid repos
+tools/fdroid-data/
+tools/fdroid-server/
