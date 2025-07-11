@@ -27,9 +27,11 @@ def last_version(metadata_path):
         for i in range(0,len(last_code),digits)
     )
 
-
 def cp(origin, target):
+    origin=Path(origin)
+    target=Path(target)
     print(f":: \033[34;1m{origin} -> {target}\033[0m")
+    mkdir(target.parent)
     target.write_bytes(origin.read_bytes())
 
 def dump(file, content):
@@ -74,7 +76,6 @@ def generateChangelogs(metadata_path: Path):
 
 def generateImages(metadata_path):
     images_path = metadata_path/'images'/'phoneScreenshots'
-    mkdir(images_path)
     for screenshot in Path().glob("screenshots/*png"):
         target = images_path/screenshot.name
         cp(screenshot, target)
@@ -136,7 +137,7 @@ def adapt_android_preset(metadata_path):
     modified = presets_file.read_text().replace(" = ", "=")
     presets_file.write_text(modified)
 
-def updateSplash(metadata_path):
+def updateSplashVersion(metadata_path):
     version = last_version(metadata_path)
     splash_svgfile = Path('examples/dice_roler/splash.svg')
 
@@ -182,6 +183,12 @@ def updateSplash(metadata_path):
         '--export-filename='+str(png_file)
     ])
 
+def updateSplash(metadata_path):
+    updateSplashVersion(metadata_path)
+    cp(
+        origin = 'examples/dice_roler/splash.png',
+        target = metadata_path/'images'/'featureGraphic.png',
+    )
 
 
 def generateMetadata():
@@ -190,9 +197,9 @@ def generateMetadata():
     Path('fastlane/.gdignore').write_text('')
     generateDescriptions(metadata_path)
     generateChangelogs(metadata_path)
+    updateSplash(metadata_path)
     generateImages(metadata_path)
     generateIcon(metadata_path)
-    updateSplash(metadata_path)
     adapt_android_preset(metadata_path)
 
 
