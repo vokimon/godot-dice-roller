@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>net.canvoki.godot_dice_roller</id>
+  
+  <name>Godot Dice Roller</name>
+  <summary>Roll dices</summary>
+
+  <developer id="net.canvoki">
+    <name translatable="no">David García Garzón</name>
+  </developer>
+
+  <description>
+    <p>Physics emulated dice rolling. Dice shapes d4, d6, d8, d10, d10x10, d12, d20 and poker dices.</p>
+  </description>
+
+  <content_rating type="oars-1.1" />
+  
+  <url type="homepage">https://vokimon.github.io/godot-dice-roller</url>
+  <url type="vcs-browser">https://github.com//vokimon/godot-dice-roller</url>
+  <url type="bugtracker">https://github.com/vokimon/godot-dice-roller/issues</url>
+
+  <branding>
+    <color type="primary" scheme_preference="light">#c6decf</color>
+    <color type="primary" scheme_preference="dark">#007547</color>
+  </branding>
+
+  <screenshots>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/vokimon/godot-dice-roller/godot-dice-roller-1.5.3/screenshots/example-landscape.png</image>
+      <caption>Default dice set: Purple d6, yellow d10 and red d8.</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/vokimon/godot-dice-roller/godot-dice-roller-1.5.3/screenshots/example-allshapes.png</image>
+      <caption>A dice set with all available shapes: d4, d6, d8, d10, d10x10, d12, d20 and poker</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/vokimon/godot-dice-roller/godot-dice-roller-1.5.3/screenshots/example-poker.png</image>
+      <caption>A dice set to play dice poker</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/vokimon/godot-dice-roller/godot-dice-roller-1.5.3/screenshots/example-editor.png</image>
+      <caption>Dice set editor dialog</caption>
+    </screenshot>
+  </screenshots>
+
+  <releases>
+    <release version="1.0" date="2022-05-07T22:18:44Z">
+      <description>
+        <p>Launch Day!!</p>
+      </description>
+    </release>
+  </releases>
+
+  <launchable type="desktop-id">net.canvoki.godot_dice_roller.desktop</launchable>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>AGPL-3.0-or-later</project_license>
+</component>

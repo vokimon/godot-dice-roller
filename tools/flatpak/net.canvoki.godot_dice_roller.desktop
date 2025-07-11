@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Godot Dice Roller
+Comment=Rolls many types of dices in 3D
+Categories=Game;BoardGame;RolePlaying
+Icon=net.canvoki.godot_dice_roller
+Exec=godot-runner
+Type=Application
+Terminal=false
