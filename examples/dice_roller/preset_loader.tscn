@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bsu4a4i0b54qv"]
 
-[ext_resource type="Script" uid="uid://bfo5t0g12e54s" path="res://examples/dice_roler/preset_loader.gd" id="1_kupvj"]
-[ext_resource type="Script" uid="uid://darv2rf2yrpi" path="res://examples/dice_roler/window_responsiver.gd" id="2_f71pt"]
+[ext_resource type="Script" uid="uid://bfo5t0g12e54s" path="res://examples/dice_roller/preset_loader.gd" id="1_kupvj"]
+[ext_resource type="Script" uid="uid://darv2rf2yrpi" path="res://examples/dice_roller/window_responsiver.gd" id="2_f71pt"]
 
 [node name="PresetLoader" type="AcceptDialog"]
 title = "Load a preset"

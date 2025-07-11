@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://l2g3sl3f2102"
-path="res://.godot/imported/splash.svg-c5d2fadea3e67fb72e9ba58c492ea642.ctex"
+path="res://.godot/imported/splash.svg-da37a45c4792bb60ab48df128c90e8be.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://examples/dice_roler/splash.svg"
-dest_files=["res://.godot/imported/splash.svg-c5d2fadea3e67fb72e9ba58c492ea642.ctex"]
+source_file="res://examples/dice_roller/splash.svg"
+dest_files=["res://.godot/imported/splash.svg-da37a45c4792bb60ab48df128c90e8be.ctex"]
 
 [params]
 

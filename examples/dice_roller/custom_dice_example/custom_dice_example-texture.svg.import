@@ -3,8 +3,8 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bt0ud7oo56tt2"
-path.s3tc="res://.godot/imported/custom_dice_example-texture.svg-bdc8bb6aadf55cf8650e6bb753bd7037.s3tc.ctex"
-path.etc2="res://.godot/imported/custom_dice_example-texture.svg-bdc8bb6aadf55cf8650e6bb753bd7037.etc2.ctex"
+path.s3tc="res://.godot/imported/custom_dice_example-texture.svg-5ba352a9176b8b2d4b11c209e3cea5f4.s3tc.ctex"
+path.etc2="res://.godot/imported/custom_dice_example-texture.svg-5ba352a9176b8b2d4b11c209e3cea5f4.etc2.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
@@ -12,8 +12,8 @@ metadata={
 
 [deps]
 
-source_file="res://examples/dice_roler/custom_dice_example/custom_dice_example-texture.svg"
-dest_files=["res://.godot/imported/custom_dice_example-texture.svg-bdc8bb6aadf55cf8650e6bb753bd7037.s3tc.ctex", "res://.godot/imported/custom_dice_example-texture.svg-bdc8bb6aadf55cf8650e6bb753bd7037.etc2.ctex"]
+source_file="res://examples/dice_roller/custom_dice_example/custom_dice_example-texture.svg"
+dest_files=["res://.godot/imported/custom_dice_example-texture.svg-5ba352a9176b8b2d4b11c209e3cea5f4.s3tc.ctex", "res://.godot/imported/custom_dice_example-texture.svg-5ba352a9176b8b2d4b11c209e3cea5f4.etc2.ctex"]
 
 [params]
 

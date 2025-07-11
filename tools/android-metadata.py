@@ -139,7 +139,7 @@ def adapt_android_preset(metadata_path):
 
 def updateSplashVersion(metadata_path):
     version = last_version(metadata_path)
-    splash_svgfile = Path('examples/dice_roler/splash.svg')
+    splash_svgfile = Path('examples/dice_roller/splash.svg')
 
     from lxml import etree
 
@@ -186,7 +186,7 @@ def updateSplashVersion(metadata_path):
 def updateSplash(metadata_path):
     updateSplashVersion(metadata_path)
     cp(
-        origin = 'examples/dice_roler/splash.png',
+        origin = 'examples/dice_roller/splash.png',
         target = metadata_path/'images'/'featureGraphic.png',
     )
 

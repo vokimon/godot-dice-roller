@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://k2lhwxr4rd72"
-path="res://.godot/imported/delete-icon.svg-b45197891a76dd140456836dab1f4c51.ctex"
+uid="uid://edibmccc45vk"
+path="res://.godot/imported/color-icon.svg-0a753928a1a8b24f124c933d345fe6bc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://examples/dice_roler/delete-icon.svg"
-dest_files=["res://.godot/imported/delete-icon.svg-b45197891a76dd140456836dab1f4c51.ctex"]
+source_file="res://examples/dice_roller/color-icon.svg"
+dest_files=["res://.godot/imported/color-icon.svg-0a753928a1a8b24f124c933d345fe6bc.ctex"]
 
 [params]
 

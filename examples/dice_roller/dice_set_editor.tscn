@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://ckylb177r5dm5"]
 
-[ext_resource type="Script" uid="uid://cj70etrfut3ml" path="res://examples/dice_roler/dice_set_editor.gd" id="1_5123s"]
-[ext_resource type="PackedScene" uid="uid://bsu4a4i0b54qv" path="res://examples/dice_roler/preset_loader.tscn" id="2_d8jwp"]
-[ext_resource type="Script" uid="uid://darv2rf2yrpi" path="res://examples/dice_roler/window_responsiver.gd" id="3_h5tkg"]
+[ext_resource type="Script" uid="uid://cj70etrfut3ml" path="res://examples/dice_roller/dice_set_editor.gd" id="1_5123s"]
+[ext_resource type="PackedScene" uid="uid://bsu4a4i0b54qv" path="res://examples/dice_roller/preset_loader.tscn" id="2_d8jwp"]
+[ext_resource type="Script" uid="uid://darv2rf2yrpi" path="res://examples/dice_roller/window_responsiver.gd" id="3_h5tkg"]
 
 [node name="DiceSetEditor" type="ConfirmationDialog"]
 title = "Dice Set Editor"
@@ -50,7 +50,7 @@ initial_position = 2
 [node name="MarginContainer" type="MarginContainer" parent="PresetNameDialog"]
 offset_left = 4.0
 offset_top = 4.0
-offset_right = 96.0
+offset_right = 164.0
 offset_bottom = 96.0
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10

@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://x324c2lmewii" path="res://addons/dice_roller/dice/d6_dice/d6.glb" id="1_vw7ac"]
 [ext_resource type="Script" uid="uid://cctm43po4vuwi" path="res://addons/dice_roller/dice/d6_dice/d6_dice.gd" id="2_vj2if"]
-[ext_resource type="Texture2D" uid="uid://bt0ud7oo56tt2" path="res://examples/dice_roler/custom_dice_example/custom_dice_example-texture.svg" id="3_0h8wa"]
+[ext_resource type="Texture2D" uid="uid://bt0ud7oo56tt2" path="res://examples/dice_roller/custom_dice_example/custom_dice_example-texture.svg" id="3_0h8wa"]
 [ext_resource type="Texture2D" uid="uid://do3xsddtldsbe" path="res://addons/dice_roller/dice/d6_dice/dice_normal_map.png" id="4_j2jbf"]
 [ext_resource type="Shader" uid="uid://bitcdkcbeinfk" path="res://addons/dice_roller/dice/d6_dice/highlight_blur.gdshader" id="5_yqqh1"]
 

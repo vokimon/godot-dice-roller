@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bebdla3qkt68"
-path="res://.godot/imported/splash.png-5d29af70da6f685319688b936d4d22ff.ctex"
+uid="uid://b4gwml1ivinax"
+path="res://.godot/imported/custom_dice_example.svg-dcb12dc6c4220137685039cf000bbfa6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://examples/dice_roler/splash.png"
-dest_files=["res://.godot/imported/splash.png-5d29af70da6f685319688b936d4d22ff.ctex"]
+source_file="res://examples/dice_roller/custom_dice_example/custom_dice_example.svg"
+dest_files=["res://.godot/imported/custom_dice_example.svg-dcb12dc6c4220137685039cf000bbfa6.ctex"]
 
 [params]
 
@@ -32,3 +32,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
+svg/scale=1.0
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false
