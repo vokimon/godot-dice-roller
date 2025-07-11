@@ -8,7 +8,7 @@ func _init() -> void:
 func _ready() -> void:
 	# Temporary hack to avoid small widgets in Android
 	if OS.get_name() == "Android":
-		theme = preload("res://examples/dice_roller/android_theme.tres")
+		theme = preload("./android_theme.tres")
 
 	%ResultLabel.text = "Ready to Roll"
 
