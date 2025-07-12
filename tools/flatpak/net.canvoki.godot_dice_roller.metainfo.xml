@@ -6,6 +6,7 @@
   <developer id="net.canvoki">
     <name translatable="no">David García Garzón</name>
   </developer>
+  <icon>net.canvoki.godot_dice_roller</icon>
   <description>
     <ul>
       <li>Customizable: shape, color, face engravings, material, box color...</li>
@@ -16,8 +17,9 @@
     <p>Documentation: https://github.com/vokimon/godot-dice-roller/blob/main/docs</p>
   </description>
   <content_rating type="oars-1.1"/>
-  <url type="homepage">https://vokimon.github.io/godot-dice-roller</url>
-  <url type="vcs-browser">https://github.com//vokimon/godot-dice-roller</url>
+  <url type="other">https://raw.githubusercontent.com//vokimon/godot-dice-roller/godot-dice-roller-1.5.3/LICENSE</url>
+  <url type="homepage">https://github.com/vokimon/godot-dice-roller</url>
+  <url type="vcs-browser">https://github.com/vokimon/godot-dice-roller</url>
   <url type="bugtracker">https://github.com/vokimon/godot-dice-roller/issues</url>
   <branding>
     <color type="primary" scheme_preference="light">#c6decf</color>
@@ -25,20 +27,40 @@
   </branding>
   <screenshots>
     <screenshot type="default">
-      <image>https://raw.githubusercontent.com/vokimon/godot-dice-roller/godot-dice-roller-1.5.3/screenshots/example-landscape.png</image>
-      <caption>Default dice set: Purple d6, yellow d10 and red d8.</caption>
+      <image>https://raw.githubusercontent.com//vokimon/godot-dice-roller/godot-dice-roller-1.5.3/screenshots/example-allshapes.png</image>
+      <caption>
+        <p>A dice set with all available shapes: d4, d6, d8, d10, d10x10, d12, d20 and poker</p>
+      </caption>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/vokimon/godot-dice-roller/godot-dice-roller-1.5.3/screenshots/example-allshapes.png</image>
-      <caption>A dice set with all available shapes: d4, d6, d8, d10, d10x10, d12, d20 and poker</caption>
+      <image>https://raw.githubusercontent.com//vokimon/godot-dice-roller/godot-dice-roller-1.5.3/screenshots/example-diceset-presets.png</image>
+      <caption>
+        <p>Save dicesets as presets to load later</p>
+      </caption>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/vokimon/godot-dice-roller/godot-dice-roller-1.5.3/screenshots/example-poker.png</image>
-      <caption>A dice set to play dice poker</caption>
+      <image>https://raw.githubusercontent.com//vokimon/godot-dice-roller/godot-dice-roller-1.5.3/screenshots/example-editor.png</image>
+      <caption>
+        <p>Diceset Editor: Edit the current diceset, adding and removing dices, and chosing their shape, color and name.</p>
+      </caption>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/vokimon/godot-dice-roller/godot-dice-roller-1.5.3/screenshots/example-editor.png</image>
-      <caption>Dice set editor dialog</caption>
+      <image>https://raw.githubusercontent.com//vokimon/godot-dice-roller/godot-dice-roller-1.5.3/screenshots/example-landscape.png</image>
+      <caption>
+        <p>Default dice set: Purple d6, yellow d10 and red d8.</p>
+      </caption>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com//vokimon/godot-dice-roller/godot-dice-roller-1.5.3/screenshots/example-poker.png</image>
+      <caption>
+        <p>A dice set to play dice poker</p>
+      </caption>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com//vokimon/godot-dice-roller/godot-dice-roller-1.5.3/screenshots/example-portrait.png</image>
+      <caption>
+        <p>Layout in portrait orientation.</p>
+      </caption>
     </screenshot>
   </screenshots>
   <releases>
@@ -241,7 +263,7 @@
       </description>
     </release>
   </releases>
-  <launchable type="desktop-id">net.canvoki.godot_dice_roller.desktop</launchable>
+  <launchable>net.canvoki.godot_dice_roller.desktop</launchable>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>AGPL-3.0-or-later</project_license>
 </component>

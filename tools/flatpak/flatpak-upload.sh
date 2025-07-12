@@ -22,7 +22,7 @@ run() {
 # Clone flathub repo if missing
 if [ ! -d "$FLATHUB_REPO_PATH/.git" ]; then
     echo "Local flathub repo not found. Cloning your fork..."
-    if ! git clone "git@github.com:$GITHUB_USER/flathub.git" "$FLATHUB_REPO_PATH"; then
+    if ! git clone "git@github.com:$GITHUB_USER/flathub.git" "$FLATHUB_REPO_PATH" --branch=new-pr; then
         echo "Could not clone your fork. Please fork https://github.com/flathub/flathub and try again."
         exit 1
     fi
@@ -32,7 +32,7 @@ pushd "$FLATHUB_REPO_PATH" > /dev/null
 
 # Checkout or create branch
 if ! git rev-parse --verify "$APP_ID" >/dev/null 2>&1; then
-    run git checkout -b "$APP_ID"
+    run git checkout -b "$APP_ID" origin/new-pr
 else
     run git checkout "$APP_ID"
 fi

@@ -2,11 +2,17 @@
 
 # generates android metadata from README.md, CHANGES.md and screenshots
 
+unique_name = 'net.canvoki.godot_dice_roller'
+raw_repo_url_prefix = f'https://raw.githubusercontent.com/'
+repo_user = 'vokimon'
+repo_name = 'godot-dice-roller'
+categories = ["Game", "BoardGame", "RolePlaying"]
+license = "AGPL-3.0-or-later"
+
 from pathlib import Path
 import os
 import contextlib
 from lxml import etree
-
 import re
 
 emoji_pattern = re.compile(
@@ -124,7 +130,6 @@ def adapt_android_preset(metadata_path):
     version = last_version(metadata_path)
     code = version_to_code(version)
     export_path = (Path('build/android')/appname.replace(" ", "-").lower()).with_suffix('.apk')
-    unique_name = 'net.canvoki.godot_dice_roller'
     icon_main = str(metadata_path/'images'/'icon.png')
 
     import configparser
@@ -221,31 +226,7 @@ def generateMetadata():
     generateIcon(metadata_path)
     adapt_android_preset(metadata_path)
     update_flathub(metadata_path)
-
-def adapt_android_preset(metadata_path: Path):
-    flatpak_dir = Path("tools/flatpak")
-    unique_id = "net.canvoki.godot_dice_roller"
-
-    metainfo_path = flatpak_dir / f"{unique_id}.metainfo.xml"
-    tree = etree.parse(str(metainfo_path))
-    root = tree.getroot()
-
-    def md_to_html(md_text):
-        return markdown.markdown(md_text, extensions=['extra', 'sane_lists'])
-
-    def update_element(tag_name, file_name):
-        text = (metadata_path / file_name).read_text().strip()
-
-        elem = root.find(f"./{tag_name}")
-        if elem is None:
-            elem = etree.SubElement(root, tag_name)
-        elem.text = text
-
-    update_element("name", "title.txt")
-    update_element("summary", "short_description.txt")
-
-    tree.write(str(metainfo_path), encoding="utf-8", xml_declaration=True, pretty_print=True)
-    print(f"Updated {metainfo_path}")
+    update_flatpak_desktop_file(metadata_path)
 
 def insert_markdown_as_xhtml(parent, markdown_text):
     from markdown import markdown
@@ -273,43 +254,10 @@ def insert_markdown_as_xhtml(parent, markdown_text):
     for child in wrapper:
         parent.append(child)
 
-def blainsert_markdown_as_xhtml(parent: etree.Element, markdown_text: str) -> None:
-    """
-    Convert markdown text to sanitized XHTML and append as children to the parent element.
-    Replaces <h2> with <p><strong>...</strong></p> to conform with Flatpak manifest allowed tags.
-    """
-    from lxml import html
-    from markdown import markdown
-
-    html_fragment = markdown(markdown_text)
-    doc = html.fragment_fromstring(html_fragment, create_parent=True)
-
-    def fix_node(node):
-        if node.tag == 'h2':
-            p = etree.Element('p')
-            strong = etree.SubElement(p, 'strong')
-            strong.text = (node.text or '').strip()
-            if node.tail:
-                strong.tail = node.tail
-            return p
-        else:
-            for i, child in enumerate(node):
-                fixed_child = fix_node(child)
-                if fixed_child is not child:
-                    node[i] = fixed_child
-            return node
-
-    fixed_doc = fix_node(doc)
-
-    # Append all children of fixed_doc to parent
-    for child in fixed_doc:
-        parent.append(child)
-    parent.tail = '\n'
-
 def parse_changelog_file(text):
     """
     Extract version, date and notes (markdown string) from a changelog file content.
-    Expects the first line to be: '## 1.5.3 (2025-07-09)'
+    Expects the first line to be like: '## 1.5.3 (2025-07-09)'
     """
     import re
     lines = text.strip().splitlines()
@@ -323,56 +271,139 @@ def parse_changelog_file(text):
     return version, date, notes_md
 
 
-def update_flathub(metadata_path):
-    # Define paths
-    fastlane_dir = Path(metadata_path)
-    metainfo_path = Path("tools/flatpak/net.canvoki.godot_dice_roller.metainfo.xml")
+def get_screenshot_caption_md(image_path: Path) -> str:
+    """Return caption markdown for a screenshot image. Use .md file if present, or generate from filename."""
+    md_path = image_path.with_suffix(".md")
+    if md_path.exists():
+        return md_path.read_text(encoding="utf-8").strip()
+    # Default from filename
+    return image_path.stem.replace('-', ' ').replace('_', ' ').title()
 
-    # Load and parse existing metainfo XML
+def update_flathub(metadata_path):
+    metainfo_path = Path(f"tools/flatpak/{unique_name}.metainfo.xml")
+
     tree = etree.parse(metainfo_path)
     root = tree.getroot()
 
     def read_textfile(path):
         return path.read_text(encoding='utf-8').strip()
 
-    def read_and_format_markdown(path):
-        return markdown(read_textfile(path))
-
     def get_and_clear(root, tag):
         node = root.find(tag)
         if node is None:
-            raise ValueError(f"Missing required XML element: <{tag}>")
+            return
         node.clear()
         return node
 
+    # -- existing fields
+
     # Title → <name>
     name_node = get_and_clear(root, "name")
-    name_node.text = read_textfile(fastlane_dir / "title.txt")
+    name_node.text = read_textfile(metadata_path / "title.txt")
 
     # Summary → <summary>
     summary_node = get_and_clear(root, "summary")
-    summary_node.text = read_textfile(fastlane_dir / "short_description.txt")
+    summary_node.text = read_textfile(metadata_path / "short_description.txt")
 
     # Full description (markdown) → <description><p>...</p></description>
     description_node = get_and_clear(root, "description")
-    insert_markdown_as_xhtml(description_node, read_textfile(fastlane_dir / "full_description.txt"))
+    insert_markdown_as_xhtml(description_node, read_textfile(metadata_path / "full_description.txt"))
 
-    # Changelogs
-    releases_node = get_and_clear(root, "releases")
-    changelog_files = (fastlane_dir/'changelogs').glob("*.txt")
-    for changelog_file in sorted(changelog_files, reverse=True):
-        print("processing", changelog_file)
-        content = changelog_file.read_text(encoding='utf-8')
-        version, date, notes_md = parse_changelog_file(content)
+    # id
+    id_node = get_and_clear(root, "id")
+    id_node.text = unique_name
 
-        release_el = etree.SubElement(releases_node, 'release', version=version, date=date)
-        description_el = etree.SubElement(release_el, 'description')
-        insert_markdown_as_xhtml(description_el, notes_md)
+    # icon
+    icon_node = get_and_clear(root, "icon")
+    icon_node.text = unique_name
 
-    # Pretty print and overwrite
+    # launch method
+    launchable = get_and_clear(root, "launchable")
+    launchable.text = unique_name + ".desktop"
+
+    # Screenshots
+    screenshots_node = get_and_clear(root, "screenshots")
+    screenshots_dir = Path("screenshots")
+
+    default = True
+    version_name = last_version(metadata_path)
+    tag_name = f"{repo_name}-{version_name}"
+    image_url_prefix = f"{raw_repo_url_prefix}/{repo_user}/{repo_name}/{repo_name}-{version_name}/screenshots/"
+    for image_path in sorted(screenshots_dir.glob("*.png")):
+        screenshot_el = etree.SubElement(screenshots_node, "screenshot")
+        if default:
+            screenshot_el.set("type", "default")
+            default = False
+
+        image_el = etree.SubElement(screenshot_el, "image")
+        image_url = image_url_prefix + image_path.name
+        image_el.text = image_url
+
+        caption_el = etree.SubElement(screenshot_el, "caption")
+        caption_md = get_screenshot_caption_md(image_path)
+        insert_markdown_as_xhtml(caption_el, caption_md)
+
+    # project_license
+    spdx_id = deduce_license()
+    license_node = get_and_clear(root, "project_license")
+    license_node.text = spdx_id
+
+    # Strip scheme if present
+    repo_host = 'https://github.com'
+    url_fields = {
+        'homepage': f"{repo_host}/{repo_user}/{repo_name}",
+        'vcs-browser': f"{repo_host}/{repo_user}/{repo_name}",
+        'bugtracker': f"{repo_host}/{repo_user}/{repo_name}/issues",
+        'other': f"{raw_repo_url_prefix}/{repo_user}/{repo_name}/{repo_name}-{version_name}/LICENSE"
+    }
+
+    content_rating_node = root.find("content_rating")
+
+    for url_type, url_value in url_fields.items():
+        xpath_expr = f"url[@type='{url_type}']"
+        url_node = get_and_clear(root, xpath_expr)
+        if url_node is None:
+            url_node = etree.Element("url", type=url_type)
+            content_rating_node.addnext(url_node)
+        url_node.text = url_value
+        url_node.set("type", url_type)
+
+
+    # Optional: Insert version element at root if needed
+    # version_node = get_and_clear(root, "version")
+    # version_node.text = last_version(metadata_path)
+
     etree.indent(tree, space="  ")
     tree.write(metainfo_path, encoding='utf-8', xml_declaration=True, pretty_print=True)
     print(f"✅ Updated metainfo file: {metainfo_path}")
+
+def deduce_license():
+    from spdx_lookup import match
+    if license:
+        return license
+    license_match = match(Path("LICENSE").read_text())
+    if license_match:
+        print(dir(license_match.license))
+        return license_match.license.id
+    raise ValueError("LICENSE content couldn't be identified, correct or explicitly set in config the SPDX id")
+
+def update_flatpak_desktop_file(metadata_path):
+    app_name = (metadata_path/"title.txt").read_text().strip()
+    summary = (metadata_path/"short_description.txt").read_text().strip()
+
+    Path(f"tools/flatpak/{unique_name}.desktop").write_text(f"""\
+[Desktop Entry]
+Name={app_name}
+Comment={summary}
+Categories={";".join(categories)}
+Icon={unique_name}
+Exec=godot-runner %U
+Type=Application
+Terminal=false
+StartupNotify=true
+""")
+
+
 
 
 if __name__ == '__main__':
