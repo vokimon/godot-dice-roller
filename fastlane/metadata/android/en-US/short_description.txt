@@ -1,1 +1,1 @@
-Rolls 3D dices in a box.
+Roll dice in 3D

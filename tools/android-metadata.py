@@ -7,6 +7,7 @@ raw_repo_url_prefix = f'https://raw.githubusercontent.com/'
 repo_user = 'vokimon'
 repo_name = 'godot-dice-roller'
 categories = ["Game", "BoardGame", "RolePlaying"]
+keywords = ["dice", "roller", "rpg", "godot", "tabletop", "gaming", "poker"]
 license = "AGPL-3.0-or-later"
 
 from pathlib import Path
@@ -76,6 +77,7 @@ def generateDescriptions(metadata_path):
     short_description = readme_lines.pop(0)
 
     full_description = '\n'.join(readme_lines).strip()
+    full_description = cutoff_on_mark(full_description)
     dump(metadata_path/"title.txt", title)
     dump(metadata_path/"short_description.txt", short_description)
     dump(metadata_path/"full_description.txt", full_description)
@@ -232,7 +234,7 @@ def insert_markdown_as_xhtml(parent, markdown_text):
     from markdown import markdown
 
     # Convert markdown to HTML (XHTML-compliant)
-    html = markdown(markdown_text, extensions=["extra"])
+    html = markdown(cutoff_on_mark(markdown_text), extensions=["extra"])
 
     # Wrap in a dummy root so we can parse multiple elements
     wrapped_html = f"<wrapper>{html}</wrapper>"
@@ -241,18 +243,50 @@ def insert_markdown_as_xhtml(parent, markdown_text):
     parser = etree.XMLParser()
     wrapper = etree.fromstring(wrapped_html, parser=parser)
 
-    # Transform unsupported tags (like <h2>) to allowed ones
-    for element in wrapper.iter():
-        if element.tag == "h2":
-            element.tag = "p"
-            strong = etree.Element("strong")
-            strong.text = element.text
-            element.text = None
-            element.append(strong)
+    replace_headings(wrapper)
+    flatten_nested_uls(wrapper)
 
     # Append children to the target XML node
     for child in wrapper:
         parent.append(child)
+
+def cutoff_on_mark(content, cutoff_marker="end-of-description"):
+
+    pattern = re.compile(rf"<!--\s*{re.escape(cutoff_marker)}\s*-->", re.IGNORECASE)
+    match = pattern.search(content)
+    if match:
+        return content[:match.start()]
+    return content  # fallback to full content if no marker
+
+def flatten_nested_uls(root):
+    for nested_ul in root.xpath('.//ul//ul'):
+        parent_li = nested_ul.getparent()
+        parent_ul = parent_li.getparent()
+        insertion_index = parent_ul.index(parent_li) + 1
+
+        for li in reversed(nested_ul.findall('li')):
+            parent_ul.insert(insertion_index, li)
+
+        parent_li.remove(nested_ul)
+        parent_ul.remove(parent_li)
+
+def replace_headings(root):
+    for heading in root.xpath(".//h1 | .//h2 | .//h3 | .//h4 | .//h5 | .//h6"):
+        print("detectado uno")
+        # Create <p><strong>...</strong></p>
+        strong = etree.Element("strong")
+        strong.text = heading.text
+        p = etree.Element("p")
+        p.append(strong)
+
+        # Copy over tail text (if any)
+        if heading.tail:
+            p.tail = heading.tail
+
+        # Replace heading with <p><strong>
+        parent = heading.getparent()
+        parent.replace(heading, p)
+
 
 def parse_changelog_file(text):
     """
@@ -281,6 +315,10 @@ def get_screenshot_caption_md(image_path: Path) -> str:
 
 def update_flathub(metadata_path):
     metainfo_path = Path(f"tools/flatpak/{unique_name}.metainfo.xml")
+
+    (Path('tools/flatpak')/f"{unique_name}.svg").write_text(
+        Path('icon.svg').read_text()
+    )
 
     tree = etree.parse(metainfo_path)
     root = tree.getroot()
@@ -316,10 +354,12 @@ def update_flathub(metadata_path):
     # icon
     icon_node = get_and_clear(root, "icon")
     icon_node.text = unique_name
+    icon_node.set('type', 'stock')
 
     # launch method
     launchable = get_and_clear(root, "launchable")
     launchable.text = unique_name + ".desktop"
+    launchable.set('type', 'desktop-id')
 
     # Screenshots
     screenshots_node = get_and_clear(root, "screenshots")
@@ -354,8 +394,18 @@ def update_flathub(metadata_path):
         'homepage': f"{repo_host}/{repo_user}/{repo_name}",
         'vcs-browser': f"{repo_host}/{repo_user}/{repo_name}",
         'bugtracker': f"{repo_host}/{repo_user}/{repo_name}/issues",
-        'other': f"{raw_repo_url_prefix}/{repo_user}/{repo_name}/{repo_name}-{version_name}/LICENSE"
+        #'other': f"{raw_repo_url_prefix}/{repo_user}/{repo_name}/{repo_name}-{version_name}/LICENSE"
     }
+
+    releases_node = get_and_clear(root, "releases")
+    for release in sorted((metadata_path/"changelogs").glob('*.txt'), reverse=True):
+        release_node = etree.SubElement(releases_node, 'release')
+        version, date, notes = parse_changelog_file(release.read_text())
+        release_node.set('version', version)
+        release_node.set('date', date)
+        release_description_node = etree.SubElement(release_node, 'description')
+        insert_markdown_as_xhtml(release_description_node, notes)
+        
 
     content_rating_node = root.find("content_rating")
 
@@ -368,10 +418,13 @@ def update_flathub(metadata_path):
         url_node.text = url_value
         url_node.set("type", url_type)
 
+    categories_node = get_and_clear(root, "categories")
+    for category in categories:
+        etree.SubElement(categories_node, "category").text = category
 
-    # Optional: Insert version element at root if needed
-    # version_node = get_and_clear(root, "version")
-    # version_node.text = last_version(metadata_path)
+    keywords_node = get_and_clear(root, "keywords")
+    for word in keywords:
+        etree.SubElement(keywords_node, "keyword").text = word
 
     etree.indent(tree, space="  ")
     tree.write(metainfo_path, encoding='utf-8', xml_declaration=True, pretty_print=True)
@@ -402,8 +455,6 @@ Type=Application
 Terminal=false
 StartupNotify=true
 """)
-
-
 
 
 if __name__ == '__main__':

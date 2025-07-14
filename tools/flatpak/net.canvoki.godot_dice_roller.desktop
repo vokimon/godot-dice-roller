@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=Godot Dice Roller
-Comment=Rolls 3D dices in a box.
+Comment=Roll dice in 3D
 Categories=Game;BoardGame;RolePlaying
 Icon=net.canvoki.godot_dice_roller
 Exec=godot-runner %U

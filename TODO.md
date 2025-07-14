@@ -9,9 +9,12 @@
 - [ ] d20: Review numbers position to match standard dice
 - [ ] d20: Review stability conditions, too bumpy
 - [ ] CI: FDroid release
+- [ ] Flatpak: extract metadata from project
+- [ ] Metadata: exclude badges from description
 
 ## Done's
 
+- [x] Example: Preset load preview
 - [x] CI: Automatic upload to itch.io
 - [x] CI: Automatic upload to Github release
 - [x] CI: Godot complains ndk and sdk are not in the paths specified in editor config build-tools and platform-tools

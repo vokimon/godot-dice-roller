@@ -6,14 +6,20 @@
 
 # godot-dice-roller
 
-Rolls 3D dices in a box.
+Roll dice in 3D
+
+Physics-based rolling of customizable sets of dice.
+Use it as a standalone application or
+integrate it into your own Godot game as an add-on.
 
 ![Screenshot Landscape](screenshots/example-landscape.png)
 
-- Customizable: shape, color, face engravings, material, box color...
+- Fully customizable: shape, color, face engravings, material, box color...
 - Available dice shapes: d4, d6, d8, d10, d10x10, d12, d20, poker dices.
-- Physics based rolling, quick rolling or, for network games, external rolling.
+- Three rolling modes: Physics based, quick and external, for network games.
 - Straight forward integration as addon in your own Godot game.
+
+<!-- end-of-description -->
 
 Documentation: https://github.com/vokimon/godot-dice-roller/blob/main/docs
 

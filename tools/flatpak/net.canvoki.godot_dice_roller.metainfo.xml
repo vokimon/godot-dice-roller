@@ -2,22 +2,37 @@
 <component type="desktop-application">
   <id>net.canvoki.godot_dice_roller</id>
   <name>Godot Dice Roller</name>
-  <summary>Rolls 3D dices in a box.</summary>
+  <summary>Roll dice in 3D</summary>
   <developer id="net.canvoki">
     <name translatable="no">David García Garzón</name>
   </developer>
-  <icon>net.canvoki.godot_dice_roller</icon>
+  <icon type="stock">net.canvoki.godot_dice_roller</icon>
   <description>
+    <p>Physics-based rolling of customizable sets of dice.
+Use it as a standalone application or
+integrate it into your own Godot game as an add-on.</p>
     <ul>
-      <li>Customizable: shape, color, face engravings, material, box color...</li>
+      <li>Fully customizable: shape, color, face engravings, material, box color...</li>
       <li>Available dice shapes: d4, d6, d8, d10, d10x10, d12, d20, poker dices.</li>
-      <li>Physics based rolling, quick rolling or, for network games, external rolling.</li>
+      <li>Three rolling modes: Physics based, quick and external, for network games.</li>
       <li>Straight forward integration as addon in your own Godot game.</li>
     </ul>
-    <p>Documentation: https://github.com/vokimon/godot-dice-roller/blob/main/docs</p>
   </description>
   <content_rating type="oars-1.1"/>
-  <url type="other">https://raw.githubusercontent.com//vokimon/godot-dice-roller/godot-dice-roller-1.5.3/LICENSE</url>
+  <categories>
+    <category>Game</category>
+    <category>BoardGame</category>
+    <category>RolePlaying</category>
+  </categories>
+  <keywords>
+    <keyword>dice</keyword>
+    <keyword>roller</keyword>
+    <keyword>rpg</keyword>
+    <keyword>godot</keyword>
+    <keyword>tabletop</keyword>
+    <keyword>gaming</keyword>
+    <keyword>poker</keyword>
+  </keywords>
   <url type="homepage">https://github.com/vokimon/godot-dice-roller</url>
   <url type="vcs-browser">https://github.com/vokimon/godot-dice-roller</url>
   <url type="bugtracker">https://github.com/vokimon/godot-dice-roller/issues</url>
@@ -41,7 +56,7 @@
     <screenshot>
       <image>https://raw.githubusercontent.com//vokimon/godot-dice-roller/godot-dice-roller-1.5.3/screenshots/example-editor.png</image>
       <caption>
-        <p>Diceset Editor: Edit the current diceset, adding and removing dices, and chosing their shape, color and name.</p>
+        <p>Diceset Editor: Add and remove dices. Choose their shape, color and name.</p>
       </caption>
     </screenshot>
     <screenshot>
@@ -111,11 +126,8 @@
           <li>✨ New skined d6: Poker dice (in the example)</li>
           <li>✨ Example app: loading and saving dice sets</li>
           <li>✨ Example app: roller box adapts its size to the number of dices</li>
-          <li>💥 BREAKING: DiceDef.sides -&gt; 'DiceDefshape'<ul>
-              <li>'sides' (int) -&gt; 'shape' (DiceShape: D6, D10, D10x10)</li>
-              <li>Legacy DiceDefs automagically migrated after load and save</li>
-            </ul>
-          </li>
+          <li>'sides' (int) -&gt; 'shape' (DiceShape: D6, D10, D10x10)</li>
+          <li>Legacy DiceDefs automagically migrated after load and save</li>
           <li>💄 DiceShape icons shown in Property Editor</li>
           <li>💄 Unified d10 text font with the one used in other dices</li>
           <li>🐛 Import d10 and d10x10 as glb and not as blend.
@@ -168,12 +180,9 @@
     <release version="1.1.1" date="2025-01-03">
       <description>
         <ul>
-          <li>✨ Cleaner installs<ul>
-              <li>screenshots and build files excluded from package</li>
-              <li>examples moved to <code>examples/dice_roller/</code> for cleaner
+          <li>screenshots and build files excluded from package</li>
+          <li>examples moved to <code>examples/dice_roller/</code> for cleaner
   merge in user's project along with other plugins.</li>
-            </ul>
-          </li>
         </ul>
       </description>
     </release>
@@ -263,7 +272,7 @@
       </description>
     </release>
   </releases>
-  <launchable>net.canvoki.godot_dice_roller.desktop</launchable>
+  <launchable type="desktop-id">net.canvoki.godot_dice_roller.desktop</launchable>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>AGPL-3.0-or-later</project_license>
 </component>
