@@ -10,7 +10,6 @@ GITHUB_USER=vokimon
 
 SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 FLATHUB_REPO_PATH="$SCRIPTPATH/flathub"
-DEST_DIR="$FLATHUB_REPO_PATH/$APP_ID"
 
 cd "$SCRIPTPATH"
 
@@ -39,17 +38,10 @@ fi
 
 popd > /dev/null
 
-run mkdir -p "$DEST_DIR"
-
-for f in "$APP_ID".{yaml,desktop,metainfo.xml,svg}; do
-    [ -e "$f" ] || {
-        echo "Warning: file $f not found."
-    }
-    run install -Dm644 "$(readlink -f "$f")" "$DEST_DIR/$f"
-done
+run install -Dm644 "${APP_ID}.yaml" $FLATHUB_REPO_PATH/
 
 pushd "$FLATHUB_REPO_PATH" > /dev/null
-run git add "$APP_ID"
+run git add "${APP_ID}.yaml"
 popd > /dev/null
 
 echo
