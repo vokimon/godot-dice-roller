@@ -118,7 +118,7 @@ jobs:
       - name: 🪪 Read version number and version code
         shell: bash
         run: |
-          python tools/android-metadata.py # generates android metadata from README.md, CHANGES.md and screenshots
+          python tools/generate-metadata.py # generates android metadata from README.md, CHANGES.md and screenshots
           #GODOT_VERSION=$(godot-asset-library-client project-field godot_version)
           GODOT_VERSION=4.4.1
           APPNAME=$(cat fastlane/metadata/en-US/title.txt | sed 's/ //g')
