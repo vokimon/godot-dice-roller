@@ -3,14 +3,16 @@
 # generates metadata for packaging and distributing in different
 # platforms from README.md, CHANGES.md and screenshots
 
-from pathlib import Path
 import os
+import operator
 import contextlib
+from pathlib import Path
 from lxml import etree
 import re
 from godot_asset_library_client.config import Config as BaseConfig
 from dataclasses import dataclass, field
-from consolemsg import fail
+from consolemsg import fail, warn
+import yaml
 
 def deduce_license():
     license_file = Path("LICENSE")
@@ -23,13 +25,33 @@ def deduce_license():
     return license_match.license.id
 
 @dataclass
+class Change:
+    version_name: str
+    version_date: str
+    notes_md: str
+
+    @property
+    def version_tuple(self):
+        return [int(v) for v in self.version_name.split('.')]
+
+
+@dataclass
 class Config(BaseConfig):
     unique_name: str = 'net.canvoki.godot_dice_roller'
     repo_name: str = 'godot-dice-roller'
     categories: list[str] = field(default_factory=list)
     keywords: list[str] = field(default_factory=list)
     license: str = field(default_factory=deduce_license)
-    # TODO: homepage
+    #homepage: str = field(default_factory=)
+    changes: list[Change] = field(default_factory=list)
+
+    @property
+    def last_version(self):
+        return max(
+            self.changes,
+            key=operator.attrgetter('version_tuple'),
+        ).version_name
+
 
 yaml_metadata = 'tools/assetlib.yaml'
 config = Config.from_file(yaml_metadata)
@@ -68,14 +90,6 @@ def version_to_code(version, epoch=0) -> str:
         for v in version.split('.')
     )
 
-def last_version(metadata_path):
-    last_code = list(sorted((metadata_path/'changelogs').glob('*txt')))[-1].stem
-    digits = 2
-    return '.'.join(
-        str(int(last_code[i:i+digits]))
-        for i in range(0,len(last_code),digits)
-    )
-
 def cp(origin, target):
     origin=Path(origin)
     target=Path(target)
@@ -111,17 +125,27 @@ def generateChangelogs(metadata_path: Path):
 
     changelog=Path("CHANGES.md").read_text()
 
+    changelog_chapters = changelog.split("##")[1:]
+    config.changes = []
+    for chapter in  changelog.split("##")[1:]:
+        version, date, notes = parse_changelog_file(chapter)
+        if not version:
+            continue # Unreleased
+        config.changes.append(Change(
+            version_name = version,
+            version_date = date,
+            notes_md = notes,
+        ))
+
     changelog_path = metadata_path/"changelogs"
     mkdir(changelog_path)
 
-    changelog_chapters = changelog.split("##")[1:]
-    for chapter in changelog_chapters:
-        version, body = process_chapter(chapter)
-        if not version[0].isnumeric():
-            # Unreleased
-            continue
+    for change in config.changes:
         version_code = version_to_code(version)
-        dump((changelog_path/version_code).with_suffix('.txt'), "##" + chapter)
+        dump((changelog_path/version_code).with_suffix('.txt'),
+            f"## {change.version_name} ({change.version_date})\n"
+            f"{change.notes_md}"
+        )
 
 def generateImages(metadata_path):
     images_path = metadata_path/'images'/'phoneScreenshots'
@@ -149,7 +173,7 @@ def generateIcon(metadata_path):
 
 def adapt_android_preset(metadata_path):
     appname = (metadata_path/'title.txt').read_text()
-    version = last_version(metadata_path)
+    version = config.last_version
     code = version_to_code(version)
     export_path = (Path('build/android')/appname.replace(" ", "-").lower()).with_suffix('.apk')
     icon_main = str(metadata_path/'images'/'icon.png')
@@ -186,7 +210,7 @@ def adapt_android_preset(metadata_path):
     presets_file.write_text(modified)
 
 def updateSplashVersion(metadata_path):
-    version = last_version(metadata_path)
+    version = config.last_version
     splash_svgfile = Path('examples/dice_roller/splash.svg')
 
     nsmap = dict(
@@ -316,9 +340,10 @@ def parse_changelog_file(text):
     import re
     lines = text.strip().splitlines()
     heading = lines[0]
-    match = re.match(r'##\s+([\d\.]+)\s+\((\d{4}-\d{2}-\d{2})\)', heading)
+    match = re.match(r'\s*([\d\.]+)\s+\((\d{4}-\d{2}-\d{2})\)', heading)
     if not match:
-        raise ValueError("Invalid changelog heading format")
+        warn(f"Ignoring change versión: \"{heading}\"")
+        return None, None, None
     version = match.group(1)
     date = match.group(2)
     notes_md = '\n'.join(lines[1:]).strip()
@@ -357,15 +382,15 @@ def update_flathub(metadata_path):
 
     # Title → <name>
     name_node = get_and_clear(root, "name")
-    name_node.text = read_textfile(metadata_path / "title.txt")
+    name_node.text = config.title
 
     # Summary → <summary>
     summary_node = get_and_clear(root, "summary")
-    summary_node.text = read_textfile(metadata_path / "short_description.txt")
+    summary_node.text = config.short_description
 
     # Full description (markdown) → <description><p>...</p></description>
     description_node = get_and_clear(root, "description")
-    insert_markdown_as_xhtml(description_node, read_textfile(metadata_path / "full_description.txt"))
+    insert_markdown_as_xhtml(description_node, config.full_description)
 
     # id
     id_node = get_and_clear(root, "id")
@@ -386,7 +411,7 @@ def update_flathub(metadata_path):
     screenshots_dir = Path("screenshots")
 
     default = True
-    version_name = last_version(metadata_path)
+    version_name = config.last_version
     tag_name = f"{config.repo_name}-{version_name}"
     raw_repo_url_prefix = config.repo_raw.replace('refs/heads/main', tag_name)
     image_url_prefix = f"{raw_repo_url_prefix}/screenshots/"
@@ -417,13 +442,12 @@ def update_flathub(metadata_path):
     }
 
     releases_node = get_and_clear(root, "releases")
-    for release in sorted((metadata_path/"changelogs").glob('*.txt'), reverse=True):
+    for release in config.changes:
         release_node = etree.SubElement(releases_node, 'release')
-        version, date, notes = parse_changelog_file(release.read_text())
-        release_node.set('version', version)
-        release_node.set('date', date)
+        release_node.set('version', release.version_name)
+        release_node.set('date', release.version_date)
         release_description_node = etree.SubElement(release_node, 'description')
-        insert_markdown_as_xhtml(release_description_node, notes)
+        insert_markdown_as_xhtml(release_description_node, release.notes_md)
         
 
     content_rating_node = root.find("content_rating")
