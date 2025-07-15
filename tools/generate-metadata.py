@@ -10,7 +10,7 @@ from pathlib import Path
 from lxml import etree
 import re
 from godot_asset_library_client.config import Config as BaseConfig
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, asdict
 from consolemsg import fail, warn
 import yaml
 
@@ -37,13 +37,16 @@ class Change:
 
 @dataclass
 class Config(BaseConfig):
-    unique_name: str = 'net.canvoki.godot_dice_roller'
+    unique_name: str = '' # TODO: should be mandatory
     repo_name: str = 'godot-dice-roller'
     categories: list[str] = field(default_factory=list)
     keywords: list[str] = field(default_factory=list)
     license: str = field(default_factory=deduce_license)
     #homepage: str = field(default_factory=)
     changes: list[Change] = field(default_factory=list)
+    title: str = ""
+    short_description: str = ""
+    full_description: str = ""
 
     @property
     def last_version(self):
@@ -52,12 +55,66 @@ class Config(BaseConfig):
             key=operator.attrgetter('version_tuple'),
         ).version_name
 
+    def __post_init__(self):
+        if not self.changes:
+            self._collect_changelogs()
+        if not self.title:
+            self._collect_descriptions()
+
+    def _collect_changelogs(self):
+        def _parse_changelog_file(text):
+            """
+            Extract version, date and notes (markdown string) from a changelog file content.
+            Expects the first line to be like: '## 1.5.3 (2025-07-09)'
+            """
+            import re
+            lines = text.strip().splitlines()
+            heading = lines[0]
+            match = re.match(r'\s*([\d\.]+)\s+\((\d{4}-\d{2}-\d{2})\)', heading)
+            if not match:
+                warn(f"Ignoring change versión: \"{heading}\"")
+                return None, None, None
+            version = match.group(1)
+            date = match.group(2)
+            notes_md = '\n'.join(lines[1:]).strip()
+            return version, date, notes_md
+
+        changelog=Path("CHANGES.md").read_text()
+
+        changelog_chapters = changelog.split("##")[1:]
+        self.changes = []
+        for chapter in  changelog.split("##")[1:]:
+            version, date, notes = _parse_changelog_file(chapter)
+            if not version:
+                continue # Unreleased
+            self.changes.append(Change(
+                version_name = version,
+                version_date = date,
+                notes_md = notes,
+            ))
+
+    def _collect_descriptions(self):
+        readme = Path("README.md").read_text()
+        readme = readme.split('#',1)[1]
+        readme_lines = readme.splitlines()
+        self.title = readme_lines.pop(0).replace('#', '').strip().replace('-',' ').title()
+        readme_lines = [ line for line in readme_lines if not line.strip().startswith("![") ]
+        while not readme_lines[0].strip():
+            readme_lines.pop(0)
+        self.short_description = readme_lines.pop(0)
+        self.full_description = cutoff_on_mark('\n'.join(readme_lines).strip())
+
+
+def cutoff_on_mark(content, cutoff_marker="end-of-description"):
+    pattern = re.compile(rf"<!--\s*{re.escape(cutoff_marker)}\s*-->", re.IGNORECASE)
+    match = pattern.search(content)
+    if match:
+        return content[:match.start()]
+    return content  # fallback to full content if no marker
+
 
 yaml_metadata = 'tools/assetlib.yaml'
 config = Config.from_file(yaml_metadata)
-
-print(config)
-
 
 emoji_pattern = re.compile(
     "["
@@ -102,49 +159,19 @@ def dump(file, content):
     file.write_text(content)
 
 def generateDescriptions(metadata_path):
-    readme = Path("README.md").read_text()
-    readme = readme.split('#',1)[1]
-    readme_lines = readme.splitlines()
-    config.title = readme_lines.pop(0).replace('#', '').strip().replace('-',' ').title()
-    readme_lines = [ line for line in readme_lines if not line.strip().startswith("![") ]
-    while not readme_lines[0].strip():
-        readme_lines.pop(0)
-    config.short_description = readme_lines.pop(0)
-    config.full_description = cutoff_on_mark('\n'.join(readme_lines).strip())
-
     dump(metadata_path/"title.txt", config.title)
     dump(metadata_path/"short_description.txt", config.short_description)
     dump(metadata_path/"full_description.txt", config.full_description)
 
 def generateChangelogs(metadata_path: Path):
-    def process_chapter(chapter):
-        heading, body = chapter.split('\n', 1)
-        heading = heading.strip()
-        version = heading.split()[0]
-        return version, body.strip()
-
-    changelog=Path("CHANGES.md").read_text()
-
-    changelog_chapters = changelog.split("##")[1:]
-    config.changes = []
-    for chapter in  changelog.split("##")[1:]:
-        version, date, notes = parse_changelog_file(chapter)
-        if not version:
-            continue # Unreleased
-        config.changes.append(Change(
-            version_name = version,
-            version_date = date,
-            notes_md = notes,
-        ))
-
     changelog_path = metadata_path/"changelogs"
     mkdir(changelog_path)
 
     for change in config.changes:
-        version_code = version_to_code(version)
+        version_code = version_to_code(change.version_name)
         dump((changelog_path/version_code).with_suffix('.txt'),
-            f"## {change.version_name} ({change.version_date})\n"
-            f"{change.notes_md}"
+            f"## {change.version_name} ({change.version_date})\n\n"
+            f"{change.notes_md}\n\n"
         )
 
 def generateImages(metadata_path):
@@ -172,7 +199,7 @@ def generateIcon(metadata_path):
 
 
 def adapt_android_preset(metadata_path):
-    appname = (metadata_path/'title.txt').read_text()
+    appname = config.title
     version = config.last_version
     code = version_to_code(version)
     export_path = (Path('build/android')/appname.replace(" ", "-").lower()).with_suffix('.apk')
@@ -271,8 +298,8 @@ def generateMetadata():
     generateImages(metadata_path)
     generateIcon(metadata_path)
     adapt_android_preset(metadata_path)
-    update_flathub(metadata_path)
-    update_flatpak_desktop_file(metadata_path)
+    update_flatpak_metainfo()
+    update_flatpak_desktop_file()
 
 def insert_markdown_as_xhtml(parent, markdown_text):
     from markdown import markdown
@@ -293,14 +320,6 @@ def insert_markdown_as_xhtml(parent, markdown_text):
     # Append children to the target XML node
     for child in wrapper:
         parent.append(child)
-
-def cutoff_on_mark(content, cutoff_marker="end-of-description"):
-
-    pattern = re.compile(rf"<!--\s*{re.escape(cutoff_marker)}\s*-->", re.IGNORECASE)
-    match = pattern.search(content)
-    if match:
-        return content[:match.start()]
-    return content  # fallback to full content if no marker
 
 def flatten_nested_uls(root):
     for nested_ul in root.xpath('.//ul//ul'):
@@ -332,23 +351,6 @@ def replace_headings(root):
         parent.replace(heading, p)
 
 
-def parse_changelog_file(text):
-    """
-    Extract version, date and notes (markdown string) from a changelog file content.
-    Expects the first line to be like: '## 1.5.3 (2025-07-09)'
-    """
-    import re
-    lines = text.strip().splitlines()
-    heading = lines[0]
-    match = re.match(r'\s*([\d\.]+)\s+\((\d{4}-\d{2}-\d{2})\)', heading)
-    if not match:
-        warn(f"Ignoring change versión: \"{heading}\"")
-        return None, None, None
-    version = match.group(1)
-    date = match.group(2)
-    notes_md = '\n'.join(lines[1:]).strip()
-    return version, date, notes_md
-
 
 def get_screenshot_caption_md(image_path: Path) -> str:
     """Return caption markdown for a screenshot image. Use .md file if present, or generate from filename."""
@@ -358,7 +360,7 @@ def get_screenshot_caption_md(image_path: Path) -> str:
     # Default from filename
     return image_path.stem.replace('-', ' ').replace('_', ' ').title()
 
-def update_flathub(metadata_path):
+def update_flatpak_metainfo():
     metainfo_path = Path(f"tools/flatpak/{config.unique_name}.metainfo.xml")
 
     (Path('tools/flatpak')/f"{config.unique_name}.svg").write_text(
@@ -367,9 +369,6 @@ def update_flathub(metadata_path):
 
     tree = etree.parse(metainfo_path)
     root = tree.getroot()
-
-    def read_textfile(path):
-        return path.read_text(encoding='utf-8').strip()
 
     def get_and_clear(root, tag):
         node = root.find(tag)
@@ -473,7 +472,7 @@ def update_flathub(metadata_path):
     tree.write(metainfo_path, encoding='utf-8', xml_declaration=True, pretty_print=True)
     print(f"✅ Updated metainfo file: {metainfo_path}")
 
-def update_flatpak_desktop_file(metadata_path):
+def update_flatpak_desktop_file():
     app_name = config.title
     summary = config.short_description
 
@@ -492,6 +491,7 @@ StartupNotify=true
 
 if __name__ == '__main__':
     generateMetadata()
+    print(yaml.dump(asdict(config)))
 
 
 
