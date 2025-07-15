@@ -1,20 +1,32 @@
 #!/usr/bin/env python
 
-# generates android metadata from README.md, CHANGES.md and screenshots
-
-unique_name = 'net.canvoki.godot_dice_roller'
-raw_repo_url_prefix = f'https://raw.githubusercontent.com/'
-repo_user = 'vokimon'
-repo_name = 'godot-dice-roller'
-categories = ["Game", "BoardGame", "RolePlaying"]
-keywords = ["dice", "roller", "rpg", "godot", "tabletop", "gaming", "poker"]
-license = "AGPL-3.0-or-later"
+# generates metadata for packaging and distributing in different
+# platforms from README.md, CHANGES.md and screenshots
 
 from pathlib import Path
 import os
 import contextlib
 from lxml import etree
 import re
+from godot_asset_library_client.config import Config as BaseConfig
+from dataclasses import dataclass, field
+
+@dataclass
+class Config(BaseConfig):
+    unique_name: str = 'net.canvoki.godot_dice_roller'
+    repo_user: str = 'vokimon'
+    repo_name: str = 'godot-dice-roller'
+    categories: list[str] = field(default_factory=list)
+    keywords: list[str] = field(default_factory=list)
+    license : str = "AGPL-3.0-or-later"
+
+
+yaml_metadata = 'tools/assetlib.yaml'
+config = Config.from_file(yaml_metadata)
+
+print(config)
+
+
 
 emoji_pattern = re.compile(
     "["
@@ -70,17 +82,16 @@ def generateDescriptions(metadata_path):
     readme = Path("README.md").read_text()
     readme = readme.split('#',1)[1]
     readme_lines = readme.splitlines()
-    title = readme_lines.pop(0).replace('#', '').strip().replace('-',' ').title()
+    config.title = readme_lines.pop(0).replace('#', '').strip().replace('-',' ').title()
     readme_lines = [ line for line in readme_lines if not line.strip().startswith("![") ]
     while not readme_lines[0].strip():
         readme_lines.pop(0)
-    short_description = readme_lines.pop(0)
+    config.short_description = readme_lines.pop(0)
+    config.full_description = cutoff_on_mark('\n'.join(readme_lines).strip())
 
-    full_description = '\n'.join(readme_lines).strip()
-    full_description = cutoff_on_mark(full_description)
-    dump(metadata_path/"title.txt", title)
-    dump(metadata_path/"short_description.txt", short_description)
-    dump(metadata_path/"full_description.txt", full_description)
+    dump(metadata_path/"title.txt", config.title)
+    dump(metadata_path/"short_description.txt", config.short_description)
+    dump(metadata_path/"full_description.txt", config.full_description)
 
 def generateChangelogs(metadata_path: Path):
     def process_chapter(chapter):
@@ -157,7 +168,7 @@ def adapt_android_preset(metadata_path):
     set(options, 'version/name', version)
     set(options, 'version/code', code)
     set(options, 'package/name', appname)
-    set(options, 'package/unique_name', unique_name)
+    set(options, 'package/unique_name', config.unique_name)
     set(options, 'launcher_icons/main_192x192', icon_main)
     presets_file = Path("export_presets.cfg")
     with presets_file.open('w') as output:
@@ -314,9 +325,9 @@ def get_screenshot_caption_md(image_path: Path) -> str:
     return image_path.stem.replace('-', ' ').replace('_', ' ').title()
 
 def update_flathub(metadata_path):
-    metainfo_path = Path(f"tools/flatpak/{unique_name}.metainfo.xml")
+    metainfo_path = Path(f"tools/flatpak/{config.unique_name}.metainfo.xml")
 
-    (Path('tools/flatpak')/f"{unique_name}.svg").write_text(
+    (Path('tools/flatpak')/f"{config.unique_name}.svg").write_text(
         Path('icon.svg').read_text()
     )
 
@@ -349,16 +360,16 @@ def update_flathub(metadata_path):
 
     # id
     id_node = get_and_clear(root, "id")
-    id_node.text = unique_name
+    id_node.text = config.unique_name
 
     # icon
     icon_node = get_and_clear(root, "icon")
-    icon_node.text = unique_name
+    icon_node.text = config.unique_name
     icon_node.set('type', 'stock')
 
     # launch method
     launchable = get_and_clear(root, "launchable")
-    launchable.text = unique_name + ".desktop"
+    launchable.text = config.unique_name + ".desktop"
     launchable.set('type', 'desktop-id')
 
     # Screenshots
@@ -367,8 +378,9 @@ def update_flathub(metadata_path):
 
     default = True
     version_name = last_version(metadata_path)
-    tag_name = f"{repo_name}-{version_name}"
-    image_url_prefix = f"{raw_repo_url_prefix}/{repo_user}/{repo_name}/{repo_name}-{version_name}/screenshots/"
+    tag_name = f"{config.repo_name}-{version_name}"
+    raw_repo_url_prefix = config.repo_raw.replace('refs/heads/main', tag_name)
+    image_url_prefix = f"{raw_repo_url_prefix}/screenshots/"
     for image_path in sorted(screenshots_dir.glob("*.png")):
         screenshot_el = etree.SubElement(screenshots_node, "screenshot")
         if default:
@@ -391,10 +403,9 @@ def update_flathub(metadata_path):
     # Strip scheme if present
     repo_host = 'https://github.com'
     url_fields = {
-        'homepage': f"{repo_host}/{repo_user}/{repo_name}",
-        'vcs-browser': f"{repo_host}/{repo_user}/{repo_name}",
-        'bugtracker': f"{repo_host}/{repo_user}/{repo_name}/issues",
-        #'other': f"{raw_repo_url_prefix}/{repo_user}/{repo_name}/{repo_name}-{version_name}/LICENSE"
+        'homepage': f"{repo_host}/{config.repo_user}/{config.repo_name}",
+        'vcs-browser': f"{repo_host}/{config.repo_user}/{config.repo_name}",
+        'bugtracker': f"{repo_host}/{config.repo_user}/{config.repo_name}/issues",
     }
 
     releases_node = get_and_clear(root, "releases")
@@ -419,11 +430,11 @@ def update_flathub(metadata_path):
         url_node.set("type", url_type)
 
     categories_node = get_and_clear(root, "categories")
-    for category in categories:
+    for category in config.categories:
         etree.SubElement(categories_node, "category").text = category
 
     keywords_node = get_and_clear(root, "keywords")
-    for word in keywords:
+    for word in config.keywords:
         etree.SubElement(keywords_node, "keyword").text = word
 
     etree.indent(tree, space="  ")
@@ -432,8 +443,8 @@ def update_flathub(metadata_path):
 
 def deduce_license():
     from spdx_lookup import match
-    if license:
-        return license
+    if config.license:
+        return config.license
     license_match = match(Path("LICENSE").read_text())
     if license_match:
         print(dir(license_match.license))
@@ -441,15 +452,15 @@ def deduce_license():
     raise ValueError("LICENSE content couldn't be identified, correct or explicitly set in config the SPDX id")
 
 def update_flatpak_desktop_file(metadata_path):
-    app_name = (metadata_path/"title.txt").read_text().strip()
-    summary = (metadata_path/"short_description.txt").read_text().strip()
+    app_name = config.title
+    summary = config.short_description
 
-    Path(f"tools/flatpak/{unique_name}.desktop").write_text(f"""\
+    Path(f"tools/flatpak/{config.unique_name}.desktop").write_text(f"""\
 [Desktop Entry]
 Name={app_name}
 Comment={summary}
-Categories={";".join(categories)}
-Icon={unique_name}
+Categories={";".join(config.categories)}
+Icon={config.unique_name}
 Exec=godot-runner %U
 Type=Application
 Terminal=false

@@ -37,4 +37,3 @@ modules:
 
     cleanup:
       - /share/icons/hicolor/icon-theme.cache
-

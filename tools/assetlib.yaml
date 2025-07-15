@@ -25,3 +25,16 @@ description_files:
 - README.md
 - CHANGES.md
 
+categories:
+    - Game
+    - BoardGame
+    - RolePlaying
+
+keywords:
+    - dice
+    - roller
+    - rpg
+    - godot
+    - tabletop
+    - gaming
+    - poker
