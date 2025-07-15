@@ -1,6 +1,7 @@
 asset_id: '3530'
 category: "1" # 2D Tools
 project_license: AGPLv3
+license: AGPL-3.0-or-later # TODO: unify with project_license
 branch: main # needed for gha on tag builds
 previews:
 #- youtube: AD8awHLpFxs # 1.0.4

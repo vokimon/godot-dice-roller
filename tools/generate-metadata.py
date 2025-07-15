@@ -10,6 +10,17 @@ from lxml import etree
 import re
 from godot_asset_library_client.config import Config as BaseConfig
 from dataclasses import dataclass, field
+from consolemsg import fail
+
+def deduce_license():
+    license_file = Path("LICENSE")
+    if not license_file.exists():
+        fail("LICENSE file not found. Setting it to Unlicensed.")
+    from spdx_lookup import match
+    license_match = match(license_file.read_text())
+    if not license_match:
+        raise fail("LICENSE content couldn't be identified, correct or explicitly set in config the SPDX id")
+    return license_match.license.id
 
 @dataclass
 class Config(BaseConfig):
@@ -17,8 +28,8 @@ class Config(BaseConfig):
     repo_name: str = 'godot-dice-roller'
     categories: list[str] = field(default_factory=list)
     keywords: list[str] = field(default_factory=list)
-    license : str = "AGPL-3.0-or-later"
-
+    license: str = field(default_factory=deduce_license)
+    # TODO: homepage
 
 yaml_metadata = 'tools/assetlib.yaml'
 config = Config.from_file(yaml_metadata)
@@ -394,9 +405,8 @@ def update_flathub(metadata_path):
         insert_markdown_as_xhtml(caption_el, caption_md)
 
     # project_license
-    spdx_id = deduce_license()
     license_node = get_and_clear(root, "project_license")
-    license_node.text = spdx_id
+    license_node.text = config.license
 
     # Strip scheme if present
     repo_host = 'https://github.com'
@@ -438,16 +448,6 @@ def update_flathub(metadata_path):
     etree.indent(tree, space="  ")
     tree.write(metainfo_path, encoding='utf-8', xml_declaration=True, pretty_print=True)
     print(f"✅ Updated metainfo file: {metainfo_path}")
-
-def deduce_license():
-    from spdx_lookup import match
-    if config.license:
-        return config.license
-    license_match = match(Path("LICENSE").read_text())
-    if license_match:
-        print(dir(license_match.license))
-        return license_match.license.id
-    raise ValueError("LICENSE content couldn't be identified, correct or explicitly set in config the SPDX id")
 
 def update_flatpak_desktop_file(metadata_path):
     app_name = config.title
