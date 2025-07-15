@@ -14,7 +14,6 @@ from dataclasses import dataclass, field
 @dataclass
 class Config(BaseConfig):
     unique_name: str = 'net.canvoki.godot_dice_roller'
-    repo_user: str = 'vokimon'
     repo_name: str = 'godot-dice-roller'
     categories: list[str] = field(default_factory=list)
     keywords: list[str] = field(default_factory=list)
@@ -25,7 +24,6 @@ yaml_metadata = 'tools/assetlib.yaml'
 config = Config.from_file(yaml_metadata)
 
 print(config)
-
 
 
 emoji_pattern = re.compile(
@@ -403,9 +401,9 @@ def update_flathub(metadata_path):
     # Strip scheme if present
     repo_host = 'https://github.com'
     url_fields = {
-        'homepage': f"{repo_host}/{config.repo_user}/{config.repo_name}",
-        'vcs-browser': f"{repo_host}/{config.repo_user}/{config.repo_name}",
-        'bugtracker': f"{repo_host}/{config.repo_user}/{config.repo_name}/issues",
+        'homepage': config.repo_url,
+        'vcs-browser': config.repo_url,
+        'bugtracker': config.issues_url,
     }
 
     releases_node = get_and_clear(root, "releases")
