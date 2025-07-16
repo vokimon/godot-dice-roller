@@ -41,6 +41,5 @@ tools/fdroid-server/
 
 
 tools/flatpak/.flatpak-builder/
-tools/flatpak/repo-dir
 tools/flatpak/*.flatpak
 tools/flatpak/flathub/

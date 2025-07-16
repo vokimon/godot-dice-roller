@@ -42,15 +42,9 @@ integrate it into your own Godot game as an add-on.</p>
   </branding>
   <screenshots>
     <screenshot type="default">
-      <image>https://raw.githubusercontent.com/vokimon/godot-dice-roller/godot-dice-roller-1.5.3/screenshots/example-allshapes.png</image>
+      <image>https://raw.githubusercontent.com/vokimon/godot-dice-roller/godot-dice-roller-1.5.3/screenshots/example-landscape.png</image>
       <caption>
-        <p>A dice set with all available shapes: d4, d6, d8, d10, d10x10, d12, d20 and poker</p>
-      </caption>
-    </screenshot>
-    <screenshot>
-      <image>https://raw.githubusercontent.com/vokimon/godot-dice-roller/godot-dice-roller-1.5.3/screenshots/example-diceset-presets.png</image>
-      <caption>
-        <p>Save dicesets as presets to load later</p>
+        <p>Default dice set: Purple d6, yellow d10 and red d8.</p>
       </caption>
     </screenshot>
     <screenshot>
@@ -60,21 +54,21 @@ integrate it into your own Godot game as an add-on.</p>
       </caption>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/vokimon/godot-dice-roller/godot-dice-roller-1.5.3/screenshots/example-landscape.png</image>
-      <caption>
-        <p>Default dice set: Purple d6, yellow d10 and red d8.</p>
-      </caption>
-    </screenshot>
-    <screenshot>
       <image>https://raw.githubusercontent.com/vokimon/godot-dice-roller/godot-dice-roller-1.5.3/screenshots/example-poker.png</image>
       <caption>
         <p>A dice set to play dice poker</p>
       </caption>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/vokimon/godot-dice-roller/godot-dice-roller-1.5.3/screenshots/example-portrait.png</image>
+      <image>https://raw.githubusercontent.com/vokimon/godot-dice-roller/godot-dice-roller-1.5.3/screenshots/example-allshapes.png</image>
       <caption>
-        <p>Layout in portrait orientation.</p>
+        <p>A dice set with all available shapes: d4, d6, d8, d10, d10x10, d12, d20 and poker</p>
+      </caption>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/vokimon/godot-dice-roller/godot-dice-roller-1.5.3/screenshots/example-diceset-presets.png</image>
+      <caption>
+        <p>Save dicesets as presets to load later</p>
       </caption>
     </screenshot>
   </screenshots>

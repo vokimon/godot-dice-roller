@@ -10,18 +10,49 @@ from pathlib import Path
 from lxml import etree
 import re
 from godot_asset_library_client.config import Config as BaseConfig
+from godot_asset_library_client import git
 from dataclasses import dataclass, field, asdict
 from consolemsg import fail, warn
 import yaml
 
+spdx2assetlib_license = {
+    'MIT': 'MIT',
+    'MPL-2.0': 'MPL-2.0',
+    'GPL-3.0-only': 'GPLv3',
+    'GPL-2.0-only': 'GPLv2',
+    'LGPL-3.0-only': 'LGPLv3',
+    'LGPL-2.1-only': 'LGPLv2.1',
+    'LGPL-2.0-only': 'LGPLv2',
+    'AGPL-3.0-only': 'AGPLv3',
+    'GPL-3.0-or-later': 'GPLv3',
+    'GPL-2.0-or-later': 'GPLv2',
+    'LGPL-3.0-or-later': 'LGPLv3',
+    'LGPL-2.1-or-later': 'LGPLv2.1',
+    'LGPL-2.0-or-later': 'LGPLv2',
+    'AGPL-3.0-or-later': 'AGPLv3',
+    'EUPL-1.2': 'EUPL-1.2',
+    'Apache-2.0': 'Apache-2.0',
+    'CC0-1.0': 'CC0',
+    'CC-BY-4.0': 'CC-BY-4.0',
+    'CC-BY-3.0': 'CC-BY-3.0',
+    'CC-BY-SA-4.0': 'CC-BY-SA-4.0',
+    'CC-BY-SA-3.0': 'CC-BY-SA-3.0',
+    'BSD-2-Clause': 'BSD-2-Clause',
+    'BSD-3-Clause': 'BSD-3-Clause',
+    'BSL-1.0':  'BSL-1.0',
+    'ISC': 'ISC',
+    'Unlicense': 'Unlicense',
+    '': 'Proprietary',
+}
+
 def deduce_license():
     license_file = Path("LICENSE")
     if not license_file.exists():
-        fail("LICENSE file not found. Setting it to Unlicensed.")
+        fail("LICENSE file not found. Setting it to Privative.")
     from spdx_lookup import match
     license_match = match(license_file.read_text())
     if not license_match:
-        raise fail("LICENSE content couldn't be identified, correct or explicitly set in config the SPDX id")
+        fail("LICENSE content couldn't be identified, correct or explicitly set in config the SPDX id")
     return license_match.license.id
 
 @dataclass
@@ -94,6 +125,16 @@ class Config(BaseConfig):
             ))
 
     def _collect_descriptions(self):
+        """
+        Extract descriptions.
+        Anything before a tittle (usually badges is ignore.
+        The first title is used as title/appname.
+        The first line after the title is used as short descriptions.
+        The rest of the document is the full description.
+        You can place an `<!-- end-of-description -->` to limit what is included.
+        Emoji will be filter out.
+        Anything besides 
+        """
         readme = Path("README.md").read_text()
         readme = readme.split('#',1)[1]
         readme_lines = readme.splitlines()
@@ -236,7 +277,7 @@ def adapt_android_preset(metadata_path):
     modified = presets_file.read_text().replace(" = ", "=")
     presets_file.write_text(modified)
 
-def updateSplashVersion(metadata_path):
+def update_splash_version():
     version = config.last_version
     splash_svgfile = Path('examples/dice_roller/splash.svg')
 
@@ -280,24 +321,26 @@ def updateSplashVersion(metadata_path):
         '--export-filename='+str(png_file)
     ])
 
-def updateSplash(metadata_path):
-    updateSplashVersion(metadata_path)
+def update_fastlane_splash(metadata_path):
     cp(
         origin = 'examples/dice_roller/splash.png',
         target = metadata_path/'images'/'featureGraphic.png',
     )
 
-
-def generateMetadata():
+def generate_fastlane():
     metadata_path = Path("fastlane/metadata/android/en-US")
     mkdir(metadata_path)
     Path('fastlane/.gdignore').write_text('')
     generateDescriptions(metadata_path)
     generateChangelogs(metadata_path)
-    updateSplash(metadata_path)
     generateImages(metadata_path)
     generateIcon(metadata_path)
+    update_fastlane_splash(metadata_path)
     adapt_android_preset(metadata_path)
+
+def generateMetadata():
+    update_splash_version()
+    generate_fastlane()
     update_flatpak_metainfo()
     update_flatpak_desktop_file()
 
@@ -351,15 +394,6 @@ def replace_headings(root):
         parent.replace(heading, p)
 
 
-
-def get_screenshot_caption_md(image_path: Path) -> str:
-    """Return caption markdown for a screenshot image. Use .md file if present, or generate from filename."""
-    md_path = image_path.with_suffix(".md")
-    if md_path.exists():
-        return md_path.read_text(encoding="utf-8").strip()
-    # Default from filename
-    return image_path.stem.replace('-', ' ').replace('_', ' ').title()
-
 def update_flatpak_metainfo():
     metainfo_path = Path(f"tools/flatpak/{config.unique_name}.metainfo.xml")
 
@@ -406,27 +440,50 @@ def update_flatpak_metainfo():
     launchable.set('type', 'desktop-id')
 
     # Screenshots
-    screenshots_node = get_and_clear(root, "screenshots")
-    screenshots_dir = Path("screenshots")
-
-    default = True
     version_name = config.last_version
     tag_name = f"{config.repo_name}-{version_name}"
     raw_repo_url_prefix = config.repo_raw.replace('refs/heads/main', tag_name)
-    image_url_prefix = f"{raw_repo_url_prefix}/screenshots/"
-    for image_path in sorted(screenshots_dir.glob("*.png")):
+    image_url_prefix = f"{raw_repo_url_prefix}/"
+
+    def preview_caption(preview):
+
+        # If explicit in metadata, take it
+        if 'caption' in preview:
+            return preview['caption']
+
+        # If there is a side md file, take it
+        image_file = Path(preview['repoimage'])
+        caption_file = image_file.with_suffix('.md')
+        if caption_file.exists():
+            return caption_file.read_text().strip()
+
+        # Else, use the file name
+        caption = image_path.stem
+        caption = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', caption)
+        caption = re.sub('([a-z0-9])([A-Z])', r'\1_\2', caption)
+        caption = caption.replace('-', ' ')
+        caption = caption.replace('_', ' ')
+        return caption.title()
+
+    screenshots_node = get_and_clear(root, "screenshots")
+
+    default = True
+    for preview in config.previews:
+        if 'repoimage' not in preview:
+            continue
+
+        image_path = preview['repoimage']
+        preview['caption'] = preview_caption(preview)
+        image_url = image_url_prefix + image_path
+
         screenshot_el = etree.SubElement(screenshots_node, "screenshot")
         if default:
             screenshot_el.set("type", "default")
             default = False
-
         image_el = etree.SubElement(screenshot_el, "image")
-        image_url = image_url_prefix + image_path.name
         image_el.text = image_url
-
         caption_el = etree.SubElement(screenshot_el, "caption")
-        caption_md = get_screenshot_caption_md(image_path)
-        insert_markdown_as_xhtml(caption_el, caption_md)
+        insert_markdown_as_xhtml(caption_el, preview['caption'])
 
     # project_license
     license_node = get_and_clear(root, "project_license")

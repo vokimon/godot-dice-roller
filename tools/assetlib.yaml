@@ -10,18 +10,28 @@ previews:
 
 - repoimage: screenshots/example-landscape.png
   repothumb: screenshots/example-landscape-thumb.jpg
+  caption: |
+    Default dice set: Purple d6, yellow d10 and red d8.
 
 - repoimage: screenshots/example-editor.png
   repothumb: screenshots/example-editor-thumb.jpg
+  caption: |
+    Diceset Editor: Add and remove dices. Choose their shape, color and name.
 
 - repoimage: screenshots/example-poker.png
   repothumb: screenshots/example-poker-thumb.jpg
+  caption: |
+    A dice set to play dice poker
 
 - repoimage: screenshots/example-allshapes.png
   repothumb: screenshots/example-allshapes-thumb.jpg
+  caption: |
+    A dice set with all available shapes: d4, d6, d8, d10, d10x10, d12, d20 and poker
 
 - repoimage: screenshots/example-diceset-presets.png
   repothumb: screenshots/example-diceset-presets-thumb.jpg
+  caption: |
+    Save dicesets as presets to load later
 
 description_files:
 - README.md
