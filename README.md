@@ -1,5 +1,6 @@
 [![CI Status](https://github.com/vokimon/godot-dice-roller/actions/workflows/runtests.yaml/badge.svg)](https://github.com/vokimon/godot-dice-roller/actions/workflows/runtests.yaml)
 [![Last Release](https://img.shields.io/github/release/vokimon/godot-dice-roller.svg?logo=github)](https://github.com/vokimon/godot-dice-roller/releases/latest)
+[![Godot Store](https://custom-icon-badges.demolab.com/badge/GodotStore-blue.svg?logo=godot-store&text=lala)(https://store-beta.godotengine.org/asset/vokimon/godot-dice-roller/)
 [![Itch.io](https://img.shields.io/badge/itch.io-%23FF0B34.svg?logo=Itch.io&logoColor=white)](https://vokimon.itch.io/godot-dice-roller)
 <!-- [![Get it on F-Droid](https://img.shields.io/f-droid/v/net.canvoki.godot_dice_roller.svg?logo=F-Droid)](https://f-droid.org/packages/net.canvoki.godot_dice_roller) -->
 <!-- [![Flathub](https://img.shields.io/flathub/v/net.canvoki.godot_dice_roller?label=Flathub&logo=flathub&logoColor=white)][] -->
