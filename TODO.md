@@ -1,6 +1,8 @@
 # TODO's
 
 - [ ] Stop long/infinite rollings. How? Reroll? Put stopped dices aside?
+- [ ] Fix: Changing the diceset while still rolling freezes the program
+- [ ] Fix: Highlight looks different (more intense) for D4
 - [ ] Visual queue to show rolling is available (bouncing dices?)
 - [ ] Realistic sizes: Do dices have to be 2 meters wide and weight kilos?
 - [ ] Nicer textures for the dices (wood, marble...)
