@@ -17,6 +17,7 @@ run/main_scene="res://examples/dice_roller/dice_roller_example.tscn"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 boot_splash/image="uid://bebdla3qkt68"
 config/icon="res://icon.svg"
+boot_splash/minimum_display_time=1000
 
 [display]
 
