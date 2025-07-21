@@ -275,7 +275,7 @@ def adapt_android_preset(metadata_path):
     with presets_file.open('w') as output:
         export_presets.write(output)
     modified = presets_file.read_text().replace(" = ", "=")
-    presets_file.write_text(modified)
+    dump(presets_file, modified)
 
 def update_splash_version():
     version = config.last_version
@@ -330,7 +330,7 @@ def update_fastlane_splash(metadata_path):
 def generate_fastlane():
     metadata_path = Path("fastlane/metadata/android/en-US")
     mkdir(metadata_path)
-    Path('fastlane/.gdignore').write_text('')
+    dump(Path('fastlane/.gdignore'), '')
     generateDescriptions(metadata_path)
     generateChangelogs(metadata_path)
     generateImages(metadata_path)
@@ -397,9 +397,7 @@ def replace_headings(root):
 def update_flatpak_metainfo():
     metainfo_path = Path(f"tools/flatpak/{config.unique_name}.metainfo.xml")
 
-    (Path('tools/flatpak')/f"{config.unique_name}.svg").write_text(
-        Path('icon.svg').read_text()
-    )
+    #cp('icon.svg', Path('tools/flatpak')/f"{config.unique_name}.svg")
 
     tree = etree.parse(metainfo_path)
     root = tree.getroot()
@@ -465,8 +463,8 @@ def update_flatpak_metainfo():
         caption = caption.replace('_', ' ')
         return caption.title()
 
+    # TODO: split collect and generate logic here
     screenshots_node = get_and_clear(root, "screenshots")
-
     default = True
     for preview in config.previews:
         if 'repoimage' not in preview:
@@ -525,15 +523,16 @@ def update_flatpak_metainfo():
     for word in config.keywords:
         etree.SubElement(keywords_node, "keyword").text = word
 
+    print(f":: \033[34;1m-> {metainfo_path}\033[0m")
     etree.indent(tree, space="  ")
     tree.write(metainfo_path, encoding='utf-8', xml_declaration=True, pretty_print=True)
-    print(f"✅ Updated metainfo file: {metainfo_path}")
 
 def update_flatpak_desktop_file():
     app_name = config.title
     summary = config.short_description
+    desktop_file = Path("tools/flatpak")/f"{config.unique_name}.desktop"
 
-    Path(f"tools/flatpak/{config.unique_name}.desktop").write_text(f"""\
+    dump(desktop_file, f"""\
 [Desktop Entry]
 Name={app_name}
 Comment={summary}
