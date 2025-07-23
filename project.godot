@@ -21,6 +21,7 @@ boot_splash/minimum_display_time=1000
 
 [display]
 
+window/subwindows/embed_subwindows=false
 window/handheld/orientation=6
 
 [editor_plugins]
