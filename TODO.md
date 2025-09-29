@@ -26,7 +26,7 @@
 - [x] CI: Distribution for windows
 - [x] CI: Distribution for linux
 - [x] D10x10: Should appear as "10x10" and not "100" in dice set editor
-    - [x] Unrelate shape identification from the number of sides
+	- [x] Unrelate shape identification from the number of sides
 - [x] Example of custom engraving: Poker d6 dices
 - [x] More dice shapes: d12
 - [x] More dice shapes: d8
