@@ -6,15 +6,16 @@ extends SubViewportContainer
 
 const dice_roller_scene = preload("../dice_roller/dice_roller.tscn")
 
-## The set of dices to be thrown. If empty, a default set will be used.
-@export var dice_set: Array[DiceDef] = []:
+## The set of dice to be thrown. If empty, a default set will be used.
+@export var dice_set: DiceSet:
 	set(new_value):
+		dice_set = new_value
 		if not roller:
-			dice_set = new_value
 			return
 		roller.dice_set = new_value
-		# Roller might change it
-		dice_set = roller.dice_set
+		# Synchronize back in case the roller modifies it (e.g. adds default dice)
+		if dice_set != roller.dice_set:
+			dice_set = roller.dice_set
 
 ## Color of the rolling box
 @export var roller_color: Color = Color.DARK_GREEN:
@@ -25,8 +26,8 @@ const dice_roller_scene = preload("../dice_roller/dice_roller.tscn")
 
 ## Box roller size. x and z are width and depth of the floor, y is the ceiling.
 ##
-## Small floors may not let the dices to finnish the roll.
-## Big floors make dices look so small.
+## Small floors may not let the dice to finnish the roll.
+## Big floors make dice look so small.
 @export var roller_size := Vector3(9, 12, 5):
 	set(new_value):
 		roller_size = new_value
@@ -41,10 +42,10 @@ const dice_roller_scene = preload("../dice_roller/dice_roller.tscn")
 		if roller:
 			roller.interactive = new_value
 
-## Triggered when a roll simumation starts
+## Triggered when a roll simulation starts
 signal roll_started()
 ## Triggered once the roll animation finishes
-signal roll_finnished(int)
+signal roll_finished(int)
 
 var roller: DiceRoller = null
 var viewport: SubViewport = null
@@ -53,17 +54,24 @@ func _init():
 	# Expand the viewport to cover the control
 	stretch = true
 
-func _ready():
+func _ready() -> void:
+	if Engine.is_editor_hint():
+		# In the editor, children might already exist from a previous run.
+		for c in get_children():
+			if c is SubViewport:
+				c.queue_free()
 	viewport = SubViewport.new()
 	add_child(viewport)
 	roller = dice_roller_scene.instantiate()
 	viewport.add_child(roller)
-	roller.roll_finnished.connect(
-		func(value): roll_finnished.emit(value)
-	)
-	roller.roll_started.connect(
-		func(): roll_started.emit()
-	)
+
+	# In the editor, the roller's script might not be fully parsed when we
+	# try to connect signals. Awaiting `ready` ensures it's safe.
+	if Engine.is_editor_hint():
+		await roller.ready
+
+	roller.roll_finished.connect(roll_finished.emit)
+	roller.roll_started.connect(roll_started.emit)
 	roller.dice_set = dice_set
 	roller.roller_color = roller_color
 	roller.roller_size = roller_size
@@ -77,7 +85,7 @@ func roll():
 func quick_roll():
 	roller.quick_roll()
 
-## Rotate the dices to a externally given result
+## Rotate the dice to an externally given result
 func show_faces(result: Array[int]):
 	roller.show_faces(result)
 
