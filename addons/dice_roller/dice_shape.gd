@@ -8,6 +8,16 @@ class_name DiceShape
 			push_warning("DiceShape: setting UNREGISTERED shape '", value, "'")
 		name=value
 
+enum DiceSides {
+	D4 = 4,
+	D6 = 6,
+	D8 = 8,
+	D10 = 10,
+	D10x10 = 100,
+	D20 = 20,
+	D12 = 12
+}
+
 static var _registry: Dictionary[String, Script] = {
 	'D4': D4Dice,
 	'D6': D6Dice,
@@ -19,12 +29,12 @@ static var _registry: Dictionary[String, Script] = {
 }
 
 static var shapes_to_sides : Dictionary[String, int] = {
-	"D6": 6,
-	"D4": 4,
-	"D8": 8,
-	"D10": 10,
-	"D10x10": 100,
-	"D20": 20,
+	"D6": DiceSides.D6,
+	"D4": DiceSides.D4,
+	"D8": DiceSides.D6,
+	"D10": DiceSides.D10,
+	"D10x10": DiceSides.D10x10,
+	"D20": DiceSides.D20,
 }
 static var sides_to_shapes : Dictionary[int, String] = invert_dict(shapes_to_sides)
 
