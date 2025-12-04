@@ -18,7 +18,7 @@ func _on_roll_button_pressed() -> void:
 func _on_quick_roll_button_pressed() -> void:
 	%DiceRollerControl.quick_roll() # quick rotate roll
 
-func _on_dice_roller_control_roll_finnished(result: int) -> void:
+func _on_dice_roller_control_roll_finished(result: int) -> void:
 	%ResultLabel.text = "Result: %s"%[result]
 	%DicesLabel.text = "%s"%[%DiceRollerControl.per_dice_result()]
 
@@ -27,13 +27,14 @@ func _on_dice_roller_control_roll_started() -> void:
 	%DicesLabel.text = "%s"%[%DiceRollerControl.per_dice_result()]
 
 func _on_edit_dice_set_button_pressed() -> void:
-	$DiceSetEditor.set_dice_set(%DiceRollerControl.dice_set)
+	$DiceSetEditor.set_dice_set(%DiceRollerControl.dice_set.dice)
 	$DiceSetEditor.popup_centered()
 
 func _on_dice_set_editor_confirmed() -> void:
-	var dice_set = $DiceSetEditor.get_dice_set()
-	%DiceRollerControl.dice_set = dice_set
+	var new_dice_set := DiceSet.new()
+	new_dice_set.dice = $DiceSetEditor.get_dice_set()
+	%DiceRollerControl.dice_set = new_dice_set
 	# We use the dice_set from the control because
-	# it ensures, the diceset has dices.
-	var size_factor : float = sqrt(len(%DiceRollerControl.dice_set)/3.0)
+	# it ensures, the diceset has dice.
+	var size_factor : float = sqrt(%DiceRollerControl.dice_set.dice.size()/3.0)
 	%DiceRollerControl.roller_size = Vector3(size_factor*9.0, 12.0, size_factor*5.0)
