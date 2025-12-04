@@ -10,7 +10,7 @@ extends Resource
 
 ## The shape of the dice.
 ## It must be one of the keys a Dice Shape is registered on.
-@export var shape: DiceShape = DiceShape.new("D6"):
+@export var shape: DiceShape = DiceShape.new("D4"):
 	set(value):
 		shape=value
 	get():
