@@ -1,0 +1,63 @@
+[gd_scene load_steps=4 format=3 uid="uid://b6g58gq1y7v1w"]
+
+[ext_resource type="Script" uid="uid://dnrgxoj3rb62y" path="res://examples/dice_roller/csharp/CSharpDiceRollerExample.cs" id="1_j2v8q"]
+[ext_resource type="Script" uid="uid://dsiemp3pev01o" path="res://addons/dice_roller/dice_roller_control/dice_roller_control.gd" id="2_v500g"]
+[ext_resource type="Resource" uid="uid://cvhsfbpl7hvk2" path="res://examples/dice_roller/csharp/csharp_example_diceset.tres" id="3_vbsgt"]
+
+[node name="CSharpDiceRollerExample" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_j2v8q")
+
+[node name="Layout" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DiceRollerControl" type="SubViewportContainer" parent="Layout"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+stretch = true
+script = ExtResource("2_v500g")
+dice_set = ExtResource("3_vbsgt")
+roller_size = Vector3(27, 36, 15)
+
+[node name="Labels" type="HFlowContainer" parent="Layout"]
+layout_mode = 2
+
+[node name="ResultLabel" type="Label" parent="Layout/Labels"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DiceLabel" type="Label" parent="Layout/Labels"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+horizontal_alignment = 2
+
+[node name="Buttons" type="HBoxContainer" parent="Layout"]
+layout_mode = 2
+
+[node name="RollButton" type="Button" parent="Layout/Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+text = "Roll"
+
+[node name="QuickRollButton" type="Button" parent="Layout/Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+text = "Quick Roll"

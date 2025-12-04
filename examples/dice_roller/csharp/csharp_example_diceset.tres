@@ -1,0 +1,47 @@
+[gd_resource type="Resource" script_class="DiceSet" load_steps=11 format=3 uid="uid://cvhsfbpl7hvk2"]
+
+[ext_resource type="Script" uid="uid://cohd4ovwrydr0" path="res://addons/dice_roller/dice_def.gd" id="1_be7ng"]
+[ext_resource type="Script" uid="uid://xsgh2gwr4gub" path="res://addons/dice_roller/dice_shape.gd" id="2_v6ac1"]
+[ext_resource type="Script" uid="uid://biytwa7jguo6h" path="res://addons/dice_roller/dice_set.gd" id="3_d6i8m"]
+
+[sub_resource type="Resource" id="Resource_q54ob"]
+script = ExtResource("1_be7ng")
+name = "D4"
+color = Color(0.45215446, 0.23108369, 0.9933073, 1)
+metadata/_custom_type_script = "uid://cohd4ovwrydr0"
+
+[sub_resource type="Resource" id="Resource_f773l"]
+script = ExtResource("2_v6ac1")
+
+[sub_resource type="Resource" id="Resource_yoryf"]
+script = ExtResource("1_be7ng")
+name = "D6"
+color = Color(0.71915746, 0, 0.3102446, 1)
+shape = SubResource("Resource_f773l")
+metadata/_custom_type_script = "uid://cohd4ovwrydr0"
+
+[sub_resource type="Resource" id="Resource_pyft5"]
+script = ExtResource("2_v6ac1")
+name = "D10"
+
+[sub_resource type="Resource" id="Resource_nxi1g"]
+script = ExtResource("1_be7ng")
+name = "D10"
+color = Color(0.81533366, 0.6511579, 0.35722575, 1)
+shape = SubResource("Resource_pyft5")
+metadata/_custom_type_script = "uid://cohd4ovwrydr0"
+
+[sub_resource type="Resource" id="Resource_8qwds"]
+script = ExtResource("2_v6ac1")
+name = "D10x10"
+
+[sub_resource type="Resource" id="Resource_8atxd"]
+script = ExtResource("1_be7ng")
+name = "D100"
+shape = SubResource("Resource_8qwds")
+metadata/_custom_type_script = "uid://cohd4ovwrydr0"
+
+[resource]
+script = ExtResource("3_d6i8m")
+dice = Array[ExtResource("1_be7ng")]([SubResource("Resource_q54ob"), SubResource("Resource_yoryf"), SubResource("Resource_nxi1g"), SubResource("Resource_8atxd")])
+metadata/_custom_type_script = "uid://biytwa7jguo6h"
