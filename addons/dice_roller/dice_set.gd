@@ -3,4 +3,4 @@ class_name DiceSet
 extends Resource
 
 ## The array of dice definitions that make up this set.
-@export var dices: Array[DiceDef] = []
+@export var dice: Array[DiceDef] = []
