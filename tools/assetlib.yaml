@@ -16,7 +16,7 @@ previews:
 - repoimage: screenshots/example-editor.png
   repothumb: screenshots/example-editor-thumb.jpg
   caption: |
-    Diceset Editor: Add and remove dices. Choose their shape, color and name.
+    Diceset Editor: Add and remove dice. Choose their shape, color and name.
 
 - repoimage: screenshots/example-poker.png
   repothumb: screenshots/example-poker-thumb.jpg
